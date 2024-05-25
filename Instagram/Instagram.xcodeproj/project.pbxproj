@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1B3306052C020F7E0098C653 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 1B3306042C020F7E0098C653 /* .swiftlint.yml */; };
 		1B51C4F72C0208B100569B39 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B51C4F62C0208B100569B39 /* AppDelegate.swift */; };
 		1B51C4F92C0208B100569B39 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B51C4F82C0208B100569B39 /* SceneDelegate.swift */; };
 		1B51C4FB2C0208B100569B39 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B51C4FA2C0208B100569B39 /* ViewController.swift */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1B3306042C020F7E0098C653 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		1B51C4F32C0208B100569B39 /* Instagram.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Instagram.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1B51C4F62C0208B100569B39 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1B51C4F82C0208B100569B39 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -45,6 +47,7 @@
 		1B51C4EA2C0208B000569B39 = {
 			isa = PBXGroup;
 			children = (
+				1B3306042C020F7E0098C653 /* .swiftlint.yml */,
 				1B51C4F52C0208B100569B39 /* Instagram */,
 				1B51C4F42C0208B100569B39 /* Products */,
 				803124671715970C5F1B8BDA /* Pods */,
@@ -151,6 +154,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1B3306052C020F7E0098C653 /* .swiftlint.yml in Resources */,
 				1B51C5002C0208B200569B39 /* Assets.xcassets in Resources */,
 				1B51C5032C0208B200569B39 /* Base in Resources */,
 				1B51C4FE2C0208B100569B39 /* Base in Resources */,
@@ -162,6 +166,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		1B1F1ECE2C020CDC003EA93D /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
