@@ -44,6 +44,48 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1B3306062C022C880098C653 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		1B3306072C022C8C0098C653 /* API */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		1B3306082C022C990098C653 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		1B3306092C022C9C0098C653 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		1B33060A2C022C9F0098C653 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		1B33060B2C022CA10098C653 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		1B51C4EA2C0208B000569B39 = {
 			isa = PBXGroup;
 			children = (
@@ -66,6 +108,12 @@
 		1B51C4F52C0208B100569B39 /* Instagram */ = {
 			isa = PBXGroup;
 			children = (
+				1B33060B2C022CA10098C653 /* Model */,
+				1B33060A2C022C9F0098C653 /* View */,
+				1B3306092C022C9C0098C653 /* ViewModel */,
+				1B3306082C022C990098C653 /* Controller */,
+				1B3306072C022C8C0098C653 /* API */,
+				1B3306062C022C880098C653 /* Utils */,
 				1B51C4F62C0208B100569B39 /* AppDelegate.swift */,
 				1B51C4F82C0208B100569B39 /* SceneDelegate.swift */,
 				1B51C4FA2C0208B100569B39 /* ViewController.swift */,
