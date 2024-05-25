@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		1B3306052C020F7E0098C653 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 1B3306042C020F7E0098C653 /* .swiftlint.yml */; };
+		1B33060D2C022E280098C653 /* MainTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B33060C2C022E280098C653 /* MainTabController.swift */; };
+		1B33060F2C0231E90098C653 /* FeedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B33060E2C0231E90098C653 /* FeedController.swift */; };
+		1B3306112C0231F90098C653 /* SearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3306102C0231F90098C653 /* SearchController.swift */; };
+		1B3306132C0232140098C653 /* ImageSelectorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3306122C0232140098C653 /* ImageSelectorController.swift */; };
+		1B3306152C0232220098C653 /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3306142C0232220098C653 /* NotificationController.swift */; };
+		1B3306172C0232360098C653 /* ProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3306162C0232360098C653 /* ProfileController.swift */; };
 		1B51C4F72C0208B100569B39 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B51C4F62C0208B100569B39 /* AppDelegate.swift */; };
 		1B51C4F92C0208B100569B39 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B51C4F82C0208B100569B39 /* SceneDelegate.swift */; };
 		1B51C4FB2C0208B100569B39 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B51C4FA2C0208B100569B39 /* ViewController.swift */; };
@@ -19,6 +25,12 @@
 
 /* Begin PBXFileReference section */
 		1B3306042C020F7E0098C653 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		1B33060C2C022E280098C653 /* MainTabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabController.swift; sourceTree = "<group>"; };
+		1B33060E2C0231E90098C653 /* FeedController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedController.swift; sourceTree = "<group>"; };
+		1B3306102C0231F90098C653 /* SearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchController.swift; sourceTree = "<group>"; };
+		1B3306122C0232140098C653 /* ImageSelectorController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSelectorController.swift; sourceTree = "<group>"; };
+		1B3306142C0232220098C653 /* NotificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
+		1B3306162C0232360098C653 /* ProfileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileController.swift; sourceTree = "<group>"; };
 		1B51C4F32C0208B100569B39 /* Instagram.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Instagram.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1B51C4F62C0208B100569B39 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1B51C4F82C0208B100569B39 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -61,6 +73,12 @@
 		1B3306082C022C990098C653 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				1B33060C2C022E280098C653 /* MainTabController.swift */,
+				1B33060E2C0231E90098C653 /* FeedController.swift */,
+				1B3306102C0231F90098C653 /* SearchController.swift */,
+				1B3306122C0232140098C653 /* ImageSelectorController.swift */,
+				1B3306142C0232220098C653 /* NotificationController.swift */,
+				1B3306162C0232360098C653 /* ProfileController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -261,7 +279,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				1B51C4FB2C0208B100569B39 /* ViewController.swift in Sources */,
+				1B3306132C0232140098C653 /* ImageSelectorController.swift in Sources */,
+				1B3306152C0232220098C653 /* NotificationController.swift in Sources */,
+				1B3306112C0231F90098C653 /* SearchController.swift in Sources */,
 				1B51C4F72C0208B100569B39 /* AppDelegate.swift in Sources */,
+				1B3306172C0232360098C653 /* ProfileController.swift in Sources */,
+				1B33060F2C0231E90098C653 /* FeedController.swift in Sources */,
+				1B33060D2C022E280098C653 /* MainTabController.swift in Sources */,
 				1B51C4F92C0208B100569B39 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
