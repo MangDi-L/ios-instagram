@@ -23,20 +23,19 @@ final class FeedController: UICollectionViewController {
     
     private func configureUI() {
         collectionView.backgroundColor = .white
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        collectionView.register(FeedCell.self, forCellWithReuseIdentifier: reuseIdentifier)
     }
 }
 
 // MARK: - UICollectionViewDataSource
 
 extension FeedController {
-    override func numberOfSections(in collectionView: UICollectionView) -> Int {
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 5
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
-        cell.backgroundColor = .red
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? FeedCell ?? FeedCell()
         return cell
     }
 }
