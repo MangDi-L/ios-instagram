@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1B2E22AB2C03820400A746DA /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2E22AA2C03820400A746DA /* FeedCell.swift */; };
+		1B2E22AD2C03892200A746DA /* Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2E22AC2C03892200A746DA /* Extentions.swift */; };
 		1B3306052C020F7E0098C653 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 1B3306042C020F7E0098C653 /* .swiftlint.yml */; };
 		1B33060D2C022E280098C653 /* MainTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B33060C2C022E280098C653 /* MainTabController.swift */; };
 		1B33060F2C0231E90098C653 /* FeedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B33060E2C0231E90098C653 /* FeedController.swift */; };
@@ -26,6 +27,7 @@
 
 /* Begin PBXFileReference section */
 		1B2E22AA2C03820400A746DA /* FeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
+		1B2E22AC2C03892200A746DA /* Extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extentions.swift; sourceTree = "<group>"; };
 		1B3306042C020F7E0098C653 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		1B33060C2C022E280098C653 /* MainTabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabController.swift; sourceTree = "<group>"; };
 		1B33060E2C0231E90098C653 /* FeedController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedController.swift; sourceTree = "<group>"; };
@@ -61,6 +63,7 @@
 		1B3306062C022C880098C653 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				1B2E22AC2C03892200A746DA /* Extentions.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -284,6 +287,7 @@
 				1B51C4FB2C0208B100569B39 /* ViewController.swift in Sources */,
 				1B2E22AB2C03820400A746DA /* FeedCell.swift in Sources */,
 				1B3306132C0232140098C653 /* ImageSelectorController.swift in Sources */,
+				1B2E22AD2C03892200A746DA /* Extentions.swift in Sources */,
 				1B3306152C0232220098C653 /* NotificationController.swift in Sources */,
 				1B3306112C0231F90098C653 /* SearchController.swift in Sources */,
 				1B51C4F72C0208B100569B39 /* AppDelegate.swift in Sources */,
