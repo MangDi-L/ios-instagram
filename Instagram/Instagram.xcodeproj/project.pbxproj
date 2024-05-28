@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1B2D974B2C05C1AA009FF8A2 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2D974A2C05C1AA009FF8A2 /* LoginController.swift */; };
+		1B2D974D2C05C1BD009FF8A2 /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2D974C2C05C1BD009FF8A2 /* RegistrationController.swift */; };
 		1B2E22AB2C03820400A746DA /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2E22AA2C03820400A746DA /* FeedCell.swift */; };
 		1B2E22AD2C03892200A746DA /* Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2E22AC2C03892200A746DA /* Extentions.swift */; };
 		1B3306052C020F7E0098C653 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 1B3306042C020F7E0098C653 /* .swiftlint.yml */; };
@@ -26,6 +28,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1B2D974A2C05C1AA009FF8A2 /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
+		1B2D974C2C05C1BD009FF8A2 /* RegistrationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationController.swift; sourceTree = "<group>"; };
 		1B2E22AA2C03820400A746DA /* FeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
 		1B2E22AC2C03892200A746DA /* Extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extentions.swift; sourceTree = "<group>"; };
 		1B3306042C020F7E0098C653 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
@@ -60,6 +64,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1B2D97492C05C17B009FF8A2 /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				1B2D974A2C05C1AA009FF8A2 /* LoginController.swift */,
+				1B2D974C2C05C1BD009FF8A2 /* RegistrationController.swift */,
+			);
+			path = Authentication;
+			sourceTree = "<group>";
+		};
 		1B3306062C022C880098C653 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -78,6 +91,7 @@
 		1B3306082C022C990098C653 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				1B2D97492C05C17B009FF8A2 /* Authentication */,
 				1B33060C2C022E280098C653 /* MainTabController.swift */,
 				1B33060E2C0231E90098C653 /* FeedController.swift */,
 				1B3306102C0231F90098C653 /* SearchController.swift */,
@@ -285,6 +299,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1B51C4FB2C0208B100569B39 /* ViewController.swift in Sources */,
+				1B2D974B2C05C1AA009FF8A2 /* LoginController.swift in Sources */,
 				1B2E22AB2C03820400A746DA /* FeedCell.swift in Sources */,
 				1B3306132C0232140098C653 /* ImageSelectorController.swift in Sources */,
 				1B2E22AD2C03892200A746DA /* Extentions.swift in Sources */,
@@ -295,6 +310,7 @@
 				1B33060F2C0231E90098C653 /* FeedController.swift in Sources */,
 				1B33060D2C022E280098C653 /* MainTabController.swift in Sources */,
 				1B51C4F92C0208B100569B39 /* SceneDelegate.swift in Sources */,
+				1B2D974D2C05C1BD009FF8A2 /* RegistrationController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
