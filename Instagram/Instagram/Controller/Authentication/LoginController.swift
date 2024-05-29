@@ -17,29 +17,13 @@ final class LoginController: UIViewController {
         return imageView
     }()
 
-    private let emailTextField: UITextField = {
-        let textField = UITextField()
-        textField.borderStyle = .none
-        textField.textColor = .white
-        textField.keyboardAppearance = .dark
-        textField.keyboardType = .emailAddress
-        textField.backgroundColor = UIColor(white: 1, alpha: 0.1)
-        textField.setHeight(50)
-        textField.attributedPlaceholder = NSAttributedString(string: "Email",
-                                                             attributes: [.foregroundColor: UIColor(white: 1, alpha: 0.7)])
+    private let emailTextField: CustomTextField = {
+        let textField = CustomTextField(placeholder: "Email")
         return textField
     }()
     
-    private let passwordTextField: UITextField = {
-        let textField = UITextField()
-        textField.borderStyle = .none
-        textField.textColor = .white
-        textField.keyboardAppearance = .dark
-        textField.keyboardType = .emailAddress
-        textField.backgroundColor = UIColor(white: 1, alpha: 0.1)
-        textField.setHeight(50)
-        textField.attributedPlaceholder = NSAttributedString(string: "Password",
-                                                             attributes: [.foregroundColor: UIColor(white: 1, alpha: 0.7)])
+    private let passwordTextField: CustomTextField = {
+        let textField = CustomTextField(placeholder: "Password")
         textField.isSecureTextEntry = true
         return textField
     }()
