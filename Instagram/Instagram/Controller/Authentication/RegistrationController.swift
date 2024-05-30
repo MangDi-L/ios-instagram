@@ -15,8 +15,13 @@ final class RegistrationController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        view.backgroundColor = .systemMint
+        
+        configureUI()
     }
     
+    // MARK: - Helpers
+    
+    private func configureUI() {
+        configureGradientLayer()
+    }
 }

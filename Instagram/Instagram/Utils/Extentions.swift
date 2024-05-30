@@ -35,6 +35,14 @@ extension UIViewController {
 //        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
 //        present(alert, animated: true, completion: nil)
 //    }
+    
+    func configureGradientLayer() {
+        let gradient = CAGradientLayer()
+        gradient.colors = [UIColor.systemPurple.cgColor, UIColor.systemBlue.cgColor]
+        gradient.locations = [0, 1]
+        view.layer.addSublayer(gradient)
+        gradient.frame = view.frame
+    }
 }
 
 extension UIButton {
