@@ -11,6 +11,7 @@
 		1B2D974D2C05C1BD009FF8A2 /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2D974C2C05C1BD009FF8A2 /* RegistrationController.swift */; };
 		1B2D974F2C076D2D009FF8A2 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2D974E2C076D2D009FF8A2 /* CustomTextField.swift */; };
 		1B2D97512C08C16C009FF8A2 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2D97502C08C16C009FF8A2 /* CustomButton.swift */; };
+		1B2D97532C09A3CC009FF8A2 /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2D97522C09A3CC009FF8A2 /* AuthenticationViewModel.swift */; };
 		1B2E22AB2C03820400A746DA /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2E22AA2C03820400A746DA /* FeedCell.swift */; };
 		1B2E22AD2C03892200A746DA /* Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2E22AC2C03892200A746DA /* Extentions.swift */; };
 		1B3306052C020F7E0098C653 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 1B3306042C020F7E0098C653 /* .swiftlint.yml */; };
@@ -34,6 +35,7 @@
 		1B2D974C2C05C1BD009FF8A2 /* RegistrationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationController.swift; sourceTree = "<group>"; };
 		1B2D974E2C076D2D009FF8A2 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		1B2D97502C08C16C009FF8A2 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
+		1B2D97522C09A3CC009FF8A2 /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
 		1B2E22AA2C03820400A746DA /* FeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
 		1B2E22AC2C03892200A746DA /* Extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extentions.swift; sourceTree = "<group>"; };
 		1B3306042C020F7E0098C653 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
@@ -109,6 +111,7 @@
 		1B3306092C022C9C0098C653 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				1B2D97522C09A3CC009FF8A2 /* AuthenticationViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -308,6 +311,7 @@
 				1B51C4FB2C0208B100569B39 /* ViewController.swift in Sources */,
 				1B2D974B2C05C1AA009FF8A2 /* LoginController.swift in Sources */,
 				1B2E22AB2C03820400A746DA /* FeedCell.swift in Sources */,
+				1B2D97532C09A3CC009FF8A2 /* AuthenticationViewModel.swift in Sources */,
 				1B3306132C0232140098C653 /* ImageSelectorController.swift in Sources */,
 				1B2E22AD2C03892200A746DA /* Extentions.swift in Sources */,
 				1B3306152C0232220098C653 /* NotificationController.swift in Sources */,
