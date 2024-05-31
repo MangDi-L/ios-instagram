@@ -10,7 +10,6 @@
 		1B2D974B2C05C1AA009FF8A2 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2D974A2C05C1AA009FF8A2 /* LoginController.swift */; };
 		1B2D974D2C05C1BD009FF8A2 /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2D974C2C05C1BD009FF8A2 /* RegistrationController.swift */; };
 		1B2D974F2C076D2D009FF8A2 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2D974E2C076D2D009FF8A2 /* CustomTextField.swift */; };
-		1B2D97512C08C16C009FF8A2 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2D97502C08C16C009FF8A2 /* CustomButton.swift */; };
 		1B2D97532C09A3CC009FF8A2 /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2D97522C09A3CC009FF8A2 /* AuthenticationViewModel.swift */; };
 		1B2E22AB2C03820400A746DA /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2E22AA2C03820400A746DA /* FeedCell.swift */; };
 		1B2E22AD2C03892200A746DA /* Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2E22AC2C03892200A746DA /* Extentions.swift */; };
@@ -34,7 +33,6 @@
 		1B2D974A2C05C1AA009FF8A2 /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		1B2D974C2C05C1BD009FF8A2 /* RegistrationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationController.swift; sourceTree = "<group>"; };
 		1B2D974E2C076D2D009FF8A2 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
-		1B2D97502C08C16C009FF8A2 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		1B2D97522C09A3CC009FF8A2 /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
 		1B2E22AA2C03820400A746DA /* FeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
 		1B2E22AC2C03892200A746DA /* Extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extentions.swift; sourceTree = "<group>"; };
@@ -121,7 +119,6 @@
 			children = (
 				1B2E22AA2C03820400A746DA /* FeedCell.swift */,
 				1B2D974E2C076D2D009FF8A2 /* CustomTextField.swift */,
-				1B2D97502C08C16C009FF8A2 /* CustomButton.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -322,7 +319,6 @@
 				1B33060D2C022E280098C653 /* MainTabController.swift in Sources */,
 				1B51C4F92C0208B100569B39 /* SceneDelegate.swift in Sources */,
 				1B2D974D2C05C1BD009FF8A2 /* RegistrationController.swift in Sources */,
-				1B2D97512C08C16C009FF8A2 /* CustomButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

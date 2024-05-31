@@ -32,7 +32,18 @@ final class RegistrationController: UIViewController {
     private let fullnameTextField = CustomTextField(placeholder: "Fullname")
     private let usernameTextField = CustomTextField(placeholder: "Username")
     
-    private let signUpButton = CustomButton(buttonName: "Sign Up")
+    private let signUpButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Sign Up", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.backgroundColor = #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1).withAlphaComponent(0.5)
+        button.setTitleColor(UIColor(white: 1, alpha: 0.67), for: .normal)
+        button.layer.cornerRadius = 5
+        button.setHeight(50)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        button.isEnabled = false
+        return button
+    }()
     
     private let alreadyHaveAccountButton: UIButton = {
         let button = UIButton(type: .system)

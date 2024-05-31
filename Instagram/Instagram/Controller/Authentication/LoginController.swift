@@ -30,7 +30,18 @@ final class LoginController: UIViewController {
         return textField
     }()
     
-    private let loginButton = CustomButton(buttonName: "Log In")
+    private let loginButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Log In", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.backgroundColor = #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1).withAlphaComponent(0.5)
+        button.setTitleColor(UIColor(white: 1, alpha: 0.67), for: .normal)
+        button.layer.cornerRadius = 5
+        button.setHeight(50)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        button.isEnabled = false
+        return button
+    }()
     
     private let forgotPasswordButton: UIButton = {
         let button = UIButton(type: .system)
