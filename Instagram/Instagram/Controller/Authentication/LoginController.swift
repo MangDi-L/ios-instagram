@@ -80,8 +80,8 @@ final class LoginController: UIViewController {
         }
         
         loginButton.backgroundColor = loginViewModel.buttonBackgroundColor
-        loginButton.setTitleColor(loginViewModel.butonTitleColor, for: .normal)
-        loginButton.isEnabled = loginViewModel.formIsVaild
+        loginButton.setTitleColor(loginViewModel.buttonTitleColor, for: .normal)
+        loginButton.isEnabled = loginViewModel.formIsValid
     }
     
     // MARK: - Helpers
