@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import PhotosUI
 
 final class RegistrationController: UIViewController {
 
@@ -13,10 +14,11 @@ final class RegistrationController: UIViewController {
     
     private var registrationViewModel = RegistrationViewModel()
     
-    private let plusPhotoButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setImage(UIImage(named: "plus_photo"), for: .normal)
-        button.tintColor = .white
+    private lazy var plusPhotoButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "plus_photo")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        button.tintColor = .systemBackground
+        button.addTarget(self, action: #selector(handleProfilePhotoSelect), for: .touchUpInside)
         return button
     }()
     
@@ -47,7 +49,7 @@ final class RegistrationController: UIViewController {
         return button
     }()
     
-    private let alreadyHaveAccountButton: UIButton = {
+    private lazy var alreadyHaveAccountButton: UIButton = {
         let button = UIButton(type: .system)
         button.attributedTitle(firstPart: "Already have an account?  ", secondPart: "Log In")
         button.addTarget(self, action: #selector(handleShowLogin), for: .touchUpInside)
@@ -84,6 +86,16 @@ final class RegistrationController: UIViewController {
         }
         
         updateForm()
+    }
+    
+    @objc private func handleProfilePhotoSelect() {
+        var configuration = PHPickerConfiguration()
+        configuration.selectionLimit = 1
+        configuration.filter = .images
+        
+        let picker = PHPickerViewController(configuration: configuration)
+        picker.delegate = self
+        present(picker, animated: true, completion: nil)
     }
     
     // MARK: - Helpers
@@ -127,5 +139,33 @@ extension RegistrationController: FormViewModel {
         signUpButton.backgroundColor = registrationViewModel.buttonBackgroundColor
         signUpButton.setTitleColor(registrationViewModel.buttonTitleColor, for: .normal)
         signUpButton.isEnabled = registrationViewModel.formIsValid
+    }
+}
+
+// MARK: - PHPickerViewControllerDelegate
+
+extension RegistrationController: PHPickerViewControllerDelegate {
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        plusPhotoButton.layer.cornerRadius = plusPhotoButton.frame.width / 2
+        plusPhotoButton.layer.masksToBounds = true
+        plusPhotoButton.layer.borderColor = UIColor.white.cgColor
+        plusPhotoButton.layer.borderWidth = 2
+        
+        let itemProvider = results.first?.itemProvider
+        
+        if let itemProvider = itemProvider,
+           itemProvider.canLoadObject(ofClass: UIImage.self) {
+            itemProvider.loadObject(ofClass: UIImage.self) { (image, error) in
+                if let image = image as? UIImage {
+                    DispatchQueue.main.async {
+                        self.plusPhotoButton.setImage(image, for: .normal)
+                    }
+                }
+            }
+        } else {
+            print("이미지 못 불러왔음!!!!")
+        }
+        
+        picker.dismiss(animated: true)
     }
 }
