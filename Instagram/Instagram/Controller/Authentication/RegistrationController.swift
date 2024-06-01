@@ -11,6 +11,8 @@ final class RegistrationController: UIViewController {
 
     // MARK: - Properties
     
+    private var registrationViewModel = RegistrationViewModel()
+    
     private let plusPhotoButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(named: "plus_photo"), for: .normal)
@@ -58,12 +60,30 @@ final class RegistrationController: UIViewController {
         super.viewDidLoad()
         
         configureUI()
+        configureNotificationObservers()
     }
     
     // MARK: - Actions
     
     @objc private func handleShowLogin() {
         navigationController?.popViewController(animated: true)
+    }
+    
+    @objc private func textDidChange(sender: UITextField) {
+        switch sender {
+        case emailTextField:
+            registrationViewModel.email = sender.text
+        case passwordTextField:
+            registrationViewModel.password = sender.text
+        case fullnameTextField:
+            registrationViewModel.fullname = sender.text
+        case usernameTextField:
+            registrationViewModel.username = sender.text
+        default: 
+            break
+        }
+        
+        updateForm()
     }
     
     // MARK: - Helpers
@@ -90,5 +110,22 @@ final class RegistrationController: UIViewController {
         view.addSubview(alreadyHaveAccountButton)
         alreadyHaveAccountButton.centerX(inView: view)
         alreadyHaveAccountButton.anchor(bottom: view.safeAreaLayoutGuide.bottomAnchor)
+    }
+    
+    private func configureNotificationObservers() {
+        emailTextField.addTarget(self, action: #selector(textDidChange), for: .editingChanged)
+        passwordTextField.addTarget(self, action: #selector(textDidChange), for: .editingChanged)
+        fullnameTextField.addTarget(self, action: #selector(textDidChange), for: .editingChanged)
+        usernameTextField.addTarget(self, action: #selector(textDidChange), for: .editingChanged)
+    }
+}
+
+// MARK: - FromViewModel
+
+extension RegistrationController: FormViewModel {
+    func updateForm() {
+        signUpButton.backgroundColor = registrationViewModel.buttonBackgroundColor
+        signUpButton.setTitleColor(registrationViewModel.buttonTitleColor, for: .normal)
+        signUpButton.isEnabled = registrationViewModel.formIsValid
     }
 }
