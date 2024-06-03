@@ -13,6 +13,7 @@ final class RegistrationController: UIViewController {
     // MARK: - Properties
     
     private var registrationViewModel = RegistrationViewModel()
+    private var profileImage: UIImage?
     
     private lazy var plusPhotoButton: UIButton = {
         let button = UIButton()
@@ -36,7 +37,7 @@ final class RegistrationController: UIViewController {
     private let fullnameTextField = CustomTextField(placeholder: "Fullname")
     private let usernameTextField = CustomTextField(placeholder: "Username")
     
-    private let signUpButton: UIButton = {
+    private lazy var signUpButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Sign Up", for: .normal)
         button.setTitleColor(.white, for: .normal)
@@ -46,6 +47,7 @@ final class RegistrationController: UIViewController {
         button.setHeight(50)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
         button.isEnabled = false
+        button.addTarget(self, action: #selector(handleSignUp), for: .touchUpInside)
         return button
     }()
     
@@ -66,6 +68,20 @@ final class RegistrationController: UIViewController {
     }
     
     // MARK: - Actions
+    
+    @objc private func handleSignUp() {
+        guard let email = emailTextField.text else { return }
+        guard let password = passwordTextField.text else { return }
+        guard let fullname = fullnameTextField.text else { return }
+        guard let username = usernameTextField.text else { return }
+        guard let profileImage = profileImage else { return }
+        
+        let credentials = AuthCredentials(email: email, password: password,
+                                          fullname: fullname, username: username,
+                                          profileImage: profileImage)
+        
+        AuthService.registerUser(withCredential: credentials)
+    }
     
     @objc private func handleShowLogin() {
         navigationController?.popViewController(animated: true)
@@ -157,6 +173,7 @@ extension RegistrationController: PHPickerViewControllerDelegate {
            itemProvider.canLoadObject(ofClass: UIImage.self) {
             itemProvider.loadObject(ofClass: UIImage.self) { (image, error) in
                 if let image = image as? UIImage {
+                    self.profileImage = image
                     DispatchQueue.main.async {
                         self.plusPhotoButton.setImage(image, for: .normal)
                     }
