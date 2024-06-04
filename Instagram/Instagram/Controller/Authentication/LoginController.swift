@@ -49,7 +49,7 @@ final class LoginController: UIViewController {
         return button
     }()
     
-    private let dontHaveAccountButton: UIButton = {
+    private lazy var dontHaveAccountButton: UIButton = {
         let button = UIButton(type: .system)
         button.attributedTitle(firstPart: "Don't have an account?  ", secondPart: "Sigh Up")
         button.addTarget(self, action: #selector(handleShowSignUp), for: .touchUpInside)
