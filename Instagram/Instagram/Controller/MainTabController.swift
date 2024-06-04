@@ -16,27 +16,19 @@ final class MainTabController: UITabBarController {
         super.viewDidLoad()
         configureViewControllers()
         checkIfUserIsLoggedIn()
-//        logout()
     }
     
     // MARK: - API
     
     private func checkIfUserIsLoggedIn() {
         if Auth.auth().currentUser == nil {
+            // background 스레드에서 API 호출을 하고 있기때문에 UI관련 작업은 메인 스레드에 있어야한다. (16_2분20초)
             DispatchQueue.main.async {
                 let controller = LoginController()
                 let nav = UINavigationController(rootViewController: controller)
                 nav.modalPresentationStyle = .fullScreen
                 self.present(nav, animated: true)
             }
-        }
-    }
-    
-    private func logout() {
-        do {
-            try Auth.auth().signOut()
-        } catch {
-            print("DEBUG: Failed to sign out!")
         }
     }
 
