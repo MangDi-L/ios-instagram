@@ -11,6 +11,10 @@ final class ProfileHeader: UICollectionReusableView {
     
     // MARK: - Properties
     
+    var viewModel: ProfileHeaderViewModel? {
+        didSet { configure() }
+    }
+    
     private let profileImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = #imageLiteral(resourceName: "venom-7")
@@ -142,6 +146,10 @@ final class ProfileHeader: UICollectionReusableView {
     }
     
     // MARK: - Helpers
+    
+    private func configure() {
+//        guard let viewModel = viewModel else { return }
+    }
     
     private func attributedStatText(value: Int, label: String) -> NSAttributedString {
         let attributedText = NSMutableAttributedString(string: "\(value)\n",
