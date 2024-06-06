@@ -20,6 +20,13 @@ final class ProfileController: UICollectionViewController {
         super.viewDidLoad()
         
         configureCollectionView()
+        fetchUser()
+    }
+    
+    // MARK: - API
+    
+    private func fetchUser() {
+        UserService.fetchUser()
     }
     
     // MARK: - Helpers

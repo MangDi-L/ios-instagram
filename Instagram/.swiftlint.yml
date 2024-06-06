@@ -9,3 +9,6 @@ included:
 
 excluded:
 - Pods
+
+identifier_name:
+  allowed_symbols: [_]
