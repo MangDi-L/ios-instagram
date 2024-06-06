@@ -14,6 +14,8 @@ final class ProfileController: UICollectionViewController {
     
     // MARK: - Properties
     
+    var user: User?
+    
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
@@ -26,7 +28,9 @@ final class ProfileController: UICollectionViewController {
     // MARK: - API
     
     private func fetchUser() {
-        UserService.fetchUser()
+        UserService.fetchUser { user in
+            self.user = user
+        }
     }
     
     // MARK: - Helpers
