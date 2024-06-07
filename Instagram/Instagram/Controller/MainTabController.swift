@@ -9,22 +9,38 @@ import UIKit
 import Firebase
 
 final class MainTabController: UITabBarController {
+    
+    // MARK: - Properties
+    
+    private var user: User? {
+        didSet { 
+            guard let user = user else { return }
+            configureViewControllers(withUser: user)
+        }
+    }
 
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureViewControllers()
         checkIfUserIsLoggedIn()
+        fetchUser()
     }
     
     // MARK: - API
+    
+    private func fetchUser() {
+        UserService.fetchUser { user in
+            self.user = user
+        }
+    }
     
     private func checkIfUserIsLoggedIn() {
         if Auth.auth().currentUser == nil {
             // background 스레드에서 API 호출을 하고 있기때문에 UI관련 작업은 메인 스레드에 있어야한다. (16_2분20초)
             DispatchQueue.main.async {
                 let controller = LoginController()
+                controller.delegate = self
                 let nav = UINavigationController(rootViewController: controller)
                 nav.modalPresentationStyle = .fullScreen
                 self.present(nav, animated: true)
@@ -34,7 +50,7 @@ final class MainTabController: UITabBarController {
 
     // MARK: - Helpers
 
-    private func configureViewControllers() {
+    private func configureViewControllers(withUser user: User) {
         view.backgroundColor = .systemBackground
         tabBar.tintColor = .black
 
@@ -51,10 +67,9 @@ final class MainTabController: UITabBarController {
         let notification = templateNavigationController(unselectedImage: #imageLiteral(resourceName: "like_unselected"),
                                                         selectedImage: #imageLiteral(resourceName: "like_selected"),
                                                         rootViewController: NotificationController())
-        let profileLayout = UICollectionViewFlowLayout()
         let profile = templateNavigationController(unselectedImage: #imageLiteral(resourceName: "profile_unselected"),
                                                    selectedImage: #imageLiteral(resourceName: "profile_selected"),
-                                                   rootViewController: ProfileController(collectionViewLayout: profileLayout))
+                                                   rootViewController: ProfileController(user: user))
         
         viewControllers = [feed, search, imageSelector, notification, profile]
     }
@@ -68,5 +83,11 @@ final class MainTabController: UITabBarController {
         nav.navigationBar.tintColor = .black
         return nav
     }
+}
 
+extension MainTabController: AuthenticationDelegate {
+    func authenticationDidComplete() {
+        fetchUser()
+        print("DEBUG: Auth did complete")
+    }
 }

@@ -7,11 +7,16 @@
 
 import UIKit
 
+protocol AuthenticationDelegate: AnyObject {
+    func authenticationDidComplete()
+}
+
 final class LoginController: UIViewController {
     
     // MARK: - Properties
     
     private var loginViewModel = LoginViewModel()
+    weak var delegate: AuthenticationDelegate?
     
     private let iconImage: UIImageView = {
         let imageView = UIImageView()
@@ -78,6 +83,7 @@ final class LoginController: UIViewController {
                 return
             }
             
+            self.delegate?.authenticationDidComplete()
             self.dismiss(animated: true)
         }
     }
