@@ -14,6 +14,7 @@ final class RegistrationController: UIViewController {
     
     private var registrationViewModel = RegistrationViewModel()
     private var profileImage: UIImage?
+    weak var delegate: AuthenticationDelegate?
     
     private lazy var plusPhotoButton: UIButton = {
         let button = UIButton()
@@ -87,6 +88,7 @@ final class RegistrationController: UIViewController {
             }
             
             print("DEBUG: Successfully registered user with firestore..")
+            self.delegate?.authenticationDidComplete()
             self.dismiss(animated: true)
         }
     }
