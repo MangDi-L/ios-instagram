@@ -16,6 +16,7 @@ final class ProfileController: UICollectionViewController {
     
     var user: User? {
         didSet {
+            // UICollectionViewDataSource 부분 전부다 재호출
             collectionView.reloadData()
         }
     }

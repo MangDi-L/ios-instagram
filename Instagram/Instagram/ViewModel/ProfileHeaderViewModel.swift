@@ -14,7 +14,7 @@ struct ProfileHeaderViewModel {
         return user.fullname
     }
     
-    var profileImageUrl: String {
-        return user.profileImageUrl
+    var profileImageUrl: URL? {
+        return URL(string: user.profileImageUrl)
     }
 }
