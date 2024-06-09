@@ -8,7 +8,15 @@
 import UIKit
 
 final class UserCell: UITableViewCell {
+    
     // MARK: - Properties
+    
+    var user: User? {
+        didSet {
+            usernameLabel.text = user?.username
+            fullnameLabel.text = user?.fullname
+        }
+    }
     
     private let profileImageView: UIImageView = {
         let imageView = UIImageView()
