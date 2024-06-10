@@ -54,3 +54,11 @@ extension SearchController {
         return cell
     }
 }
+
+// MARK: - UITableViewDelegate
+extension SearchController {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let controller = ProfileController(user: users[indexPath.row])
+        navigationController?.pushViewController(controller, animated: true)
+    }
+}
