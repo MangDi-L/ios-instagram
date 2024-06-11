@@ -20,6 +20,8 @@ struct User {
         return Auth.auth().currentUser?.uid == uid
     }
     
+    var stats: UserStats?
+    
     init(dictionary: [String: Any]) {
         self.email = dictionary["email"] as? String ?? ""
         self.fullname = dictionary["fullname"] as? String ?? ""
@@ -27,4 +29,10 @@ struct User {
         self.uid = dictionary["uid"] as? String ?? ""
         self.username = dictionary["username"] as? String ?? ""
     }
+}
+
+struct UserStats {
+    let following: Int
+    let followers: Int
+//    let posts: Int
 }
