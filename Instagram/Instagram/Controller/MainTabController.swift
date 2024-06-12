@@ -88,8 +88,15 @@ final class MainTabController: UITabBarController {
     
     private func didFinishPickingMedia(_ picker: YPImagePicker) {
         picker.didFinishPicking { items, cancelled in
-            picker.dismiss(animated: true) {
+            // 자연스런 화면이동을 위해 animated는 false로 설정
+            picker.dismiss(animated: false) {
                 guard let selectedImage = items.singlePhoto?.image else { return }
+                
+                let controller = UploadPostController()
+                let nav = UINavigationController(rootViewController: controller)
+                nav.modalPresentationStyle = .fullScreen
+                // 자연스런 화면이동을 위해 animated는 false로 설정
+                self.present(nav, animated: false)
             }
         }
     }

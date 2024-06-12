@@ -37,6 +37,8 @@
 		1BE8903C2C119B4E00C88A3A /* ProfileHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE8903B2C119B4E00C88A3A /* ProfileHeaderViewModel.swift */; };
 		1BE8903E2C15877D00C88A3A /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE8903D2C15877D00C88A3A /* UserCell.swift */; };
 		1BE890402C16D70800C88A3A /* UserCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE8903F2C16D70800C88A3A /* UserCellViewModel.swift */; };
+		1BE890422C19832E00C88A3A /* UploadPostController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE890412C19832E00C88A3A /* UploadPostController.swift */; };
+		1BE890442C199F5300C88A3A /* InputTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE890432C199F5300C88A3A /* InputTextView.swift */; };
 		3F24237812C483C1AAFC38D2 /* Pods_Instagram.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDCBF086736D4CB5CA82B675 /* Pods_Instagram.framework */; };
 /* End PBXBuildFile section */
 
@@ -73,6 +75,8 @@
 		1BE8903B2C119B4E00C88A3A /* ProfileHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderViewModel.swift; sourceTree = "<group>"; };
 		1BE8903D2C15877D00C88A3A /* UserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		1BE8903F2C16D70800C88A3A /* UserCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCellViewModel.swift; sourceTree = "<group>"; };
+		1BE890412C19832E00C88A3A /* UploadPostController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadPostController.swift; sourceTree = "<group>"; };
+		1BE890432C199F5300C88A3A /* InputTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTextView.swift; sourceTree = "<group>"; };
 		5FEF2B45057EB4B8E5E49D8B /* Pods-Instagram.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Instagram.release.xcconfig"; path = "Target Support Files/Pods-Instagram/Pods-Instagram.release.xcconfig"; sourceTree = "<group>"; };
 		D388E93A983A302F23D2BDC8 /* Pods-Instagram.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Instagram.debug.xcconfig"; path = "Target Support Files/Pods-Instagram/Pods-Instagram.debug.xcconfig"; sourceTree = "<group>"; };
 		EDCBF086736D4CB5CA82B675 /* Pods_Instagram.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Instagram.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -128,6 +132,7 @@
 				1B3306122C0232140098C653 /* ImageSelectorController.swift */,
 				1B3306142C0232220098C653 /* NotificationController.swift */,
 				1B3306162C0232360098C653 /* ProfileController.swift */,
+				1BE890412C19832E00C88A3A /* UploadPostController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -149,6 +154,7 @@
 				1B2E22AA2C03820400A746DA /* FeedCell.swift */,
 				1B2D974E2C076D2D009FF8A2 /* CustomTextField.swift */,
 				1BE8903D2C15877D00C88A3A /* UserCell.swift */,
+				1BE890432C199F5300C88A3A /* InputTextView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -366,6 +372,7 @@
 			files = (
 				1B2D974F2C076D2D009FF8A2 /* CustomTextField.swift in Sources */,
 				1BE890332C103CD500C88A3A /* ProfileHeader.swift in Sources */,
+				1BE890422C19832E00C88A3A /* UploadPostController.swift in Sources */,
 				1B51C4FB2C0208B100569B39 /* ViewController.swift in Sources */,
 				1B2D974B2C05C1AA009FF8A2 /* LoginController.swift in Sources */,
 				1B2E22AB2C03820400A746DA /* FeedCell.swift in Sources */,
@@ -378,6 +385,7 @@
 				1BE8903A2C1191CD00C88A3A /* User.swift in Sources */,
 				1B51C4F72C0208B100569B39 /* AppDelegate.swift in Sources */,
 				1BE8903C2C119B4E00C88A3A /* ProfileHeaderViewModel.swift in Sources */,
+				1BE890442C199F5300C88A3A /* InputTextView.swift in Sources */,
 				1BE890382C118DE200C88A3A /* Constants.swift in Sources */,
 				1B3306172C0232360098C653 /* ProfileController.swift in Sources */,
 				1BE890402C16D70800C88A3A /* UserCellViewModel.swift in Sources */,
