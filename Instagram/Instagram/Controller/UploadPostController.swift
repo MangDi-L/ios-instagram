@@ -53,8 +53,19 @@ final class UploadPostController: UIViewController {
         dismiss(animated: true)
     }
     
-    @objc private func didTapDone() {
+    @objc private func didTapShare() {
+        guard let image = selectedImage else { return }
+        guard let caption = captionTextView.text else { return }
         
+        PostService.uploadPost(caption: caption, image: image) { error in
+            if let error = error {
+                print("DEBUG: Failed to upload post \(error.localizedDescription)")
+                return
+            }
+            
+            self.dismiss(animated: true)
+            self.tabBarController?.selectedIndex = 0
+        }
     }
     
     // MARK: - Helpers
@@ -70,7 +81,7 @@ final class UploadPostController: UIViewController {
         
         navigationItem.title = "Upload Post"
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(didTapCancel))
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Share", style: .done, target: self, action: #selector(didTapDone))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Share", style: .done, target: self, action: #selector(didTapShare))
         
         
         view.addSubview(photoImageView)
