@@ -7,9 +7,15 @@
 
 import UIKit
 
+protocol UploadPostControllerDelegate: AnyObject {
+    func controllerDidFinishUploadingPost(_ controller: UploadPostController)
+}
+
 final class UploadPostController: UIViewController {
     
     // MARK: - Properties
+    
+    weak var delegate: UploadPostControllerDelegate?
     
     var selectedImage: UIImage? {
         didSet { photoImageView.image = selectedImage }
@@ -63,8 +69,7 @@ final class UploadPostController: UIViewController {
                 return
             }
             
-            self.dismiss(animated: true)
-            self.tabBarController?.selectedIndex = 0
+            self.delegate?.controllerDidFinishUploadingPost(self)
         }
     }
     
