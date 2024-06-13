@@ -11,6 +11,10 @@ final class UploadPostController: UIViewController {
     
     // MARK: - Properties
     
+    var selectedImage: UIImage? {
+        didSet { photoImageView.image = selectedImage }
+    }
+    
     private let photoImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
