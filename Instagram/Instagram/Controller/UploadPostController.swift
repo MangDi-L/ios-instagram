@@ -19,8 +19,11 @@ final class UploadPostController: UIViewController {
         return imageView
     }()
     
-    private let captionTextView: InputTextView = {
+    private lazy var captionTextView: InputTextView = {
         let textView = InputTextView()
+        textView.placeholderText = "Enter caption.."
+        textView.font = UIFont.systemFont(ofSize: 16)
+        textView.delegate = self
         return textView
     }()
     
@@ -52,6 +55,12 @@ final class UploadPostController: UIViewController {
     
     // MARK: - Helpers
     
+    private func checkMaxLength(_ textView: UITextView) {
+        if (textView.text.count) > 100 {
+            textView.deleteBackward()
+        }
+    }
+    
     private func configureUI() {
         view.backgroundColor = .systemBackground
         
@@ -82,6 +91,16 @@ final class UploadPostController: UIViewController {
         
         view.addSubview(characterCountLabel)
         characterCountLabel.anchor(bottom: captionTextView.bottomAnchor, right: view.rightAnchor,
-                                   paddingRight: 12)
+                                   paddingBottom: -8, paddingRight: 12)
+    }
+}
+
+// MARK: - UITextViewDelegate
+
+extension UploadPostController: UITextViewDelegate {
+    func textViewDidChange(_ textView: UITextView) {
+        checkMaxLength(textView)
+        let count = textView.text.count
+        characterCountLabel.text = "\(count) / 100"
     }
 }
