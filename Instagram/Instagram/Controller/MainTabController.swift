@@ -86,8 +86,14 @@ final class MainTabController: UITabBarController {
         return nav
     }
     
-    private func didFinishPickingMedia(_ picker: YPImagePicker) {
+    private func didFinishPickingMedia(_ picker: YPImagePicker, currentSelectedIndex: Int) {
         picker.didFinishPicking { items, cancelled in
+            if cancelled {
+                self.selectedIndex = currentSelectedIndex
+                self.dismiss(animated: true)
+                return
+            }
+            
             // 자연스런 화면이동을 위해 animated는 false로 설정
             picker.dismiss(animated: false) {
                 guard let selectedImage = items.singlePhoto?.image else { return }
@@ -133,7 +139,7 @@ extension MainTabController: UITabBarControllerDelegate {
             picker.modalPresentationStyle = .fullScreen
             present(picker, animated: true)
             
-            didFinishPickingMedia(picker)
+            didFinishPickingMedia(picker, currentSelectedIndex: self.selectedIndex)
         }
         
         return true
