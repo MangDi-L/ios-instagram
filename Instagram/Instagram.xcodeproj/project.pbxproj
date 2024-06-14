@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1B17180D2C1C218800C512C0 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B17180C2C1C218800C512C0 /* Post.swift */; };
 		1B2D974B2C05C1AA009FF8A2 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2D974A2C05C1AA009FF8A2 /* LoginController.swift */; };
 		1B2D974D2C05C1BD009FF8A2 /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2D974C2C05C1BD009FF8A2 /* RegistrationController.swift */; };
 		1B2D974F2C076D2D009FF8A2 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2D974E2C076D2D009FF8A2 /* CustomTextField.swift */; };
@@ -44,6 +45,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1B17180C2C1C218800C512C0 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		1B2D974A2C05C1AA009FF8A2 /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		1B2D974C2C05C1BD009FF8A2 /* RegistrationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationController.swift; sourceTree = "<group>"; };
 		1B2D974E2C076D2D009FF8A2 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
@@ -166,6 +168,7 @@
 			isa = PBXGroup;
 			children = (
 				1BE890392C1191CD00C88A3A /* User.swift */,
+				1B17180C2C1C218800C512C0 /* Post.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -395,6 +398,7 @@
 				1B33060F2C0231E90098C653 /* FeedController.swift in Sources */,
 				1B33060D2C022E280098C653 /* MainTabController.swift in Sources */,
 				1BE8902D2C0DA84D00C88A3A /* ImageUploader.swift in Sources */,
+				1B17180D2C1C218800C512C0 /* Post.swift in Sources */,
 				1BE8902F2C0DA86100C88A3A /* AuthService.swift in Sources */,
 				1BE890462C1B7F3A00C88A3A /* PostService.swift in Sources */,
 				1BE890362C118D8E00C88A3A /* UserService.swift in Sources */,
