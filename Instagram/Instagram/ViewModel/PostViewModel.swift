@@ -10,7 +10,7 @@ import Foundation
 struct PostViewModel {
     private let post: Post
     
-    var imageUrl: URL? {
+    var postImageUrl: URL? {
         return URL(string: post.imageUrl)
     }
     
@@ -20,6 +20,14 @@ struct PostViewModel {
     
     var likes: Int {
         return post.likes
+    }
+    
+    var profileImageUrl: URL? {
+        return URL(string: post.postUser?.profileImageUrl ?? "")
+    }
+    
+    var username: String {
+        return post.postUser?.username ?? ""
     }
     
     init(post: Post) {

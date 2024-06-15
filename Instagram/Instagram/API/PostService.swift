@@ -18,7 +18,7 @@ struct PostService {
                                        "timestamp": Timestamp(date: Date()),
                                        "likes": 0,
                                        "imageUrl": imageUrl,
-                                       "ownerUrl": uid]
+                                       "ownerUid": uid]
             
             COLLECTION_POSTS.addDocument(data: data, completion: completion)
         }

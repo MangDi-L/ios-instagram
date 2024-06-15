@@ -27,7 +27,6 @@ final class FeedCell: UICollectionViewCell {
     private lazy var usernameButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitleColor(.black, for: .normal)
-        button.setTitle("venom", for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 13)
         button.addTarget(self, action: #selector(didTapUsername), for: .touchUpInside)
         return button
@@ -135,7 +134,9 @@ final class FeedCell: UICollectionViewCell {
         guard let viewModel = viewModel else { return }
         
         captionLabel.text = viewModel.caption
-        postImageView.sd_setImage(with: viewModel.imageUrl)
+        postImageView.sd_setImage(with: viewModel.postImageUrl)
+        profileImageView.sd_setImage(with: viewModel.profileImageUrl)
+        usernameButton.setTitle(viewModel.username, for: .normal)
     }
     
     private func configureActionButtons() {

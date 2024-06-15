@@ -22,6 +22,11 @@ final class FeedController: UICollectionViewController {
         super.viewDidLoad()
         
         configureUI()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
         fetchPosts()
     }
     
@@ -45,6 +50,19 @@ final class FeedController: UICollectionViewController {
     private func fetchPosts() {
         PostService.fetchPosts { posts in
             self.posts = posts
+            
+            if !posts.isEmpty {
+                for number in 0...posts.count - 1 {
+                    self.fetchPostsUser(post: posts[number], num: number)
+                }
+            }
+            self.collectionView.reloadData()
+        }
+    }
+    
+    private func fetchPostsUser(post: Post, num: Int) {
+        UserService.fetchUser(uid: post.ownerUid) { user in
+            self.posts[num].postUser = user
             self.collectionView.reloadData()
         }
     }

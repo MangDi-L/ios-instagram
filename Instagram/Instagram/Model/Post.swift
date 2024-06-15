@@ -15,6 +15,7 @@ struct Post {
     let ownerUid: String
     let timestamp: Timestamp
     let postId: String
+    var postUser: User?
     
     init(postId: String, dictionary: [String: Any]) {
         self.postId = postId

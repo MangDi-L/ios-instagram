@@ -24,6 +24,20 @@ struct UserService {
         }
     }
     
+    // 36) 강의에 없는 코드.. 직접 추가함
+    static func fetchUser(uid: String, completion: @escaping(User) -> Void) {
+        COLLECTION_USERS.document(uid).getDocument { documentSnapshot, error in
+            if let error = error {
+                print("DEBUG: failed to get userdata")
+            }
+            
+            guard let dictionary = documentSnapshot?.data() else { return }
+            let user = User(dictionary: dictionary)
+            
+            completion(user)
+        }
+    }
+    
     static func fetchUsers(completion: @escaping([User]) -> Void) {
         COLLECTION_USERS.getDocuments { querySnapshot, error in
             guard let snapshot = querySnapshot else { return }
