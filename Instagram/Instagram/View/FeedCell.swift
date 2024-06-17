@@ -137,6 +137,7 @@ final class FeedCell: UICollectionViewCell {
         postImageView.sd_setImage(with: viewModel.postImageUrl)
         profileImageView.sd_setImage(with: viewModel.profileImageUrl)
         usernameButton.setTitle(viewModel.username, for: .normal)
+        likesLabel.text = viewModel.likesLabelText
     }
     
     private func configureActionButtons() {

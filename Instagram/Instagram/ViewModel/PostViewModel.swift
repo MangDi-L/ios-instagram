@@ -22,6 +22,14 @@ struct PostViewModel {
         return post.likes
     }
     
+    var likesLabelText: String {
+        if post.likes != 1 {
+            return"\(post.likes) likes"
+        } else {
+            return"\(post.likes) like"
+        }
+    }
+    
     var profileImageUrl: URL? {
         return URL(string: post.postUser?.profileImageUrl ?? "")
     }
