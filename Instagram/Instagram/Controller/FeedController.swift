@@ -45,6 +45,11 @@ final class FeedController: UICollectionViewController {
         }
     }
     
+    @objc private func handleRefresh() {
+        posts.removeAll()
+        fetchPosts()
+    }
+    
     // MARK: - API
     
     private func fetchPosts() {
@@ -56,6 +61,8 @@ final class FeedController: UICollectionViewController {
                     self.fetchPostsUser(post: posts[number], num: number)
                 }
             }
+            
+            self.collectionView.refreshControl?.endRefreshing()
             self.collectionView.reloadData()
         }
     }
@@ -79,6 +86,11 @@ final class FeedController: UICollectionViewController {
                                                             target: self,
                                                             action: #selector(handleLogout))
         navigationItem.title = "Feed"
+        
+        // 새로고침
+        let refresher = UIRefreshControl()
+        refresher.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
+        collectionView.refreshControl = refresher
     }
 }
 
