@@ -22,11 +22,6 @@ final class FeedController: UICollectionViewController {
         super.viewDidLoad()
         
         configureUI()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
         fetchPosts()
     }
     
@@ -45,7 +40,7 @@ final class FeedController: UICollectionViewController {
         }
     }
     
-    @objc private func handleRefresh() {
+    @objc func handleRefresh() {
         posts.removeAll()
         fetchPosts()
     }
