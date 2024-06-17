@@ -34,5 +34,5 @@ struct User {
 struct UserStats {
     let following: Int
     let followers: Int
-//    let posts: Int
+    let posts: Int
 }
