@@ -32,6 +32,11 @@ final class ProfileController: UICollectionViewController {
         super.viewDidLoad()
         
         configureCollectionView()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
         checkIfUserIsFollowed()
         fetchUserStats()
         fetchPosts()
