@@ -20,7 +20,8 @@ final class CommentController: UICollectionViewController {
     }()
     
     // MARK: - Lifecycle
-
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -64,7 +65,7 @@ extension CommentController {
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? CommentCell ?? CommentCell()
     
         return cell
     }
