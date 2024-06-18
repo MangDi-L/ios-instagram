@@ -11,6 +11,7 @@
 		1B17180F2C1C2D0B00C512C0 /* PostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B17180E2C1C2D0B00C512C0 /* PostViewModel.swift */; };
 		1B1718112C21877900C512C0 /* CommentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B1718102C21877900C512C0 /* CommentController.swift */; };
 		1B1718132C2189CF00C512C0 /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B1718122C2189CF00C512C0 /* CommentCell.swift */; };
+		1B1718152C21A35300C512C0 /* CommentInputAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B1718142C21A35300C512C0 /* CommentInputAccessoryView.swift */; };
 		1B2D974B2C05C1AA009FF8A2 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2D974A2C05C1AA009FF8A2 /* LoginController.swift */; };
 		1B2D974D2C05C1BD009FF8A2 /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2D974C2C05C1BD009FF8A2 /* RegistrationController.swift */; };
 		1B2D974F2C076D2D009FF8A2 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2D974E2C076D2D009FF8A2 /* CustomTextField.swift */; };
@@ -52,6 +53,7 @@
 		1B17180E2C1C2D0B00C512C0 /* PostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewModel.swift; sourceTree = "<group>"; };
 		1B1718102C21877900C512C0 /* CommentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentController.swift; sourceTree = "<group>"; };
 		1B1718122C2189CF00C512C0 /* CommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
+		1B1718142C21A35300C512C0 /* CommentInputAccessoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentInputAccessoryView.swift; sourceTree = "<group>"; };
 		1B2D974A2C05C1AA009FF8A2 /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		1B2D974C2C05C1BD009FF8A2 /* RegistrationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationController.swift; sourceTree = "<group>"; };
 		1B2D974E2C076D2D009FF8A2 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
@@ -169,6 +171,7 @@
 				1BE8903D2C15877D00C88A3A /* UserCell.swift */,
 				1BE890432C199F5300C88A3A /* InputTextView.swift */,
 				1B1718122C2189CF00C512C0 /* CommentCell.swift */,
+				1B1718142C21A35300C512C0 /* CommentInputAccessoryView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -401,6 +404,7 @@
 				1B3306112C0231F90098C653 /* SearchController.swift in Sources */,
 				1BE8903A2C1191CD00C88A3A /* User.swift in Sources */,
 				1B51C4F72C0208B100569B39 /* AppDelegate.swift in Sources */,
+				1B1718152C21A35300C512C0 /* CommentInputAccessoryView.swift in Sources */,
 				1BE8903C2C119B4E00C88A3A /* ProfileHeaderViewModel.swift in Sources */,
 				1BE890442C199F5300C88A3A /* InputTextView.swift in Sources */,
 				1BE890382C118DE200C88A3A /* Constants.swift in Sources */,
