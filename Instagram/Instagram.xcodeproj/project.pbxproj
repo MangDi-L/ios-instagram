@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		1B17180D2C1C218800C512C0 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B17180C2C1C218800C512C0 /* Post.swift */; };
 		1B17180F2C1C2D0B00C512C0 /* PostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B17180E2C1C2D0B00C512C0 /* PostViewModel.swift */; };
+		1B1718112C21877900C512C0 /* CommentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B1718102C21877900C512C0 /* CommentController.swift */; };
+		1B1718132C2189CF00C512C0 /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B1718122C2189CF00C512C0 /* CommentCell.swift */; };
 		1B2D974B2C05C1AA009FF8A2 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2D974A2C05C1AA009FF8A2 /* LoginController.swift */; };
 		1B2D974D2C05C1BD009FF8A2 /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2D974C2C05C1BD009FF8A2 /* RegistrationController.swift */; };
 		1B2D974F2C076D2D009FF8A2 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2D974E2C076D2D009FF8A2 /* CustomTextField.swift */; };
@@ -48,6 +50,8 @@
 /* Begin PBXFileReference section */
 		1B17180C2C1C218800C512C0 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		1B17180E2C1C2D0B00C512C0 /* PostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewModel.swift; sourceTree = "<group>"; };
+		1B1718102C21877900C512C0 /* CommentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentController.swift; sourceTree = "<group>"; };
+		1B1718122C2189CF00C512C0 /* CommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
 		1B2D974A2C05C1AA009FF8A2 /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		1B2D974C2C05C1BD009FF8A2 /* RegistrationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationController.swift; sourceTree = "<group>"; };
 		1B2D974E2C076D2D009FF8A2 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
@@ -140,6 +144,7 @@
 				1B3306142C0232220098C653 /* NotificationController.swift */,
 				1B3306162C0232360098C653 /* ProfileController.swift */,
 				1BE890412C19832E00C88A3A /* UploadPostController.swift */,
+				1B1718102C21877900C512C0 /* CommentController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -163,6 +168,7 @@
 				1B2D974E2C076D2D009FF8A2 /* CustomTextField.swift */,
 				1BE8903D2C15877D00C88A3A /* UserCell.swift */,
 				1BE890432C199F5300C88A3A /* InputTextView.swift */,
+				1B1718122C2189CF00C512C0 /* CommentCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -382,6 +388,7 @@
 				1B17180F2C1C2D0B00C512C0 /* PostViewModel.swift in Sources */,
 				1B2D974F2C076D2D009FF8A2 /* CustomTextField.swift in Sources */,
 				1BE890332C103CD500C88A3A /* ProfileHeader.swift in Sources */,
+				1B1718112C21877900C512C0 /* CommentController.swift in Sources */,
 				1BE890422C19832E00C88A3A /* UploadPostController.swift in Sources */,
 				1B51C4FB2C0208B100569B39 /* ViewController.swift in Sources */,
 				1B2D974B2C05C1AA009FF8A2 /* LoginController.swift in Sources */,
@@ -409,6 +416,7 @@
 				1BE890312C103CBB00C88A3A /* ProfileCell.swift in Sources */,
 				1B51C4F92C0208B100569B39 /* SceneDelegate.swift in Sources */,
 				1B2D974D2C05C1BD009FF8A2 /* RegistrationController.swift in Sources */,
+				1B1718132C2189CF00C512C0 /* CommentCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
