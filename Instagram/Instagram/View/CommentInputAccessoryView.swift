@@ -33,8 +33,7 @@ final class CommentInputAccessoryView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        // 실험
-//        autoresizingMask = .flexibleHeight
+        autoresizingMask = .flexibleHeight
         
         addSubview(postButton)
         postButton.anchor(top: topAnchor, right: rightAnchor, paddingRight: 8)
@@ -55,6 +54,10 @@ final class CommentInputAccessoryView: UIView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override var intrinsicContentSize: CGSize {
+        return .zero
     }
     
     // MARK: - Actions

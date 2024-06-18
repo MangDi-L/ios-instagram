@@ -13,10 +13,9 @@ final class CommentController: UICollectionViewController {
     
     // MARK: - Properties
     
-    private lazy var commtentInputView: CommentInputAccessoryView = {
+    private lazy var commentInputView: CommentInputAccessoryView = {
         let frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 50)
         let view = CommentInputAccessoryView(frame: frame)
-        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
@@ -28,15 +27,13 @@ final class CommentController: UICollectionViewController {
         configureCollectionView()
     }
     
-    // 실험
-//    override var inputAccessoryView: UIView? {
-//        get { return commtentInputView }
-//    }
+    override var inputAccessoryView: UIView? {
+        get { return commentInputView }
+    }
     
-    // 실험
-//    override var canBecomeFirstResponder: Bool {
-//        return true
-//    }
+    override var canBecomeFirstResponder: Bool {
+        return true
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
