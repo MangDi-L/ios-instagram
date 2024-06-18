@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol FeedCellDelegate: AnyObject {
+    func cell(_ cell: FeedCell, wantsToShowCommentsFor post: Post)
+}
+
 final class FeedCell: UICollectionViewCell {
     
     // MARK: - Properties
@@ -14,6 +18,8 @@ final class FeedCell: UICollectionViewCell {
     var viewModel: PostViewModel? {
         didSet { configureUI() }
     }
+    
+    weak var delegate: FeedCellDelegate?
     
     private let profileImageView: UIImageView = {
         let imageView = UIImageView()
@@ -52,6 +58,7 @@ final class FeedCell: UICollectionViewCell {
         let button = UIButton(type: .system)
         button.setImage(#imageLiteral(resourceName: "comment"), for: .normal)
         button.tintColor = .black
+        button.addTarget(self, action: #selector(didTapComment), for: .touchUpInside)
         return button
     }()
     
@@ -126,6 +133,11 @@ final class FeedCell: UICollectionViewCell {
     
     @objc private func didTapUsername() {
         
+    }
+    
+    @objc private func didTapComment() {
+        guard let viewModel = viewModel else { return }
+        delegate?.cell(self, wantsToShowCommentsFor: viewModel.post)
     }
     
     // MARK: - Helpers

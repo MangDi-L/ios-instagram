@@ -8,7 +8,7 @@
 import UIKit
 import Firebase
 
-private let reuseIdentifier = "Cell"
+private let reuseIdentifier = "FeedCell"
 
 final class FeedController: UICollectionViewController {
     
@@ -128,6 +128,7 @@ extension FeedController {
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? FeedCell ?? FeedCell()
+        cell.delegate = self
         cell.viewModel = PostViewModel(post: posts[indexPath.row])
         return cell
     }
@@ -142,5 +143,14 @@ extension FeedController: UICollectionViewDelegateFlowLayout {
         height += 50 // 이미지 바로 밑
         height += 60 // 부수적인것들
         return CGSize(width: width, height: height)
+    }
+}
+
+// MARK: - FeedCellDelegate
+
+extension FeedController: FeedCellDelegate {
+    func cell(_ cell: FeedCell, wantsToShowCommentsFor post: Post) {
+        let controller = CommentController(collectionViewLayout: UICollectionViewLayout())
+        navigationController?.pushViewController(controller, animated: true)
     }
 }
