@@ -16,6 +16,7 @@ final class CommentInputAccessoryView: UIView {
         textView.placeholderText = "Enter comment.."
         textView.font = UIFont.systemFont(ofSize: 15)
         textView.isScrollEnabled = false
+        textView.placeholderShouldCenter = true
         return textView
     }()
     
@@ -42,9 +43,9 @@ final class CommentInputAccessoryView: UIView {
         addSubview(commentTextView)
         commentTextView.translatesAutoresizingMaskIntoConstraints = false
         commentTextView.topAnchor.constraint(equalTo: topAnchor, constant: 8).isActive = true
-        commentTextView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: 8).isActive = true
+        commentTextView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -8).isActive = true
         commentTextView.leftAnchor.constraint(equalTo: leftAnchor, constant: 8).isActive = true
-        commentTextView.rightAnchor.constraint(equalTo: postButton.leftAnchor, constant: 8).isActive = true
+        commentTextView.rightAnchor.constraint(equalTo: postButton.leftAnchor, constant: -8).isActive = true
         
         let divider = UIView()
         divider.backgroundColor = .lightGray
