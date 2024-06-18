@@ -14,7 +14,9 @@ final class FeedController: UICollectionViewController {
     
     // MARK: - Properties
     
-    private var posts: [Post] = []
+    var posts: [Post] = []
+    var isShowProfilePosts: Bool = false
+    var moveToCellIndex: IndexPath = IndexPath()
     
     // MARK: - Lifecycle
 
@@ -22,7 +24,7 @@ final class FeedController: UICollectionViewController {
         super.viewDidLoad()
         
         configureUI()
-        fetchPosts()
+        if isShowProfilePosts { fetchProfilePostsUser() } else { fetchPosts() }
     }
     
     // MARK: - Actions
@@ -41,8 +43,7 @@ final class FeedController: UICollectionViewController {
     }
     
     @objc func handleRefresh() {
-        posts.removeAll()
-        fetchPosts()
+        if isShowProfilePosts { fetchProfilePosts() } else { fetchPosts() }
     }
     
     // MARK: - API
@@ -69,17 +70,46 @@ final class FeedController: UICollectionViewController {
         }
     }
     
+    private func fetchProfilePostsUser() {
+        for number in 0...posts.count - 1 {
+            fetchPostsUser(post: posts[number], num: number)
+        }
+        
+        collectionView.scrollToItem(at: moveToCellIndex, at: .top, animated: false)
+        return
+    }
+    
+    private func fetchProfilePosts() {
+        guard let uid = posts.first?.ownerUid else { return }
+        
+        PostService.fetchPosts(forUser: uid) { posts in
+            self.posts = posts
+            
+            if !posts.isEmpty {
+                for number in 0...posts.count - 1 {
+                    self.fetchPostsUser(post: posts[number], num: number)
+                }
+            }
+            
+            self.collectionView.refreshControl?.endRefreshing()
+            self.collectionView.reloadData()
+        }
+    }
+    
     // MARK: - Helpers
     
     private func configureUI() {
         collectionView.backgroundColor = .white
         collectionView.register(FeedCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         
-        // 로그아웃 버튼
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout",
-                                                            style: .plain,
-                                                            target: self,
-                                                            action: #selector(handleLogout))
+        if !isShowProfilePosts {
+            // 로그아웃 버튼
+            navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout",
+                                                                style: .plain,
+                                                                target: self,
+                                                                action: #selector(handleLogout))
+        }
+        
         navigationItem.title = "Feed"
         
         // 새로고침
