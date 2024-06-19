@@ -73,4 +73,11 @@ final class CommentInputAccessoryView: UIView {
     @objc private func didTapPostButton() {
         delegate?.inputView(self, wantsToUploadComment: commentTextView.text)
     }
+    
+    // MARK: - Helpers
+    
+    func clearCommentTextView() {
+        commentTextView.text = nil
+        commentTextView.placeholderLabel.isHidden = false
+    }
 }

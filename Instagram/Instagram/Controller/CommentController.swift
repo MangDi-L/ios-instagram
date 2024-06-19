@@ -87,6 +87,6 @@ extension CommentController: UICollectionViewDelegateFlowLayout {
 
 extension CommentController: CommentInputAccessoryViewDelegate {
     func inputView(_ inputView: CommentInputAccessoryView, wantsToUploadComment comment: String) {
-        
+        inputView.clearCommentTextView()
     }
 }
