@@ -24,12 +24,18 @@ struct CommentService {
             snapshot?.documentChanges.forEach({ change in
                 if change.type == .added {
                     let data = change.document.data()
-                    let comment = Comment(dictionary: data)
-                    comments.append(comment)
+                    var comment = Comment(dictionary: data)
+                    
+                    UserService.fetchUser(uid: comment.uid) { user in
+                        comment.user = user
+                        comments.append(comment)
+                        
+                        if change == snapshot?.documentChanges.last {
+                            completion(comments)
+                        }
+                    }
                 }
             })
-            
-            completion(comments)
         }
     }
 }
