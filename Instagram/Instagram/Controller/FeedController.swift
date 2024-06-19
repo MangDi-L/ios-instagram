@@ -24,7 +24,7 @@ final class FeedController: UICollectionViewController {
         super.viewDidLoad()
         
         configureUI()
-        if isShowProfilePosts { fetchProfilePostsUser() } else { fetchPosts() }
+        if isShowProfilePosts { moveToPostIndex() } else { fetchPosts() }
     }
     
     // MARK: - Actions
@@ -51,13 +51,6 @@ final class FeedController: UICollectionViewController {
     private func fetchPosts() {
         PostService.fetchPosts { posts in
             self.posts = posts
-            
-            if !posts.isEmpty {
-                for number in 0...posts.count - 1 {
-                    self.fetchPostsUser(post: posts[number], num: number)
-                }
-            }
-            
             self.collectionView.refreshControl?.endRefreshing()
             self.collectionView.reloadData()
         }
@@ -70,13 +63,8 @@ final class FeedController: UICollectionViewController {
         }
     }
     
-    private func fetchProfilePostsUser() {
-        for number in 0...posts.count - 1 {
-            fetchPostsUser(post: posts[number], num: number)
-        }
-        
+    private func moveToPostIndex() {
         collectionView.scrollToItem(at: moveToCellIndex, at: .top, animated: false)
-        return
     }
     
     private func fetchProfilePosts() {
@@ -84,13 +72,6 @@ final class FeedController: UICollectionViewController {
         
         PostService.fetchPosts(forUser: uid) { posts in
             self.posts = posts
-            
-            if !posts.isEmpty {
-                for number in 0...posts.count - 1 {
-                    self.fetchPostsUser(post: posts[number], num: number)
-                }
-            }
-            
             self.collectionView.refreshControl?.endRefreshing()
             self.collectionView.reloadData()
         }
