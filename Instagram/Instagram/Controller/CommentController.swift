@@ -6,12 +6,15 @@
 //
 
 import UIKit
+import Firebase
 
 private let reuseIdentifier = "CommentCell"
 
 final class CommentController: UICollectionViewController {
     
     // MARK: - Properties
+    
+    private let post: Post
     
     private lazy var commentInputView: CommentInputAccessoryView = {
         let frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 50)
@@ -22,6 +25,14 @@ final class CommentController: UICollectionViewController {
     
     // MARK: - Lifecycle
     
+    init(post: Post) {
+        self.post = post
+        super.init(collectionViewLayout: UICollectionViewFlowLayout())
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -87,6 +98,17 @@ extension CommentController: UICollectionViewDelegateFlowLayout {
 
 extension CommentController: CommentInputAccessoryViewDelegate {
     func inputView(_ inputView: CommentInputAccessoryView, wantsToUploadComment comment: String) {
-        inputView.clearCommentTextView()
+        // import Firebase 하고 이거 사용하거나 밑의 코드 사용하거나
+//        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        guard let tab = tabBarController as? MainTabController else { return }
+        guard let user = tab.user else { return }
+        
+        self.showLoader(true)
+        
+        CommentService.uploadComment(comment: comment, postID: post.postId, userID: user.uid) { error in
+            self.showLoader(false)
+            inputView.clearCommentTextView()
+        }
     }
 }
