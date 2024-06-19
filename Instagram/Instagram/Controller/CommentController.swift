@@ -16,6 +16,7 @@ final class CommentController: UICollectionViewController {
     private lazy var commentInputView: CommentInputAccessoryView = {
         let frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 50)
         let view = CommentInputAccessoryView(frame: frame)
+        view.delegate = self
         return view
     }()
     
@@ -29,7 +30,7 @@ final class CommentController: UICollectionViewController {
     }
     
     override var inputAccessoryView: UIView? {
-        get { return commentInputView }
+        return commentInputView
     }
     
     override var canBecomeFirstResponder: Bool {
@@ -79,5 +80,13 @@ extension CommentController {
 extension CommentController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: view.frame.width, height: 80)
+    }
+}
+
+// MARK: - CommentInputAccessoryViewDelegate
+
+extension CommentController: CommentInputAccessoryViewDelegate {
+    func inputView(_ inputView: CommentInputAccessoryView, wantsToUploadComment comment: String) {
+        
     }
 }
