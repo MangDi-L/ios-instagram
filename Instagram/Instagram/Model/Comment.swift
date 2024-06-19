@@ -11,6 +11,7 @@ struct Comment {
     let comment: String
     let timestamp: Timestamp
     let uid: String
+    var user: User?
     
     init(dictionary: [String: Any]) {
         self.comment = dictionary["comment"] as? String ?? ""

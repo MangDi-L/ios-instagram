@@ -92,6 +92,7 @@ extension CommentController {
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? CommentCell ?? CommentCell()
+        cell.viewModel = CommentViewModel(comment: comments[indexPath.row])
     
         return cell
     }
