@@ -24,7 +24,7 @@ struct UserService {
         }
     }
     
-    // 36) 강의에 없는 코드.. 직접 추가함
+    // 36)
     static func fetchUser(uid: String, completion: @escaping(User) -> Void) {
         COLLECTION_USERS.document(uid).getDocument { documentSnapshot, error in
             if let error = error {
