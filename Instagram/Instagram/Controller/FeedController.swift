@@ -144,7 +144,10 @@ extension FeedController: FeedCellDelegate {
                 cell.likeButton.tintColor = .red
             }
         } else {
-            
+            PostService.unlikePost(post: post) { error in
+                cell.likeButton.setImage(UIImage(named: "like_unselected"), for: .normal)
+                cell.likeButton.tintColor = .black
+            }
         }
     }
 }
