@@ -23,7 +23,11 @@ final class CommentCell: UICollectionViewCell {
         return imageView
     }()
     
-    private let commentLabel = UILabel()
+    private let commentLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        return label
+    }()
     
     // MARK: - Lifecycle
     
@@ -39,6 +43,7 @@ final class CommentCell: UICollectionViewCell {
         commentLabel.centerY(inView: profileImageView,
                              leftAnchor: profileImageView.rightAnchor,
                              paddingLeft: 8)
+        commentLabel.anchor(right: rightAnchor, paddingRight: 8)
     }
     
     required init?(coder: NSCoder) {
