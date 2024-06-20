@@ -14,10 +14,7 @@ final class FeedController: UICollectionViewController {
     
     // MARK: - Properties
     
-    // 이거에다가 옵저버 달아줄 생각을 아예 못함;;
-    var posts: [Post] = [] {
-        didSet { collectionView.reloadData() }
-    }
+    var posts: [Post] = []
     var isShowProfilePosts: Bool = false
     var moveToCellIndex: IndexPath = IndexPath()
     
@@ -56,6 +53,7 @@ final class FeedController: UICollectionViewController {
             self.posts = posts
             self.collectionView.refreshControl?.endRefreshing()
             self.checkIfUserLikedPosts()
+            self.collectionView.reloadData()
         }
     }
     
@@ -65,6 +63,7 @@ final class FeedController: UICollectionViewController {
         PostService.fetchPosts(forUser: uid) { posts in
             self.posts = posts
             self.collectionView.refreshControl?.endRefreshing()
+            self.collectionView.reloadData()
         }
     }
     
@@ -74,6 +73,7 @@ final class FeedController: UICollectionViewController {
                 // 이 클로저로 넘어오는 포스트는 무조건 like한 포스트만 넘어온다
                 if let index = self.posts.firstIndex(where: { $0.postId == post.postId }) {
                     self.posts[index].didLike = didLike
+                    self.collectionView.reloadData()
                 }
             }
         }
