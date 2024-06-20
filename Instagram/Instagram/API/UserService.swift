@@ -74,6 +74,7 @@ struct UserService {
         }
     }
     
+    // 프로필에 표시할 팔로워, 팔로잉, 포스트 갖고오기
     static func fetchUserStats(uid: String, completion: @escaping(UserStats) -> Void) {
         COLLECTION_FOLLOWERS.document(uid).collection("user-followers").getDocuments { snapshot, error in
             let followers = snapshot?.documents.count ?? 0

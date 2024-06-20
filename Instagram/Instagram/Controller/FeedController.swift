@@ -139,7 +139,10 @@ extension FeedController: FeedCellDelegate {
         cell.viewModel?.post.didLike.toggle()
         
         if post.didLike {
-            
+            PostService.likePost(post: post) { error in
+                cell.likeButton.setImage(UIImage(named: "like_selected"), for: .normal)
+                cell.likeButton.tintColor = .red
+            }
         } else {
             
         }

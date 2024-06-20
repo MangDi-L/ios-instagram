@@ -48,7 +48,7 @@ final class FeedCell: UICollectionViewCell {
         return imageView
     }()
     
-    private lazy var likeButton: UIButton = {
+    lazy var likeButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(#imageLiteral(resourceName: "like_unselected"), for: .normal)
         button.tintColor = .black
