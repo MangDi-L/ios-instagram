@@ -14,7 +14,10 @@ final class FeedController: UICollectionViewController {
     
     // MARK: - Properties
     
-    var posts: [Post] = []
+    // 이거에다가 옵저버 달아줄 생각을 아예 못함;;
+    var posts: [Post] = [] {
+        didSet { collectionView.reloadData() }
+    }
     var isShowProfilePosts: Bool = false
     var moveToCellIndex: IndexPath = IndexPath()
     
@@ -52,19 +55,8 @@ final class FeedController: UICollectionViewController {
         PostService.fetchPosts { posts in
             self.posts = posts
             self.collectionView.refreshControl?.endRefreshing()
-            self.collectionView.reloadData()
+            self.checkIfUserLikedPosts()
         }
-    }
-    
-    private func fetchPostsUser(post: Post, num: Int) {
-        UserService.fetchUser(uid: post.ownerUid) { user in
-            self.posts[num].postUser = user
-            self.collectionView.reloadData()
-        }
-    }
-    
-    private func moveToPostIndex() {
-        collectionView.scrollToItem(at: moveToCellIndex, at: .top, animated: false)
     }
     
     private func fetchProfilePosts() {
@@ -73,7 +65,17 @@ final class FeedController: UICollectionViewController {
         PostService.fetchPosts(forUser: uid) { posts in
             self.posts = posts
             self.collectionView.refreshControl?.endRefreshing()
-            self.collectionView.reloadData()
+        }
+    }
+    
+    private func checkIfUserLikedPosts() {
+        posts.forEach { post in
+            PostService.checkIfUserLikedPost(post: post) { didLike in
+                // 이 클로저로 넘어오는 포스트는 무조건 like한 포스트만 넘어온다
+                if let index = self.posts.firstIndex(where: { $0.postId == post.postId }) {
+                    self.posts[index].didLike = didLike
+                }
+            }
         }
     }
     
@@ -97,6 +99,10 @@ final class FeedController: UICollectionViewController {
         let refresher = UIRefreshControl()
         refresher.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
         collectionView.refreshControl = refresher
+    }
+    
+    private func moveToPostIndex() {
+        collectionView.scrollToItem(at: moveToCellIndex, at: .top, animated: false)
     }
 }
 
@@ -139,14 +145,16 @@ extension FeedController: FeedCellDelegate {
         cell.viewModel?.post.didLike.toggle()
         
         if post.didLike {
-            PostService.likePost(post: post) { error in
-                cell.likeButton.setImage(UIImage(named: "like_selected"), for: .normal)
-                cell.likeButton.tintColor = .red
-            }
-        } else {
             PostService.unlikePost(post: post) { error in
                 cell.likeButton.setImage(UIImage(named: "like_unselected"), for: .normal)
                 cell.likeButton.tintColor = .black
+                cell.viewModel?.post.likes = post.likes - 1
+            }
+        } else {
+            PostService.likePost(post: post) { error in
+                cell.likeButton.setImage(UIImage(named: "like_selected"), for: .normal)
+                cell.likeButton.tintColor = .red
+                cell.viewModel?.post.likes = post.likes + 1
             }
         }
     }
