@@ -7,7 +7,11 @@
 
 import Firebase
 
-struct Comment {
+struct Comment: Equatable {
+    static func == (lhs: Comment, rhs: Comment) -> Bool {
+        return lhs.comment == rhs.comment && lhs.timestamp == rhs.timestamp && lhs.uid == rhs.uid
+    }
+    
     let comment: String
     let timestamp: Timestamp
     let uid: String

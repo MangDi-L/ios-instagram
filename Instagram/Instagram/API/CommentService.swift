@@ -25,17 +25,19 @@ struct CommentService {
                 if change.type == .added {
                     let data = change.document.data()
                     var comment = Comment(dictionary: data)
-                    
-                    UserService.fetchUser(uid: comment.uid) { user in
-                        comment.user = user
-                        comments.append(comment)
-                        
-                        if change == snapshot?.documentChanges.last {
-                            completion(comments)
-                        }
-                    }
+                    comments.append(comment)
                 }
             })
+            
+            for (num, comment) in comments.enumerated() {
+                UserService.fetchUser(uid: comment.uid) { user in
+                    comments[num].user = user
+                    
+                    if comment == comments.last {
+                        completion(comments)
+                    }
+                }
+            }
         }
     }
 }
