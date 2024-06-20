@@ -136,6 +136,12 @@ extension FeedController: FeedCellDelegate {
     }
     
     func cell(_ cell: FeedCell, didLike post: Post) {
+        cell.viewModel?.post.didLike.toggle()
         
+        if post.didLike {
+            
+        } else {
+            
+        }
     }
 }

@@ -8,7 +8,7 @@
 import Foundation
 
 struct PostViewModel {
-    let post: Post
+    var post: Post
     
     var postImageUrl: URL? {
         return URL(string: post.imageUrl)

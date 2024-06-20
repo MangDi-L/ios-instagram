@@ -16,6 +16,7 @@ struct Post {
     let timestamp: Timestamp
     let postId: String
     var postUser: User?
+    var didLike = false
     
     init(postId: String, dictionary: [String: Any]) {
         self.postId = postId
