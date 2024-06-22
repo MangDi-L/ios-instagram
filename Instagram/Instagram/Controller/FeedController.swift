@@ -71,7 +71,6 @@ final class FeedController: UICollectionViewController {
     private func checkIfUserLikedPosts() {
         posts.forEach { post in
             PostService.checkIfUserLikedPost(post: post) { didLike in
-                // 이 클로저로 넘어오는 포스트는 무조건 like한 포스트만 넘어온다
                 if let index = self.posts.firstIndex(where: { $0.postId == post.postId }) {
                     self.posts[index].didLike = didLike
                     self.collectionView.reloadData()
@@ -159,5 +158,10 @@ extension FeedController: FeedCellDelegate {
                 cell.viewModel?.post.likes = post.likes + 1
             }
         }
+    }
+    
+    func cell(_ cell: FeedCell, wantsToShowProfileFor user: User) {
+        let controller = ProfileController(user: user)
+        navigationController?.pushViewController(controller, animated: true)
     }
 }
