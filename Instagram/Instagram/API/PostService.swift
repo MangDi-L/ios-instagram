@@ -26,7 +26,7 @@ struct PostService {
     
     // 피드컨트롤러에서 모든 유저의 포스트내역 가져오는 코드
     static func fetchPosts(completion: @escaping([Post]) -> Void) {
-        COLLECTION_POSTS.order(by: "timestamp", descending: true).getDocuments { snapshot, error in
+        COLLECTION_POSTS.getDocuments { snapshot, error in
             guard let documents = snapshot?.documents else { return }
             var posts: [Post] = []
             
@@ -39,6 +39,9 @@ struct PostService {
                     posts.append(post)
                     
                     if documentSnapshot == documents.last {
+                        posts.sort { post1, post2 in
+                            return post1.timestamp.seconds > post2.timestamp.seconds
+                        }
                         completion(posts)
                     }
                 }
