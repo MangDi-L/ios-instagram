@@ -63,6 +63,7 @@ final class FeedController: UICollectionViewController {
         PostService.fetchPosts(forUser: uid) { posts in
             self.posts = posts
             self.collectionView.refreshControl?.endRefreshing()
+            self.checkIfUserLikedPosts()
             self.collectionView.reloadData()
         }
     }
@@ -102,6 +103,7 @@ final class FeedController: UICollectionViewController {
     }
     
     private func moveToPostIndex() {
+        checkIfUserLikedPosts()
         collectionView.scrollToItem(at: moveToCellIndex, at: .top, animated: false)
     }
 }
