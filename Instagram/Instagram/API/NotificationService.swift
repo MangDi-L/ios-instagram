@@ -28,4 +28,19 @@ struct NotificationService {
         
         docRef.setData(data)
     }
+    
+    static func fetchNotifications(completion: @escaping([Notification]) -> Void) {
+        guard let currentUid = Auth.auth().currentUser?.uid else { return }
+        
+        COLLECTION_NOTIFICATIONS.document(currentUid).collection("user-notifications").getDocuments { snapshot, _ in
+            guard let documents = snapshot?.documents else { return }
+            var notifications = documents.map { Notification(dictionary: $0.data()) }
+            
+            notifications.sort { noti1, noti2 in
+                return noti1.timestamp.seconds > noti2.timestamp.seconds
+            }
+            
+            completion(notifications)
+        }
+    }
 }
