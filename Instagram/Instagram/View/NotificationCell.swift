@@ -7,6 +7,12 @@
 
 import UIKit
 
+protocol NotificationCellDelegate: AnyObject {
+    func cell(_ cell: NotificationCell, wansToFollow uid: String)
+    func cell(_ cell: NotificationCell, wantsToUnfollow uid: String)
+    func cell(_ cell: NotificationCell, wantsToViewPost post: Post)
+}
+
 final class NotificationCell: UITableViewCell {
     
     // MARK: - Properties
@@ -14,6 +20,8 @@ final class NotificationCell: UITableViewCell {
     var viewModel: NotificationViewModel? {
         didSet { configureUI() }
     }
+    
+    weak var delegate: NotificationCellDelegate?
     
     private let profileImageView: UIImageView = {
         let imageView = UIImageView()
@@ -92,7 +100,9 @@ final class NotificationCell: UITableViewCell {
     }
     
     @objc private func handlePostImageTapped() {
-        
+        guard let viewModel = viewModel,
+              let post = viewModel.notification.post else { return }
+        delegate?.cell(self, wantsToViewPost: post)
     }
     
     // MARK: - Helpers

@@ -56,6 +56,31 @@ extension NotificationController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as? NotificationCell ?? NotificationCell()
         cell.viewModel = NotificationViewModel(notification: notifications[indexPath.row])
+        cell.delegate = self
         return cell
+    }
+}
+
+// MARK: - UITableViewDelegate
+
+extension NotificationController {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+    }
+}
+
+// MARK: - NotificationCellDelegate
+
+extension NotificationController: NotificationCellDelegate {
+    func cell(_ cell: NotificationCell, wansToFollow uid: String) {
+        
+    }
+    
+    func cell(_ cell: NotificationCell, wantsToUnfollow uid: String) {
+        
+    }
+    
+    func cell(_ cell: NotificationCell, wantsToViewPost post: Post) {
+        
     }
 }
