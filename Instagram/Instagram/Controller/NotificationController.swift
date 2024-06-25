@@ -81,6 +81,10 @@ extension NotificationController: NotificationCellDelegate {
     }
     
     func cell(_ cell: NotificationCell, wantsToViewPost post: Post) {
-        
+        guard let tab = tabBarController as? MainTabController else { return }
+        guard let currentUser = tab.user else { return }
+        let profileController = ProfileController(user: currentUser)
+        navigationController?.pushViewController(profileController, animated: true)
+        profileController.moveToFeedControllerFromNotificationPost(postId: post.postId)
     }
 }

@@ -39,7 +39,7 @@ final class ProfileController: UICollectionViewController {
         
         checkIfUserIsFollowed()
         fetchUserStats()
-        fetchPosts()
+        fetchPosts { }
     }
     
     // MARK: - API
@@ -58,10 +58,11 @@ final class ProfileController: UICollectionViewController {
         }
     }
     
-    private func fetchPosts() {
+    private func fetchPosts(completion: @escaping() -> Void) {
         PostService.fetchPosts(forUser: user.uid) { posts in
             self.posts = posts
             self.collectionView.reloadData()
+            completion()
         }
     }
     
@@ -75,6 +76,24 @@ final class ProfileController: UICollectionViewController {
         collectionView.register(ProfileHeader.self,
                                 forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
                                 withReuseIdentifier: headerIdentifier)
+    }
+    
+    func moveToFeedControllerFromNotificationPost(postId: String) {
+        fetchPosts {
+            let controller = FeedController(collectionViewLayout: UICollectionViewFlowLayout())
+            
+            controller.isShowProfilePosts = true
+            controller.posts = self.posts
+            
+            let index = self.posts.firstIndex { post in
+                return post.postId == postId
+            }
+            
+            guard let index = index else { return }
+            
+            controller.moveToCellIndex = IndexPath(row: index, section: 0)
+            self.navigationController?.pushViewController(controller, animated: true)
+        }
     }
 }
 
