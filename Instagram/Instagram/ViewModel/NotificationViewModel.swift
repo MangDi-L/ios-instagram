@@ -15,15 +15,15 @@ struct NotificationViewModel {
     }
     
     var postImageUrl: URL? {
-        return URL(string: notification.postImageUrl ?? "")
+        return URL(string: notification.post?.imageUrl ?? "")
     }
     
     var profileImageUrl: URL? {
-        return URL(string: notification.userProfileImageUrl)
+        return URL(string: notification.user?.profileImageUrl ?? "")
     }
     
     var notificationMessage: NSAttributedString {
-        let username = notification.username
+        guard let username = notification.user?.username else { return NSAttributedString(string: "") }
         let message = notification.type.notificationMessage
         
         let attributedText = NSMutableAttributedString(string: username,

@@ -80,6 +80,15 @@ struct PostService {
             }
     }
     
+    static func fetchPost(id: String, completion: @escaping(Post) -> Void) {
+        COLLECTION_POSTS.document(id).getDocument { snapshot, _ in
+            guard let document = snapshot,
+                  let data = document.data() else { return }
+            let post = Post(postId: document.documentID, dictionary: data)
+            completion(post)
+        }
+    }
+    
     static func likePost(post: Post, completion: @escaping(FirestoreCompletion)) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         COLLECTION_POSTS.document(post.postId).updateData(["likes": post.likes + 1])

@@ -161,7 +161,7 @@ extension FeedController: FeedCellDelegate {
                 cell.viewModel?.post.likes = post.likes + 1
                 
                 guard let postUser = post.postUser else { return }
-                NotificationService.uploadNotification(toUid: post.ownerUid, fromUser: currentUser,
+                NotificationService.uploadNotification(toUid: post.ownerUid, fromUid: currentUser.uid,
                                                        type: .like, post: post)
             }
         }

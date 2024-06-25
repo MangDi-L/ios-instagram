@@ -8,7 +8,7 @@
 import Firebase
 
 struct NotificationService {
-    static func uploadNotification(toUid uid: String, fromUser: User,
+    static func uploadNotification(toUid uid: String, fromUid: String,
                                    type: NotificationType, post: Post? = nil) {
         guard let currentUid = Auth.auth().currentUser?.uid else { return }
         // 자기 자신에겐 알림 보내지 않기
@@ -18,32 +18,74 @@ struct NotificationService {
         let docRef = COLLECTION_NOTIFICATIONS.document(uid).collection("user-notifications").document()
         
         var data: [String: Any] = ["timestamp": Timestamp(date: Date()),
-                                   "uid": fromUser.uid,
+                                   "uid": fromUid,
                                    "type": type.rawValue,
-                                   "id": docRef.documentID,
-                                   "userProfileImageUrl": fromUser.profileImageUrl,
-                                   "username": fromUser.username]
+                                   "id": docRef.documentID]
         
         if let post = post {
             data["postId"] = post.postId
-            data["postImageUrl"] = post.imageUrl
         }
         
         docRef.setData(data)
     }
     
+    // 모든 알림 가저오기
     static func fetchNotifications(completion: @escaping([Notification]) -> Void) {
         guard let currentUid = Auth.auth().currentUser?.uid else { return }
         
         COLLECTION_NOTIFICATIONS.document(currentUid).collection("user-notifications").getDocuments { snapshot, _ in
             guard let documents = snapshot?.documents else { return }
-            var notifications = documents.map { Notification(dictionary: $0.data()) }
+            var notifications: [Notification] = []
             
-            notifications.sort { noti1, noti2 in
-                return noti1.timestamp.seconds > noti2.timestamp.seconds
+            documents.forEach { document in
+                var notification = Notification(dictionary: document.data())
+                
+                // 모든 알림은 상대방의 유저 정보를 가지고 있음
+                UserService.fetchUser(uid: notification.uid) { user in
+                    notification.user = user
+                    notifications.append(notification)
+                    
+                    if document == documents.last {
+                        notifications.sort { noti1, noti2 in
+                            return noti1.timestamp.seconds > noti2.timestamp.seconds
+                        }
+                        
+                        // follow을 제외한 like, comment 타입의 알림은 Post를 받아오도록
+                        fetchNotificationWithPost(notifications: notifications) { notifications in
+                            completion(notifications)
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    static func fetchNotificationWithPost(notifications: [Notification], completion: @escaping([Notification]) -> Void) {
+        var notifications: [Notification] = notifications
+        var indexes: [Int] = []
+        var countIndex: Int = 0
+        
+        for (index, notification) in notifications.enumerated() {
+            if notification.type != .follow {
+                indexes.append(index)
             }
             
-            completion(notifications)
+            // 모든 알림의 타입이 follow인경우 completion호출
+            if index == notifications.count - 1 && indexes.isEmpty {
+                completion(notifications)
+            }
+        }
+        
+        for index in indexes {
+            guard let postId = notifications[index].postId else { return }
+            PostService.fetchPost(id: postId) { post in
+                notifications[index].post = post
+                countIndex += 1
+                
+                if countIndex == indexes.count {
+                    completion(notifications)
+                }
+            }
         }
     }
 }
