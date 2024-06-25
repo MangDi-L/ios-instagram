@@ -46,12 +46,13 @@ struct NotificationService {
                     notifications.append(notification)
                     
                     if document == documents.last {
-                        notifications.sort { noti1, noti2 in
-                            return noti1.timestamp.seconds > noti2.timestamp.seconds
-                        }
                         
                         // follow을 제외한 like, comment 타입의 알림은 Post를 받아오도록
-                        fetchNotificationWithPost(notifications: notifications) { notifications in
+                        fetchNotificationWithPost(notifications: notifications) { noties in
+                            notifications = noties
+                            notifications.sort { noti1, noti2 in
+                                return noti1.timestamp.seconds > noti2.timestamp.seconds
+                            }
                             completion(notifications)
                         }
                     }

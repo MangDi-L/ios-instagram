@@ -34,7 +34,7 @@ struct Notification {
     var post: Post?
     
     init(dictionary: [String: Any]) {
-        self.timestamp = dictionary["Timestamp"] as? Timestamp ?? Timestamp(date: Date())
+        self.timestamp = dictionary["timestamp"] as? Timestamp ?? Timestamp(date: Date())
         self.id = dictionary["id"] as? String ?? ""
         self.uid = dictionary["uid"] as? String ?? ""
         self.postId = dictionary["postId"] as? String ?? ""
