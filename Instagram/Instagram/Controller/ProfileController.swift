@@ -137,7 +137,11 @@ extension ProfileController: UICollectionViewDelegateFlowLayout {
 
 extension ProfileController: ProfileHeaderDelegate {
     func header(_ profileHeader: ProfileHeader, didTapActionButtonFor user: User) {
+        guard let tab = tabBarController as? MainTabController else { return }
+        guard let currentUser = tab.user else { return }
+        
         if user.isCurrentUser {
+            // 프로필 편집버튼 누를시
             
         } else if user.isFollowed {
             UserService.unfollow(uid: user.uid) { error in
@@ -148,6 +152,10 @@ extension ProfileController: ProfileHeaderDelegate {
             UserService.follow(uid: user.uid) { error in
                 self.user.isFollowed = true
                 self.fetchUserStats()
+                
+                NotificationService.uploadNotification(toUid: user.uid,
+                                                       fromUid: currentUser.uid,
+                                                       type: .follow)
             }
         }
     }
