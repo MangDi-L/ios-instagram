@@ -24,6 +24,12 @@ enum NotificationType: Int {
     }
 }
 
+enum NotificationFollowType {
+    case loading
+    case follow
+    case unfollow
+}
+
 struct Notification {
     let uid: String
     var postId: String?
@@ -32,7 +38,8 @@ struct Notification {
     let id: String
     var user: User?
     var post: Post?
-    var isUserFollowed = false
+//    var isUserFollowed = false
+    var isUserFollowed = NotificationFollowType.loading
     
     init(dictionary: [String: Any]) {
         self.timestamp = dictionary["timestamp"] as? Timestamp ?? Timestamp(date: Date())

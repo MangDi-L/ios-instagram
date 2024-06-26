@@ -46,14 +46,35 @@ struct NotificationViewModel {
     }
     
     var followButtonText: String {
-        return notification.isUserFollowed ? "Following" : "Follow"
+        switch notification.isUserFollowed {
+        case .loading:
+            return "Loading"
+        case .follow:
+            return "Following"
+        case .unfollow:
+            return "Follow"
+        }
     }
     
     var followButtonBackgroundColor: UIColor {
-        return notification.isUserFollowed ? .white : .systemBlue
+        switch notification.isUserFollowed {
+        case .loading:
+            return .systemGray6
+        case .follow:
+            return .white
+        case .unfollow:
+            return .systemBlue
+        }
     }
     
     var followButtonTextColor: UIColor {
-        return notification.isUserFollowed ? .black : .white
+        switch notification.isUserFollowed {
+        case .loading:
+            return .systemOrange
+        case .follow:
+            return .black
+        case .unfollow:
+            return .white
+        }
     }
 }

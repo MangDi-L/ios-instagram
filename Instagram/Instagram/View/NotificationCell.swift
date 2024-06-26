@@ -107,9 +107,12 @@ final class NotificationCell: UITableViewCell {
     @objc private func handleFollowTapped() {
         guard let viewModel = viewModel else { return }
         
-        if viewModel.notification.isUserFollowed {
+        switch viewModel.notification.isUserFollowed {
+        case .loading:
+            return
+        case .follow:
             delegate?.cell(self, wantsToUnfollow: viewModel.notification.uid)
-        } else {
+        case .unfollow:
             delegate?.cell(self, wansToFollow: viewModel.notification.uid)
         }
     }

@@ -46,7 +46,7 @@ final class NotificationController: UITableViewController {
             
             UserService.checkIfUserIsFollowed(uid: notification.uid) { isFollowed in
                 if let index = self.notifications.firstIndex(where: { $0.id == notification.id }) {
-                    self.notifications[index].isUserFollowed = isFollowed
+                    self.notifications[index].isUserFollowed = isFollowed ? .follow : .unfollow
                 }
             }
         }
@@ -84,13 +84,13 @@ extension NotificationController {
 extension NotificationController: NotificationCellDelegate {
     func cell(_ cell: NotificationCell, wansToFollow uid: String) {
         UserService.follow(uid: uid) { _ in
-            cell.viewModel?.notification.isUserFollowed.toggle()
+            cell.viewModel?.notification.isUserFollowed = .follow
         }
     }
     
     func cell(_ cell: NotificationCell, wantsToUnfollow uid: String) {
         UserService.unfollow(uid: uid) { _ in
-            cell.viewModel?.notification.isUserFollowed.toggle()
+            cell.viewModel?.notification.isUserFollowed = .unfollow
         }
     }
     
