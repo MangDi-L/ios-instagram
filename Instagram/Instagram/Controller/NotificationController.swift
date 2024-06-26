@@ -23,6 +23,11 @@ final class NotificationController: UITableViewController {
         super.viewDidLoad()
         
         configureTableView()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
         fetchNotifications()
     }
     
@@ -86,11 +91,15 @@ extension NotificationController {
 
 extension NotificationController: NotificationCellDelegate {
     func cell(_ cell: NotificationCell, wansToFollow uid: String) {
-        
+        UserService.follow(uid: uid) { _ in
+            cell.viewModel?.notification.isUserFollowed.toggle()
+        }
     }
     
     func cell(_ cell: NotificationCell, wantsToUnfollow uid: String) {
-        
+        UserService.unfollow(uid: uid) { _ in
+            cell.viewModel?.notification.isUserFollowed.toggle()
+        }
     }
     
     func cell(_ cell: NotificationCell, wantsToViewPost post: Post) {

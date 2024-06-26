@@ -23,12 +23,14 @@ final class NotificationCell: UITableViewCell {
     
     weak var delegate: NotificationCellDelegate?
     
-    private let profileImageView: UIImageView = {
+    private lazy var profileImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.backgroundColor = .lightGray
-        imageView.image = #imageLiteral(resourceName: "venom-7")
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleProfileImageTapped))
+        imageView.addGestureRecognizer(tap)
+        imageView.isUserInteractionEnabled = true
         return imageView
     }()
     
@@ -46,7 +48,7 @@ final class NotificationCell: UITableViewCell {
         let tap = UITapGestureRecognizer(target: self, action: #selector(handlePostImageTapped))
         imageView.addGestureRecognizer(tap)
         imageView.isUserInteractionEnabled = true
-        imageView.backgroundColor = .systemBlue
+        imageView.backgroundColor = .systemGray
         return imageView
     }()
     
@@ -95,8 +97,18 @@ final class NotificationCell: UITableViewCell {
     
     // MARK: - Actions
     
-    @objc private func handleFollowTapped() {
+    @objc private func handleProfileImageTapped() {
         
+    }
+    
+    @objc private func handleFollowTapped() {
+        guard let viewModel = viewModel else { return }
+        
+        if viewModel.notification.isUserFollowed {
+            delegate?.cell(self, wantsToUnfollow: viewModel.notification.uid)
+        } else {
+            delegate?.cell(self, wansToFollow: viewModel.notification.uid)
+        }
     }
     
     @objc private func handlePostImageTapped() {
