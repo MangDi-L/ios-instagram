@@ -44,4 +44,16 @@ struct NotificationViewModel {
     var shouldHideFollowButton: Bool {
         return notification.type != .follow
     }
+    
+    var followButtonText: String {
+        return notification.isUserFollowed ? "Following" : "Follow"
+    }
+    
+    var followButtonBackgroundColor: UIColor {
+        return notification.isUserFollowed ? .white : .systemBlue
+    }
+    
+    var followButtonTextColor: UIColor {
+        return notification.isUserFollowed ? .black : .white
+    }
 }

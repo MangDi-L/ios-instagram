@@ -32,6 +32,7 @@ struct Notification {
     let id: String
     var user: User?
     var post: Post?
+    var isUserFollowed = false
     
     init(dictionary: [String: Any]) {
         self.timestamp = dictionary["timestamp"] as? Timestamp ?? Timestamp(date: Date())

@@ -116,5 +116,9 @@ final class NotificationCell: UITableViewCell {
         
         followButton.isHidden = viewModel.shouldHideFollowButton
         postImageView.isHidden = viewModel.shouldHidePostImage
+        
+        followButton.setTitle(viewModel.followButtonText, for: .normal)
+        followButton.backgroundColor = viewModel.followButtonBackgroundColor
+        followButton.setTitleColor(viewModel.followButtonTextColor, for: .normal)
     }
 }

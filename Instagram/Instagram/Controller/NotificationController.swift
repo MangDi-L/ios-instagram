@@ -31,6 +31,19 @@ final class NotificationController: UITableViewController {
     private func fetchNotifications() {
         NotificationService.fetchNotifications { notifications in
             self.notifications = notifications
+            self.checkIfUserIsFollowed()
+        }
+    }
+    
+    private func checkIfUserIsFollowed() {
+        notifications.forEach { notification in
+            guard notification.type == .follow else { return }
+            
+            UserService.checkIfUserIsFollowed(uid: notification.uid) { isFollowed in
+                if let index = self.notifications.firstIndex(where: { $0.id == notification.id }) {
+                    self.notifications[index].isUserFollowed = isFollowed
+                }
+            }
         }
     }
     
