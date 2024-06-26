@@ -11,6 +11,7 @@ protocol NotificationCellDelegate: AnyObject {
     func cell(_ cell: NotificationCell, wansToFollow uid: String)
     func cell(_ cell: NotificationCell, wantsToUnfollow uid: String)
     func cell(_ cell: NotificationCell, wantsToViewPost post: Post)
+    func cell(_ cell: NotificationCell, wantsToProfile user: User)
 }
 
 final class NotificationCell: UITableViewCell {
@@ -98,7 +99,9 @@ final class NotificationCell: UITableViewCell {
     // MARK: - Actions
     
     @objc private func handleProfileImageTapped() {
+        guard let user = viewModel?.notification.user else { return }
         
+        delegate?.cell(self, wantsToProfile: user)
     }
     
     @objc private func handleFollowTapped() {

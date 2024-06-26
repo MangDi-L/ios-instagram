@@ -79,14 +79,6 @@ extension NotificationController {
     }
 }
 
-// MARK: - UITableViewDelegate
-
-extension NotificationController {
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-    }
-}
-
 // MARK: - NotificationCellDelegate
 
 extension NotificationController: NotificationCellDelegate {
@@ -108,5 +100,10 @@ extension NotificationController: NotificationCellDelegate {
         let profileController = ProfileController(user: currentUser)
         navigationController?.pushViewController(profileController, animated: true)
         profileController.moveToFeedControllerFromNotificationPost(postId: post.postId)
+    }
+    
+    func cell(_ cell: NotificationCell, wantsToProfile user: User) {
+        let profileController = ProfileController(user: user)
+        navigationController?.pushViewController(profileController, animated: true)
     }
 }
