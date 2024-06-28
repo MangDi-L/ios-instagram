@@ -95,13 +95,19 @@ extension NotificationController {
 
 extension NotificationController: NotificationCellDelegate {
     func cell(_ cell: NotificationCell, wansToFollow uid: String) {
+        showLoader(true)
+        
         UserService.follow(uid: uid) { _ in
+            self.showLoader(false)
             cell.viewModel?.notification.isUserFollowed = .follow
         }
     }
     
     func cell(_ cell: NotificationCell, wantsToUnfollow uid: String) {
+        showLoader(true)
+        
         UserService.unfollow(uid: uid) { _ in
+            self.showLoader(false)
             cell.viewModel?.notification.isUserFollowed = .unfollow
         }
     }
