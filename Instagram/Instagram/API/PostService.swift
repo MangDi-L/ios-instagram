@@ -31,18 +31,20 @@ struct PostService {
             var posts: [Post] = []
             
             // 모든 포스트들에 유저정보 넣는 작업
-            documents.forEach { documentSnapshot in
-                var post = Post(postId: documentSnapshot.documentID, dictionary: documentSnapshot.data())
+            documents.forEach { document in
+                var post = Post(postId: document.documentID, dictionary: document.data())
+                posts.append(post)
                 
-                UserService.fetchUser(uid: post.ownerUid) { user in
-                    post.postUser = user
-                    posts.append(post)
+                if document == documents.last {
+                    posts.sort { post1, post2 in
+                        return post1.timestamp.seconds > post2.timestamp.seconds
+                    }
                     
-                    if documentSnapshot == documents.last {
-                        posts.sort { post1, post2 in
-                            return post1.timestamp.seconds > post2.timestamp.seconds
+                    for (index, post) in posts.enumerated() {
+                        UserService.fetchUser(uid: post.ownerUid) { user in
+                            posts[index].postUser = user
+                            completion(posts)
                         }
-                        completion(posts)
                     }
                 }
             }
