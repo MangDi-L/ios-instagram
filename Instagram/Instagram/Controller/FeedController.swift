@@ -56,11 +56,17 @@ final class FeedController: UICollectionViewController {
 //            self.collectionView.reloadData()
 //        }
         
-        PostService.fetchUserFeedPosts { posts in
-            self.posts = posts
-            self.collectionView.refreshControl?.endRefreshing()
-            self.checkIfUserLikedPosts()
-            self.collectionView.reloadData()
+        PostService.fetchUserFeedPosts { result in
+            switch result {
+            case .success(let posts):
+                self.posts = posts
+                self.collectionView.refreshControl?.endRefreshing()
+                self.checkIfUserLikedPosts()
+                self.collectionView.reloadData()
+            case .failure(let failure):
+                print(failure.rawValue)
+                self.collectionView.refreshControl?.endRefreshing()
+            }
         }
     }
     

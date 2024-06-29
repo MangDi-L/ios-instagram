@@ -9,6 +9,10 @@ import UIKit
 import Firebase
 import FirebaseFirestoreInternal
 
+enum PostServiceError: String, Error {
+    case contentsEmpty = "The received contents do not exist."
+}
+
 struct PostService {
     static func uploadPost(caption: String, image: UIImage, completion: @escaping(FirestoreCompletion)) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
@@ -120,12 +124,16 @@ struct PostService {
         }
     }
     
-    static func fetchUserFeedPosts(completion: @escaping([Post]) -> Void) {
+    static func fetchUserFeedPosts(completion: @escaping(Result<[Post], PostServiceError>) -> Void) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         var posts: [Post] = []
         
         COLLECTION_USERS.document(uid).collection("user-feed").getDocuments { snapshot, error in
             guard let documents = snapshot?.documents else { return }
+            
+            if documents.isEmpty {
+                completion(.failure(.contentsEmpty))
+            }
             
             for (index, document) in documents.enumerated() {
                 fetchPost(id: document.documentID) { post in
@@ -133,7 +141,7 @@ struct PostService {
                     
                     UserService.fetchUser(uid: post.ownerUid) { user in
                         posts[index].postUser = user
-                        completion(posts)
+                        completion(.success(posts))
                     }
                 }
             }
