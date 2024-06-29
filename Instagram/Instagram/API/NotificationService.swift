@@ -79,7 +79,7 @@ struct NotificationService {
         
         for index in indexes {
             guard let postId = notifications[index].postId else { return }
-            PostService.fetchPost(id: postId) { post in
+            PostService.fetchPost(id: postId, isNeedPostUser: false) { post in
                 notifications[index].post = post
                 countIndex += 1
                 

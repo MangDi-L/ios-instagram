@@ -88,12 +88,20 @@ struct PostService {
             }
     }
     
-    static func fetchPost(id: String, completion: @escaping(Post) -> Void) {
+    static func fetchPost(id: String, isNeedPostUser: Bool, completion: @escaping(Post) -> Void) {
         COLLECTION_POSTS.document(id).getDocument { snapshot, _ in
             guard let document = snapshot,
                   let data = document.data() else { return }
-            let post = Post(postId: document.documentID, dictionary: data)
-            completion(post)
+            var post = Post(postId: document.documentID, dictionary: data)
+            
+            if isNeedPostUser {
+                UserService.fetchUser(uid: post.ownerUid) { user in
+                    post.postUser = user
+                    completion(post)
+                }
+            } else {
+                completion(post)
+            }
         }
     }
     
@@ -138,13 +146,9 @@ struct PostService {
             }
             
             for (index, document) in documents.enumerated() {
-                fetchPost(id: document.documentID) { post in
+                fetchPost(id: document.documentID, isNeedPostUser: true) { post in
                     posts.append(post)
-                    
-                    UserService.fetchUser(uid: post.ownerUid) { user in
-                        posts[index].postUser = user
-                        completion(.success(posts))
-                    }
+                    completion(.success(posts))
                 }
             }
         }
