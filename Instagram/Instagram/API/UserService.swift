@@ -91,10 +91,10 @@ struct UserService {
     }
     
     // 팔로우 이후 user-feed 컬렉션의 내용 업데이트
-    static func updateUserFeedAfterFollowing(user: User, didFollow: Bool) {
-        guard let uid = Auth.auth().currentUser?.uid else { return }
+    static func updateUserFeedAfterFollowing(opponentUid: String, didFollow: Bool) {
+        guard let myUid = Auth.auth().currentUser?.uid else { return }
         
-        let query = COLLECTION_POSTS.whereField("ownerUid", isEqualTo: user.uid)
+        let query = COLLECTION_POSTS.whereField("ownerUid", isEqualTo: opponentUid)
         query.getDocuments { snapshot, error in
             guard let documents = snapshot?.documents else { return }
             
@@ -102,9 +102,9 @@ struct UserService {
             
             docIDs.forEach { id in
                 if didFollow {
-                    COLLECTION_USERS.document(uid).collection("user-feed").document(id).setData([:])
+                    COLLECTION_USERS.document(myUid).collection("user-feed").document(id).setData([:])
                 } else {
-                    COLLECTION_USERS.document(uid).collection("user-feed").document(id).delete()
+                    COLLECTION_USERS.document(myUid).collection("user-feed").document(id).delete()
                 }
             }
         }

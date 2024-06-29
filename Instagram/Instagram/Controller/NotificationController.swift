@@ -100,6 +100,8 @@ extension NotificationController: NotificationCellDelegate {
         UserService.follow(uid: uid) { _ in
             self.showLoader(false)
             cell.viewModel?.notification.isUserFollowed = .follow
+            
+            UserService.updateUserFeedAfterFollowing(opponentUid: uid, didFollow: true)
         }
     }
     
@@ -109,6 +111,8 @@ extension NotificationController: NotificationCellDelegate {
         UserService.unfollow(uid: uid) { _ in
             self.showLoader(false)
             cell.viewModel?.notification.isUserFollowed = .unfollow
+            
+            UserService.updateUserFeedAfterFollowing(opponentUid: uid, didFollow: false)
         }
     }
     
