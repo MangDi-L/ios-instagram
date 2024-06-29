@@ -109,4 +109,23 @@ struct UserService {
             }
         }
     }
+    
+    // 자신을 팔로우 한 상대방에게 내가 게시글을 올릴때마다 갱신될수있도록 그리고 내 게시글도 볼수있도록
+    // 66) 이 부분은 비효율적이며 서버에서 처리할내용을 클라이언트가 처리할 경우의 코드다. 자세한 내용은 결제...
+    static func updateUserFeedAfterPost(postId: String) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        // 날 팔로우 하는사람들의 목록을 가지고
+        COLLECTION_FOLLOWERS.document(uid).collection("user-followers").getDocuments { snapshot, error in
+            guard let documents = snapshot?.documents else { return }
+            
+            // 날 팔로우 하는사람들의 user-feed 항목에 postID를 넣는다.
+            documents.forEach { document in
+                COLLECTION_USERS.document(document.documentID).collection("user-feed").document(postId).setData([:])
+            }
+            
+            // 내 user-feed에 내가 추가한 postId를 넣는다.
+            COLLECTION_USERS.document(uid).collection("user-feed").document(postId).setData([:])
+        }
+    }
 }
