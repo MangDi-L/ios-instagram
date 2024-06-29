@@ -91,7 +91,7 @@ struct UserService {
     }
     
     // 팔로우 이후 user-feed 컬렉션의 내용 업데이트
-    static func updateUserFeedAfterFollowing(user: User) {
+    static func updateUserFeedAfterFollowing(user: User, didFollow: Bool) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
         let query = COLLECTION_POSTS.whereField("ownerUid", isEqualTo: user.uid)
@@ -101,7 +101,11 @@ struct UserService {
             let docIDs = documents.map { $0.documentID }
             
             docIDs.forEach { id in
-                COLLECTION_USERS.document(uid).collection("user-feed").document(id).setData([:])
+                if didFollow {
+                    COLLECTION_USERS.document(uid).collection("user-feed").document(id).setData([:])
+                } else {
+                    COLLECTION_USERS.document(uid).collection("user-feed").document(id).delete()
+                }
             }
         }
     }

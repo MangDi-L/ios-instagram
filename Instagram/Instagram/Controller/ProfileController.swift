@@ -166,6 +166,8 @@ extension ProfileController: ProfileHeaderDelegate {
             UserService.unfollow(uid: user.uid) { error in
                 self.user.isFollowed = false
                 self.fetchUserStats()
+                
+                UserService.updateUserFeedAfterFollowing(user: user, didFollow: false)
             }
         } else {
             UserService.follow(uid: user.uid) { error in
@@ -176,7 +178,7 @@ extension ProfileController: ProfileHeaderDelegate {
                                                        fromUid: currentUser.uid,
                                                        type: .follow)
                 
-                UserService.updateUserFeedAfterFollowing(user: user)
+                UserService.updateUserFeedAfterFollowing(user: user, didFollow: true)
             }
         }
     }
