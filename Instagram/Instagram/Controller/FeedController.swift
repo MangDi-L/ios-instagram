@@ -60,6 +60,7 @@ final class FeedController: UICollectionViewController {
             switch result {
             case .success(let posts):
                 self.posts = posts
+                self.sortingPosts()
                 self.collectionView.refreshControl?.endRefreshing()
                 self.checkIfUserLikedPosts()
                 self.collectionView.reloadData()
@@ -117,6 +118,12 @@ final class FeedController: UICollectionViewController {
     private func moveToPostIndex() {
         checkIfUserLikedPosts()
         collectionView.scrollToItem(at: moveToCellIndex, at: .top, animated: false)
+    }
+    
+    private func sortingPosts() {
+        posts.sort { post1, post2 in
+            return post1.timestamp.seconds < post2.timestamp.seconds
+        }
     }
 }
 
