@@ -119,4 +119,24 @@ struct PostService {
             completion(didLike)
         }
     }
+    
+    static func fetchUserFeedPosts(completion: @escaping([Post]) -> Void) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        var posts: [Post] = []
+        
+        COLLECTION_USERS.document(uid).collection("user-feed").getDocuments { snapshot, error in
+            guard let documents = snapshot?.documents else { return }
+            
+            for (index, document) in documents.enumerated() {
+                fetchPost(id: document.documentID) { post in
+                    posts.append(post)
+                    
+                    UserService.fetchUser(uid: post.ownerUid) { user in
+                        posts[index].postUser = user
+                        completion(posts)
+                    }
+                }
+            }
+        }
+    }
 }

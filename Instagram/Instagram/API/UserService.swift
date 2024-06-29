@@ -89,4 +89,20 @@ struct UserService {
             }
         }
     }
+    
+    // 팔로우 이후 user-feed 컬렉션의 내용 업데이트
+    static func updateUserFeedAfterFollowing(user: User) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        let query = COLLECTION_POSTS.whereField("ownerUid", isEqualTo: user.uid)
+        query.getDocuments { snapshot, error in
+            guard let documents = snapshot?.documents else { return }
+            
+            let docIDs = documents.map { $0.documentID }
+            
+            docIDs.forEach { id in
+                COLLECTION_USERS.document(uid).collection("user-feed").document(id).setData([:])
+            }
+        }
+    }
 }
