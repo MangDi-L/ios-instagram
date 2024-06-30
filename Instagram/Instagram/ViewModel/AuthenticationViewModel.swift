@@ -53,6 +53,4 @@ struct RegistrationViewModel: AuthenticationViewModel {
     var buttonTitleColor: UIColor {
         return formIsValid ? .white : UIColor(white: 1, alpha: 0.67)
     }
-    
-    
 }

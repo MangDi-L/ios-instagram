@@ -49,9 +49,10 @@ final class LoginController: UIViewController {
         return button
     }()
     
-    private let forgotPasswordButton: UIButton = {
+    private lazy var forgotPasswordButton: UIButton = {
         let button = UIButton(type: .system)
         button.attributedTitle(firstPart: "forgot your password?", secondPart: "Get help signing in.")
+        button.addTarget(self, action: #selector(handleShowResetPassword), for: .touchUpInside)
         return button
     }()
     
@@ -102,6 +103,11 @@ final class LoginController: UIViewController {
         }
         
         updateForm()
+    }
+    
+    @objc private func handleShowResetPassword() {
+        let controller = ResetPasswordController()
+        navigationController?.pushViewController(controller, animated: true)
     }
     
     // MARK: - Helpers
