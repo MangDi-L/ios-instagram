@@ -22,6 +22,14 @@ struct NotificationViewModel {
         return URL(string: notification.user?.profileImageUrl ?? "")
     }
     
+    var timestampString: String? {
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = [.second, .minute, .hour, .weekOfMonth]
+        formatter.maximumUnitCount = 1
+        formatter.unitsStyle = .abbreviated
+        return formatter.string(from: notification.timestamp.dateValue(), to: Date())
+    }
+    
     var notificationMessage: NSAttributedString {
         guard let username = notification.user?.username else { return NSAttributedString(string: "") }
         let message = notification.type.notificationMessage
@@ -30,7 +38,7 @@ struct NotificationViewModel {
                                                        attributes: [.font: UIFont.boldSystemFont(ofSize: 14)])
         attributedText.append(NSAttributedString(string: message,
                                                  attributes: [.font: UIFont.systemFont(ofSize: 14)]))
-        attributedText.append(NSAttributedString(string: "  2m",
+        attributedText.append(NSAttributedString(string: " \(timestampString ?? "")",
                                                  attributes: [.font: UIFont.systemFont(ofSize: 14),
                                                               .foregroundColor: UIColor.lightGray]))
         
