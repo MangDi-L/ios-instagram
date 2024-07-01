@@ -95,11 +95,18 @@ extension NotificationController {
 
 extension NotificationController: NotificationCellDelegate {
     func cell(_ cell: NotificationCell, wansToFollow uid: String) {
+        guard let tab = tabBarController as? MainTabController else { return }
+        guard let currentUser = tab.user else { return }
+        
         showLoader(true)
         
         UserService.follow(uid: uid) { _ in
             self.showLoader(false)
             cell.viewModel?.notification.isUserFollowed = .follow
+            
+            NotificationService.uploadNotification(toUid: uid,
+                                                   fromUid: currentUser.uid,
+                                                   type: .follow)
             
             UserService.updateUserFeedAfterFollowing(opponentUid: uid, didFollow: true)
         }
