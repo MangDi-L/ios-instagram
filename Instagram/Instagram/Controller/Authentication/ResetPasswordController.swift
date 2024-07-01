@@ -16,8 +16,8 @@ final class ResetPasswordController: UIViewController {
     // MARK: - Properties
     
     private var viewModel = ResetPasswordViewModel()
-    
     weak var delegate: ResetPasswordControllerDelegate?
+    var email: String?
     
     private let emailTextField = CustomTextField(placeholder: "Email")
     
@@ -91,6 +91,12 @@ final class ResetPasswordController: UIViewController {
     
     private func configureUI() {
         configureGradientLayer()
+        
+        if let email = email {
+            emailTextField.text = email
+            viewModel.email = email
+            updateForm()
+        }
         
         emailTextField.addTarget(self, action: #selector(textDidChange), for: .editingChanged)
         
