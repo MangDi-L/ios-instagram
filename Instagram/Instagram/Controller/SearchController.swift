@@ -43,6 +43,7 @@ final class SearchController: UIViewController {
         configureSearchController()
         configureUI()
         fetchUsers()
+        fetchPosts()
     }
     
     // MARK: - API
@@ -54,10 +55,20 @@ final class SearchController: UIViewController {
         }
     }
     
+    private func fetchPosts() {
+        PostService.fetchPosts { posts in
+            self.posts = posts
+            self.collectionView.refreshControl?.endRefreshing()
+//            self.checkIfUserLikedPosts()
+            self.collectionView.reloadData()
+        }
+    }
+    
     // MARK: - Helpers
     
     private func configureUI() {
         view.backgroundColor = .systemBackground
+        navigationItem.title = "Explore"
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -113,12 +124,12 @@ extension SearchController: UITableViewDelegate {
 
 extension SearchController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 25
+        return posts.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: postCellIdentifier, for: indexPath) as? ProfileCell ?? ProfileCell()
-//        cell.viewModel = PostViewModel(post: posts[indexPath.row])
+        cell.viewModel = PostViewModel(post: posts[indexPath.row])
         return cell
     }
 }
@@ -126,7 +137,13 @@ extension SearchController: UICollectionViewDataSource {
 // MARK: - UICollectionViewDelegate
 
 extension SearchController: UICollectionViewDelegate {
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let controller = FeedController(collectionViewLayout: UICollectionViewFlowLayout())
+        controller.isShowProfilePosts = true
+        controller.posts = posts
+        controller.moveToCellIndex = indexPath
+        navigationController?.pushViewController(controller, animated: true)
+    }
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout

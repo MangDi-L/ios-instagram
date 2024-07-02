@@ -122,7 +122,7 @@ final class FeedController: UICollectionViewController {
     
     private func sortingPosts() {
         posts.sort { post1, post2 in
-            return post1.timestamp.seconds < post2.timestamp.seconds
+            return post1.timestamp.seconds > post2.timestamp.seconds
         }
     }
 }
