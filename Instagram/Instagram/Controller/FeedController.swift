@@ -140,7 +140,9 @@ final class FeedController: UICollectionViewController {
     
     private func moveToPostIndex() {
         checkIfUserLikedPosts()
-        collectionView.scrollToItem(at: moveToCellIndex, at: .top, animated: false)
+        DispatchQueue.main.async {
+            self.collectionView.scrollToItem(at: self.moveToCellIndex, at: .top, animated: false)
+        }
     }
     
     private func sortingPosts() {
