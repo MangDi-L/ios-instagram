@@ -170,10 +170,16 @@ extension SearchController: UISearchBarDelegate {
 extension SearchController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         guard let searchText = searchController.searchBar.text?.lowercased() else { return }
-        filteredUsers = users.filter {
-            $0.username.lowercased().contains(searchText) ||
-            $0.fullname.lowercased().contains(searchText)
+        
+        if searchText.isEmpty {
+            filteredUsers = users
+        } else {
+            filteredUsers = users.filter {
+                $0.username.lowercased().contains(searchText) ||
+                $0.fullname.lowercased().contains(searchText)
+            }
         }
+        
         tableView.reloadData()
     }
 }
