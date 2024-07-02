@@ -7,14 +7,17 @@
 
 import UIKit
 
+private let reuseIdentifier = "UserCell"
+private let postCellIdentifier = "ProfileCell"
+
 final class SearchController: UIViewController {
     
     // MARK: - Properties
     
     private let tableView = UITableView()
-    private let reuseIdentifier = "UserCell"
     private var users: [User] = []
     private var filteredUsers: [User] = []
+    private var posts: [Post] = []
     private let searchController = UISearchController(searchResultsController: nil)
     
     private var inSearchMode: Bool {
@@ -22,13 +25,23 @@ final class SearchController: UIViewController {
         return searchController.isActive && ((searchController.searchBar.text?.isEmpty) != nil)
     }
     
+    private lazy var collectionView: UICollectionView = {
+        let layout = UICollectionViewLayout()
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.backgroundColor = .systemBackground
+        collectionView.register(ProfileCell.self, forCellWithReuseIdentifier: postCellIdentifier)
+        return collectionView
+    }()
+    
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         configureSearchController()
-        configureTableView()
+        configureUI()
         fetchUsers()
     }
     
@@ -43,7 +56,7 @@ final class SearchController: UIViewController {
     
     // MARK: - Helpers
     
-    private func configureTableView() {
+    private func configureUI() {
         view.backgroundColor = .systemBackground
         
         tableView.delegate = self
@@ -53,6 +66,11 @@ final class SearchController: UIViewController {
         
         view.addSubview(tableView)
         tableView.fillSuperview()
+        tableView.isHidden = true
+        
+        view.addSubview(collectionView)
+        collectionView.fillSuperview()
+        collectionView.isHidden = false
     }
     
     private func configureSearchController() {
@@ -60,6 +78,7 @@ final class SearchController: UIViewController {
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.searchBar.placeholder = "Search"
+        searchController.searchBar.delegate = self
         navigationItem.searchController = searchController
         definesPresentationContext = false
     }
@@ -87,6 +106,62 @@ extension SearchController: UITableViewDelegate {
         let user = inSearchMode ? filteredUsers[indexPath.row] : users[indexPath.row]
         let controller = ProfileController(user: user)
         navigationController?.pushViewController(controller, animated: true)
+    }
+}
+
+// MARK: - UICollectionViewDataSource
+
+extension SearchController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 25
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: postCellIdentifier, for: indexPath) as? ProfileCell ?? ProfileCell()
+//        cell.viewModel = PostViewModel(post: posts[indexPath.row])
+        return cell
+    }
+}
+
+// MARK: - UICollectionViewDelegate
+
+extension SearchController: UICollectionViewDelegate {
+    
+}
+
+// MARK: - UICollectionViewDelegateFlowLayout
+
+extension SearchController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width = (view.frame.width - 2) / 3
+        return CGSize(width: width, height: width)
+    }
+}
+
+// MARK: - UISearchBarDelegate
+
+extension SearchController: UISearchBarDelegate {
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        searchBar.showsCancelButton = true
+        collectionView.isHidden = true
+        tableView.isHidden = false
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.endEditing(true)
+        searchBar.showsCancelButton = false
+        searchBar.text = nil
+        
+        collectionView.isHidden = false
+        tableView.isHidden = true
     }
 }
 
