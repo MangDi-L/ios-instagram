@@ -139,7 +139,7 @@ extension SearchController: UICollectionViewDataSource {
 extension SearchController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let controller = FeedController(collectionViewLayout: UICollectionViewFlowLayout())
-        controller.isShowProfilePosts = true
+        controller.feedType = .search
         controller.posts = posts
         controller.moveToCellIndex = indexPath
         navigationController?.pushViewController(controller, animated: true)

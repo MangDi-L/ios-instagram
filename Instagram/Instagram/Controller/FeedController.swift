@@ -10,12 +10,18 @@ import Firebase
 
 private let reuseIdentifier = "FeedCell"
 
+enum FeedType {
+    case basic
+    case profile
+    case search
+}
+
 final class FeedController: UICollectionViewController {
     
     // MARK: - Properties
     
     var posts: [Post] = []
-    var isShowProfilePosts: Bool = false
+    var feedType: FeedType = .basic
     var moveToCellIndex: IndexPath = IndexPath()
     
     // MARK: - Lifecycle
@@ -24,7 +30,15 @@ final class FeedController: UICollectionViewController {
         super.viewDidLoad()
         
         configureUI()
-        if isShowProfilePosts { moveToPostIndex() } else { fetchPosts() }
+        
+        switch feedType {
+        case .basic:
+            fetchPosts()
+        case .profile:
+            moveToPostIndex()
+        case .search:
+            moveToPostIndex()
+        }
     }
     
     // MARK: - Actions
@@ -43,19 +57,19 @@ final class FeedController: UICollectionViewController {
     }
     
     @objc func handleRefresh() {
-        if isShowProfilePosts { fetchProfilePosts() } else { fetchPosts() }
+        switch feedType {
+        case .basic:
+            fetchPosts()
+        case .profile:
+            fetchProfilePosts()
+        case .search:
+            fetchSearchPosts()
+        }
     }
     
     // MARK: - API
     
     private func fetchPosts() {
-//        PostService.fetchPosts { posts in
-//            self.posts = posts
-//            self.collectionView.refreshControl?.endRefreshing()
-//            self.checkIfUserLikedPosts()
-//            self.collectionView.reloadData()
-//        }
-        
         PostService.fetchUserFeedPosts { result in
             switch result {
             case .success(let posts):
@@ -82,6 +96,15 @@ final class FeedController: UICollectionViewController {
         }
     }
     
+    private func fetchSearchPosts() {
+        PostService.fetchPosts { posts in
+            self.posts = posts
+            self.collectionView.refreshControl?.endRefreshing()
+            self.checkIfUserLikedPosts()
+            self.collectionView.reloadData()
+        }
+    }
+    
     private func checkIfUserLikedPosts() {
         posts.forEach { post in
             PostService.checkIfUserLikedPost(post: post) { didLike in
@@ -99,7 +122,7 @@ final class FeedController: UICollectionViewController {
         collectionView.backgroundColor = .white
         collectionView.register(FeedCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         
-        if !isShowProfilePosts {
+        if feedType == .basic {
             // 로그아웃 버튼
             navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout",
                                                                 style: .plain,

@@ -82,7 +82,7 @@ final class ProfileController: UICollectionViewController {
         fetchPosts {
             let controller = FeedController(collectionViewLayout: UICollectionViewFlowLayout())
             
-            controller.isShowProfilePosts = true
+            controller.feedType = .profile
             controller.posts = self.posts
             
             let index = self.posts.firstIndex { post in
@@ -124,7 +124,7 @@ extension ProfileController {
 extension ProfileController {
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let controller = FeedController(collectionViewLayout: UICollectionViewFlowLayout())
-        controller.isShowProfilePosts = true
+        controller.feedType = .profile
         controller.posts = posts
         controller.moveToCellIndex = indexPath
         navigationController?.pushViewController(controller, animated: true)
