@@ -7,9 +7,11 @@
 
 import UIKit
 
-final class SearchController: UITableViewController {
+final class SearchController: UIViewController {
     
     // MARK: - Properties
+    
+    private let tableView = UITableView()
     private let reuseIdentifier = "UserCell"
     private var users: [User] = []
     private var filteredUsers: [User] = []
@@ -44,8 +46,13 @@ final class SearchController: UITableViewController {
     private func configureTableView() {
         view.backgroundColor = .systemBackground
         
+        tableView.delegate = self
+        tableView.dataSource = self
         tableView.register(UserCell.self, forCellReuseIdentifier: reuseIdentifier)
         tableView.rowHeight = 64
+        
+        view.addSubview(tableView)
+        tableView.fillSuperview()
     }
     
     private func configureSearchController() {
@@ -60,12 +67,12 @@ final class SearchController: UITableViewController {
 
 // MARK: - UITableViewDataSource
 
-extension SearchController {
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+extension SearchController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return inSearchMode ? filteredUsers.count : users.count
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as? UserCell ?? UserCell()
         
         let user = inSearchMode ? filteredUsers[indexPath.row] : users[indexPath.row]
@@ -75,8 +82,8 @@ extension SearchController {
 }
 
 // MARK: - UITableViewDelegate
-extension SearchController {
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+extension SearchController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let user = inSearchMode ? filteredUsers[indexPath.row] : users[indexPath.row]
         let controller = ProfileController(user: user)
         navigationController?.pushViewController(controller, animated: true)

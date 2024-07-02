@@ -51,7 +51,7 @@ struct NotificationService {
                         fetchNotificationWithPost(notifications: notifications) { noties in
                             notifications = noties
                             notifications.sort { noti1, noti2 in
-                                return noti1.timestamp.seconds > noti2.timestamp.seconds
+                                return noti1.timestamp.seconds < noti2.timestamp.seconds
                             }
                             completion(notifications)
                         }
