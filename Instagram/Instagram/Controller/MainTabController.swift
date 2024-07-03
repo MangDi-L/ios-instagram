@@ -157,4 +157,8 @@ extension MainTabController: UploadPostControllerDelegate {
         guard let feed = feedNav.viewControllers.first as? FeedController else { return }
         feed.handleRefresh()
     }
+    
+    func controllerDidCanceledUploadingPost() {
+        selectedIndex = 0
+    }
 }

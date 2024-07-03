@@ -9,6 +9,7 @@ import UIKit
 
 protocol UploadPostControllerDelegate: AnyObject {
     func controllerDidFinishUploadingPost(_ controller: UploadPostController)
+    func controllerDidCanceledUploadingPost()
 }
 
 final class UploadPostController: UIViewController {
@@ -57,6 +58,7 @@ final class UploadPostController: UIViewController {
     // MARK: - Actions
     
     @objc private func didTapCancel() {
+        delegate?.controllerDidCanceledUploadingPost()
         dismiss(animated: true)
     }
     
