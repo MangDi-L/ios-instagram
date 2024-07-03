@@ -13,6 +13,15 @@ final class ProfileEditController: UIViewController {
 
     // MARK: - Properties
     
+    var user: User? {
+        didSet {
+            cellCounts = 2
+            profileImageView.sd_setImage(with: URL(string: user?.profileImageUrl ?? ""))
+        }
+    }
+    
+    var cellCounts: Int = 0
+    
     private let profileImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
@@ -72,16 +81,18 @@ final class ProfileEditController: UIViewController {
 
 extension ProfileEditController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return cellCounts
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as? ProfileEditCell ?? ProfileEditCell()
         
+        guard let user = user else { return ProfileEditCell() }
+        
         if indexPath == IndexPath(row: 0, section: 0) {
-            cell.configureLabels(name: "Name", inputName: "asdf")
+            cell.configureLabels(name: "Name", inputName: user.fullname)
         } else if indexPath == IndexPath(row: 1, section: 0) {
-            cell.configureLabels(name: "Username", inputName: "ffff")
+            cell.configureLabels(name: "Username", inputName: user.username)
         }
         
         return cell

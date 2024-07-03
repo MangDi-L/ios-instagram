@@ -162,6 +162,7 @@ extension ProfileController: ProfileHeaderDelegate {
         if user.isCurrentUser {
             // 프로필 편집버튼 누를시
             let profileEditController = ProfileEditController()
+            profileEditController.user = user
             navigationController?.pushViewController(profileEditController, animated: true)
         } else if user.isFollowed {
             UserService.unfollow(uid: user.uid) { error in
