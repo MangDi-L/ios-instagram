@@ -7,6 +7,8 @@
 
 import UIKit
 
+private let reuseIdentifier = "ProfileEditCell"
+
 final class ProfileEditController: UIViewController {
 
     // MARK: - Properties
@@ -27,8 +29,11 @@ final class ProfileEditController: UIViewController {
         return button
     }()
     
-    private let tableView: UITableView = {
+    private lazy var tableView: UITableView = {
         let tableView = UITableView()
+        tableView.rowHeight = 40
+        tableView.register(ProfileEditCell.self, forCellReuseIdentifier: reuseIdentifier)
+        tableView.dataSource = self
         return tableView
     }()
     
@@ -62,5 +67,23 @@ final class ProfileEditController: UIViewController {
         tableView.anchor(top: profileImageChangeButton.bottomAnchor, left: view.leftAnchor,
                          bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor,
                          paddingTop: 16)
+    }
+}
+
+extension ProfileEditController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 2
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as? ProfileEditCell ?? ProfileEditCell()
+        
+        if indexPath == IndexPath(row: 0, section: 0) {
+            cell.configureLabels(name: "Name", inputName: "asdf")
+        } else if indexPath == IndexPath(row: 1, section: 0) {
+            cell.configureLabels(name: "Username", inputName: "ffff")
+        }
+        
+        return cell
     }
 }
