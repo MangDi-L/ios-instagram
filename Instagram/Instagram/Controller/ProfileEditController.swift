@@ -31,7 +31,7 @@ final class ProfileEditController: UIViewController {
         return imageView
     }()
     
-    private let profileImageChangeButton: UIButton = {
+    private lazy var profileImageChangeButton: UIButton = {
         let button = UIButton()
         button.setTitle("Change Profile Photo", for: .normal)
         button.setTitleColor(.systemBlue, for: .normal)
@@ -106,8 +106,15 @@ final class ProfileEditController: UIViewController {
             
             // 자연스런 화면이동을 위해 animated는 false로 설정
             picker.dismiss(animated: false) {
-                guard let selectedImage = items.singlePhoto?.image else { return }
-                self.profileImageView.image = selectedImage
+                guard let selectedImage = items.singlePhoto?.image,
+                      let user = self.user else { return }
+                
+                self.showLoader(true)
+                
+                UserService.updateUserProfileImage(user: user, image: selectedImage) { error in
+                    self.showLoader(false)
+                    self.profileImageView.image = selectedImage
+                }
             }
         }
     }

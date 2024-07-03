@@ -128,4 +128,13 @@ struct UserService {
             COLLECTION_USERS.document(uid).collection("user-feed").document(postId).setData([:])
         }
     }
+    
+    static func updateUserProfileImage(user: User, image: UIImage, completion: @escaping(Error?) -> Void) {
+        ImageUploader.uploadImage(image: image) { imageUrl in
+            var user = user
+            user.profileImageUrl = imageUrl
+            let dictionary = user.dictionary
+            COLLECTION_USERS.document(user.uid).updateData(dictionary, completion: completion)
+        }
+    }
 }

@@ -19,6 +19,13 @@ struct User {
     var isCurrentUser: Bool {
         return Auth.auth().currentUser?.uid == uid
     }
+    var dictionary: [String: Any] {
+        return ["email": email,
+                "fullname": fullname,
+                "profileImageUrl": profileImageUrl,
+                "uid": uid,
+                "username": username]
+    }
     
     var stats: UserStats?
     
