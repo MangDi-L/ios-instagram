@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import YPImagePicker
 
 private let reuseIdentifier = "ProfileEditCell"
 
@@ -35,6 +36,7 @@ final class ProfileEditController: UIViewController {
         button.setTitle("Change Profile Photo", for: .normal)
         button.setTitleColor(.systemBlue, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        button.addTarget(self, action: #selector(handleEdit), for: .touchUpInside)
         return button
     }()
     
@@ -55,6 +57,23 @@ final class ProfileEditController: UIViewController {
     }
     
     // MARK: - Actions
+    
+    @objc private func handleEdit() {
+        var config = YPImagePickerConfiguration()
+        config.library.mediaType = .photo
+        config.shouldSaveNewPicturesToAlbum = false
+        config.startOnScreen = .library
+        config.screens = [.library]
+        config.hidesStatusBar = false
+        config.hidesBottomBar = false
+        config.library.maxNumberOfItems = 1
+        
+        let picker = YPImagePicker(configuration: config)
+        picker.modalPresentationStyle = .fullScreen
+        present(picker, animated: true)
+        
+        didFinishPickingMedia(picker)
+    }
     
     // MARK: - Helpers
     
@@ -77,6 +96,21 @@ final class ProfileEditController: UIViewController {
                          bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor,
                          paddingTop: 16)
     }
+    
+    private func didFinishPickingMedia(_ picker: YPImagePicker) {
+        picker.didFinishPicking { items, cancelled in
+            if cancelled {
+                self.dismiss(animated: true)
+                return
+            }
+            
+            // 자연스런 화면이동을 위해 animated는 false로 설정
+            picker.dismiss(animated: false) {
+                guard let selectedImage = items.singlePhoto?.image else { return }
+                self.profileImageView.image = selectedImage
+            }
+        }
+    }
 }
 
 extension ProfileEditController: UITableViewDataSource {
@@ -98,3 +132,9 @@ extension ProfileEditController: UITableViewDataSource {
         return cell
     }
 }
+
+//extension ProfileEditController: UITableViewDelegate {
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        
+//    }
+//}
