@@ -163,6 +163,7 @@ extension ProfileController: ProfileHeaderDelegate {
             // 프로필 편집버튼 누를시
             let profileEditController = ProfileEditController()
             profileEditController.user = user
+            profileEditController.delegate = self
             navigationController?.pushViewController(profileEditController, animated: true)
         } else if user.isFollowed {
             UserService.unfollow(uid: user.uid) { error in
@@ -183,5 +184,12 @@ extension ProfileController: ProfileHeaderDelegate {
                 UserService.updateUserFeedAfterFollowing(opponentUid: user.uid, didFollow: true)
             }
         }
+    }
+}
+
+extension ProfileController: ProfileEditControllerDelegate {
+    func profileImageChanged(user: User) {
+        self.user = user
+        self.collectionView.reloadData()
     }
 }

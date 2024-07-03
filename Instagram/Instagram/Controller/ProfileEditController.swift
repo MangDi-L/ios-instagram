@@ -10,6 +10,10 @@ import YPImagePicker
 
 private let reuseIdentifier = "ProfileEditCell"
 
+protocol ProfileEditControllerDelegate: AnyObject {
+    func profileImageChanged(user: User)
+}
+
 final class ProfileEditController: UIViewController {
 
     // MARK: - Properties
@@ -21,6 +25,7 @@ final class ProfileEditController: UIViewController {
         }
     }
     
+    var delegate: ProfileEditControllerDelegate?
     var cellCounts: Int = 0
     
     private let profileImageView: UIImageView = {
@@ -111,9 +116,10 @@ final class ProfileEditController: UIViewController {
                 
                 self.showLoader(true)
                 
-                UserService.updateUserProfileImage(user: user, image: selectedImage) { error in
+                UserService.updateUserProfileImage(user: user, image: selectedImage) { user in
                     self.showLoader(false)
                     self.profileImageView.image = selectedImage
+                    self.delegate?.profileImageChanged(user: user)
                 }
             }
         }

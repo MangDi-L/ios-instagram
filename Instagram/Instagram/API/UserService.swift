@@ -129,12 +129,14 @@ struct UserService {
         }
     }
     
-    static func updateUserProfileImage(user: User, image: UIImage, completion: @escaping(Error?) -> Void) {
+    static func updateUserProfileImage(user: User, image: UIImage, completion: @escaping(User) -> Void) {
         ImageUploader.uploadImage(image: image) { imageUrl in
             var user = user
             user.profileImageUrl = imageUrl
             let dictionary = user.dictionary
-            COLLECTION_USERS.document(user.uid).updateData(dictionary, completion: completion)
+            COLLECTION_USERS.document(user.uid).updateData(dictionary) { error in
+                completion(user)
+            }
         }
     }
 }
