@@ -28,6 +28,11 @@ final class ProfileEditController: UIViewController {
     var delegate: ProfileEditControllerDelegate?
     var cellCounts: Int = 0
     
+    private lazy var leftBarButtonItem: UIBarButtonItem = {
+        let barButtonItem = UIBarButtonItem(image: UIImage(systemName: "chevron.left"), style: .plain, target: self, action: #selector(handleBackward))
+        return barButtonItem
+    }()
+    
     private let profileImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
@@ -63,6 +68,10 @@ final class ProfileEditController: UIViewController {
     
     // MARK: - Actions
     
+    @objc private func handleBackward() {
+        navigationController?.popViewController(animated: true)
+    }
+    
     @objc private func handleEdit() {
         var config = YPImagePickerConfiguration()
         config.library.mediaType = .photo
@@ -85,6 +94,7 @@ final class ProfileEditController: UIViewController {
     private func configureUI() {
         view.backgroundColor = .systemBackground
         navigationItem.title = "Edit Profile"
+        navigationItem.leftBarButtonItem = leftBarButtonItem
         
         view.addSubview(profileImageView)
         profileImageView.anchor(top: view.safeAreaLayoutGuide.topAnchor, paddingTop: 16)
