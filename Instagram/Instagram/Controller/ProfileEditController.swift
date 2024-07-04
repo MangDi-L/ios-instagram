@@ -11,8 +11,7 @@ import YPImagePicker
 private let reuseIdentifier = "ProfileEditCell"
 
 protocol ProfileEditControllerDelegate: AnyObject {
-    func profileImageChanged(user: User)
-    func profileNameChanged(user: User)
+    func profileImageOrNameChanged(user: User)
 }
 
 final class ProfileEditController: UIViewController {
@@ -131,7 +130,7 @@ final class ProfileEditController: UIViewController {
                 UserService.updateUserProfileImage(user: user, image: selectedImage) { user in
                     self.showLoader(false)
                     self.profileImageView.image = selectedImage
-                    self.delegate?.profileImageChanged(user: user)
+                    self.delegate?.profileImageOrNameChanged(user: user)
                 }
             }
         }
@@ -194,6 +193,6 @@ extension ProfileEditController: ProfileNameEditControllerDelegate {
             cell?.configureLabels(name: "Username", inputName: text)
         }
         
-        delegate?.profileNameChanged(user: user)
+        delegate?.profileImageOrNameChanged(user: user)
     }
 }
