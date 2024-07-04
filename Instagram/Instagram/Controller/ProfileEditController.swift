@@ -55,6 +55,7 @@ final class ProfileEditController: UIViewController {
         tableView.rowHeight = 40
         tableView.register(ProfileEditCell.self, forCellReuseIdentifier: reuseIdentifier)
         tableView.dataSource = self
+        tableView.delegate = self
         return tableView
     }()
     
@@ -136,6 +137,8 @@ final class ProfileEditController: UIViewController {
     }
 }
 
+// MARK: - UITableViewDataSource
+
 extension ProfileEditController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return cellCounts
@@ -143,6 +146,7 @@ extension ProfileEditController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as? ProfileEditCell ?? ProfileEditCell()
+        cell.selectionStyle = .gray
         
         guard let user = user else { return ProfileEditCell() }
         
@@ -156,8 +160,23 @@ extension ProfileEditController: UITableViewDataSource {
     }
 }
 
-//extension ProfileEditController: UITableViewDelegate {
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        
-//    }
-//}
+// MARK: - UITableViewDelegate
+
+extension ProfileEditController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let profileNameEditController = ProfileNameEditController()
+        
+        guard let user = user else { return }
+        
+        if indexPath == IndexPath(row: 0, section: 0) {
+            profileNameEditController.profileNameType = .name
+            profileNameEditController.name = user.fullname
+        } else {
+            profileNameEditController.profileNameType = .username
+            profileNameEditController.name = user.username
+        }
+
+        tableView.deselectRow(at: indexPath, animated: true)
+        navigationController?.pushViewController(profileNameEditController, animated: true)
+    }
+}
