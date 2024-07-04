@@ -24,11 +24,17 @@ final class ProfileNameEditController: UIViewController {
         return barButtonItem
     }()
     
+    private lazy var rightBarButtonItem: UIBarButtonItem = {
+        let barButtonItem = UIBarButtonItem(title: "Completion", style: .done, target: self, action: #selector(handleCompletion))
+        barButtonItem.tintColor = .systemBlue
+        return barButtonItem
+    }()
+    
     private lazy var nameTextFieldView: UIView = {
         let textFieldView = UIView()
         textFieldView.backgroundColor = .systemBackground
         textFieldView.layer.borderColor = UIColor.black.cgColor
-        textFieldView.layer.borderWidth = 2
+        textFieldView.layer.borderWidth = 1
         textFieldView.layer.cornerRadius = 10
         textFieldView.clipsToBounds = true
         textFieldView.translatesAutoresizingMaskIntoConstraints = false
@@ -85,6 +91,10 @@ final class ProfileNameEditController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
     
+    @objc private func handleCompletion() {
+        
+    }
+    
     @objc private func handleReset() {
         nameTextField.text = ""
         nameTextField.becomeFirstResponder()
@@ -95,6 +105,7 @@ final class ProfileNameEditController: UIViewController {
     private func configureUI() {
         view.backgroundColor = .systemBackground
         navigationItem.leftBarButtonItem = leftBarButtonItem
+        navigationItem.rightBarButtonItem = rightBarButtonItem
         
         switch profileNameType {
         case .name:
