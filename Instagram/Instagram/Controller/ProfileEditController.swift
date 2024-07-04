@@ -129,6 +129,7 @@ final class ProfileEditController: UIViewController {
                 
                 UserService.updateUserProfileImage(user: user, image: selectedImage) { user in
                     self.showLoader(false)
+                    self.user = user
                     self.profileImageView.image = selectedImage
                     self.delegate?.profileImageOrNameChanged(user: user)
                 }
@@ -193,6 +194,7 @@ extension ProfileEditController: ProfileNameEditControllerDelegate {
             cell?.configureLabels(name: "Username", inputName: text)
         }
         
+        self.user = user
         delegate?.profileImageOrNameChanged(user: user)
     }
 }
