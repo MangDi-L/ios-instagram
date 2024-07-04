@@ -25,7 +25,7 @@ final class ProfileEditController: UIViewController {
         }
     }
     
-    var delegate: ProfileEditControllerDelegate?
+    weak var delegate: ProfileEditControllerDelegate?
     var cellCounts: Int = 0
     
     private lazy var leftBarButtonItem: UIBarButtonItem = {
@@ -167,6 +167,7 @@ extension ProfileEditController: UITableViewDelegate {
         guard let user = user else { return }
         
         let profileNameEditController = ProfileNameEditController(user: user)
+        profileNameEditController.delegate = self
         
         if indexPath == IndexPath(row: 0, section: 0) {
             profileNameEditController.profileNameType = .name
@@ -176,5 +177,20 @@ extension ProfileEditController: UITableViewDelegate {
 
         tableView.deselectRow(at: indexPath, animated: true)
         navigationController?.pushViewController(profileNameEditController, animated: true)
+    }
+}
+
+// MARK: - ProfileNameEditControllerDelegate
+
+extension ProfileEditController: ProfileNameEditControllerDelegate {
+    func profileNameUpdate(type: ProfileNameType, text: String) {
+        switch type {
+        case .name:
+            let cell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? ProfileEditCell
+            cell?.configureLabels(name: "Name", inputName: text)
+        case .username:
+            let cell = tableView.cellForRow(at: IndexPath(row: 1, section: 0)) as? ProfileEditCell
+            cell?.configureLabels(name: "Username", inputName: text)
+        }
     }
 }

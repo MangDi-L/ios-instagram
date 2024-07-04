@@ -12,12 +12,17 @@ enum ProfileNameType {
     case username
 }
 
+protocol ProfileNameEditControllerDelegate: AnyObject {
+    func profileNameUpdate(type: ProfileNameType, text: String)
+}
+
 final class ProfileNameEditController: UIViewController {
     
     // MARK: - Properties
     
     var user: User
     var profileNameType: ProfileNameType = .name
+    weak var delegate: ProfileNameEditControllerDelegate?
     
     private lazy var leftBarButtonItem: UIBarButtonItem = {
         let barButtonItem = UIBarButtonItem(image: UIImage(systemName: "chevron.left"), style: .plain, target: self, action: #selector(handleBackward))
@@ -106,6 +111,8 @@ final class ProfileNameEditController: UIViewController {
         showLoader(true)
         UserService.updateUserProfileName(user: user, type: profileNameType, name: nameText) { error in
             self.showLoader(false)
+            self.delegate?.profileNameUpdate(type: self.profileNameType, text: nameText)
+            self.navigationController?.popViewController(animated: true)
         }
     }
     
