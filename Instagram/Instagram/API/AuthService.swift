@@ -30,14 +30,14 @@ struct AuthService {
         checkupNamesDuplicate(fullname: credentials.fullname, username: credentials.username) { result in
             switch result {
             case .success:
-                ImageUploader.uploadImage(image: credentials.profileImage) { imageUrl in
-                    Auth.auth().createUser(withEmail: credentials.email, password: credentials.password) { authDataResult, error in
-                        if let error = error {
-                            print("DEBUG: Failed to register user \(error.localizedDescription)")
-                            completion(.failure(error))
-                            return
-                        }
-                        
+                Auth.auth().createUser(withEmail: credentials.email, password: credentials.password) { authDataResult, error in
+                    if let error = error {
+                        print("DEBUG: Failed to register user \(error.localizedDescription)")
+                        completion(.failure(error))
+                        return
+                    }
+                    
+                    ImageUploader.uploadImage(image: credentials.profileImage) { imageUrl in
                         guard let uid = authDataResult?.user.uid else { return }
                         
                         let data: [String: Any] = ["email": credentials.email,
