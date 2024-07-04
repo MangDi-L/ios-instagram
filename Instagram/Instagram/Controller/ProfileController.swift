@@ -197,5 +197,10 @@ extension ProfileController: ProfileEditControllerDelegate {
         self.user = user
         navigationItem.title = user.username
         self.collectionView.reloadData()
+        
+        guard let tab = tabBarController as? MainTabController else { return }
+        guard let nav = tab.viewControllers?[.zero] as? UINavigationController else { return }
+        let feed = nav.topViewController as? FeedController
+        feed?.handleRefresh()
     }
 }
