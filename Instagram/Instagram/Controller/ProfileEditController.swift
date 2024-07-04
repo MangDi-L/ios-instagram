@@ -12,6 +12,7 @@ private let reuseIdentifier = "ProfileEditCell"
 
 protocol ProfileEditControllerDelegate: AnyObject {
     func profileImageChanged(user: User)
+    func profileNameChanged(user: User)
 }
 
 final class ProfileEditController: UIViewController {
@@ -183,7 +184,7 @@ extension ProfileEditController: UITableViewDelegate {
 // MARK: - ProfileNameEditControllerDelegate
 
 extension ProfileEditController: ProfileNameEditControllerDelegate {
-    func profileNameUpdate(type: ProfileNameType, text: String) {
+    func profileNameUpdate(type: ProfileNameType, text: String, user: User) {
         switch type {
         case .name:
             let cell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? ProfileEditCell
@@ -192,5 +193,7 @@ extension ProfileEditController: ProfileNameEditControllerDelegate {
             let cell = tableView.cellForRow(at: IndexPath(row: 1, section: 0)) as? ProfileEditCell
             cell?.configureLabels(name: "Username", inputName: text)
         }
+        
+        delegate?.profileNameChanged(user: user)
     }
 }

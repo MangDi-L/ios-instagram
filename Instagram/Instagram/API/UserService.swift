@@ -140,7 +140,7 @@ struct UserService {
         }
     }
     
-    static func updateUserProfileName(user: User, type: ProfileNameType, name: String, completion: @escaping(Error?) -> Void) {
+    static func updateUserProfileName(user: User, type: ProfileNameType, name: String, completion: @escaping(User) -> Void) {
         var user = user
         
         switch type {
@@ -151,6 +151,8 @@ struct UserService {
         }
         
         let dictionary = user.dictionary
-        COLLECTION_USERS.document(user.uid).updateData(dictionary, completion: completion)
+        COLLECTION_USERS.document(user.uid).updateData(dictionary) { error in
+            completion(user)
+        }
     }
 }

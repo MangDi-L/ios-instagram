@@ -192,4 +192,10 @@ extension ProfileController: ProfileEditControllerDelegate {
         self.user = user
         self.collectionView.reloadData()
     }
+    
+    func profileNameChanged(user: User) {
+        self.user = user
+        navigationItem.title = user.username
+        self.collectionView.reloadData()
+    }
 }

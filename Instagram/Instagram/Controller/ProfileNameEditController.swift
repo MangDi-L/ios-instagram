@@ -13,7 +13,7 @@ enum ProfileNameType {
 }
 
 protocol ProfileNameEditControllerDelegate: AnyObject {
-    func profileNameUpdate(type: ProfileNameType, text: String)
+    func profileNameUpdate(type: ProfileNameType, text: String, user: User)
 }
 
 final class ProfileNameEditController: UIViewController {
@@ -109,9 +109,10 @@ final class ProfileNameEditController: UIViewController {
         guard let nameText = nameTextField.text else { return }
         
         showLoader(true)
-        UserService.updateUserProfileName(user: user, type: profileNameType, name: nameText) { error in
+        
+        UserService.updateUserProfileName(user: user, type: profileNameType, name: nameText) { user in
             self.showLoader(false)
-            self.delegate?.profileNameUpdate(type: self.profileNameType, text: nameText)
+            self.delegate?.profileNameUpdate(type: self.profileNameType, text: nameText, user: user)
             self.navigationController?.popViewController(animated: true)
         }
     }
