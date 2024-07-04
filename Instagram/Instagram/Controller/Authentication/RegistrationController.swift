@@ -91,6 +91,8 @@ final class RegistrationController: UIViewController {
                 print("DEBUG: Successfully registered user with firestore..")
                 self.delegate?.authenticationDidComplete()
                 self.dismiss(animated: true)
+            case .failure(let failure as AuthServiceError):
+                self.showMessage(withTitle: "Failed to register", message: failure.rawValue)
             case .failure(let failure):
                 self.showMessage(withTitle: "Failed to register", message: failure.localizedDescription)
             }

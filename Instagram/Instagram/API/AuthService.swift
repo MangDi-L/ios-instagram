@@ -63,6 +63,10 @@ struct AuthService {
     
     static func checkupNamesDuplicate(fullname: String, username: String, completion: @escaping (Result<Void, AuthServiceError>) -> Void) {
         COLLECTION_USERS.getDocuments { querySnapshot, error in
+            if let error = error {
+                print("DEBUG: \(error.localizedDescription)")
+            }
+            
             guard let snapshot = querySnapshot else { return }
             
             if snapshot.documents.isEmpty { completion(.success(())) }
