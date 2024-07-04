@@ -19,6 +19,11 @@ final class ProfileNameEditController: UIViewController {
     var profileNameType: ProfileNameType = .name
     var name: String = ""
     
+    private lazy var leftBarButtonItem: UIBarButtonItem = {
+        let barButtonItem = UIBarButtonItem(image: UIImage(systemName: "chevron.left"), style: .plain, target: self, action: #selector(handleBackward))
+        return barButtonItem
+    }()
+    
     private lazy var nameTextFieldView: UIView = {
         let textFieldView = UIView()
         textFieldView.backgroundColor = .systemBackground
@@ -60,6 +65,7 @@ final class ProfileNameEditController: UIViewController {
         let imageConfig = UIImage.SymbolConfiguration(pointSize: 16, weight: .medium)
         button.setImage(UIImage(systemName: "x.circle.fill", withConfiguration: imageConfig), for: .normal)
         button.tintColor = .black
+        button.addTarget(self, action: #selector(handleReset), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -70,12 +76,25 @@ final class ProfileNameEditController: UIViewController {
         super.viewDidLoad()
         
         configureUI()
+        nameTextField.becomeFirstResponder()
+    }
+    
+    // MARK: - Actions
+    
+    @objc private func handleBackward() {
+        navigationController?.popViewController(animated: true)
+    }
+    
+    @objc private func handleReset() {
+        nameTextField.text = ""
+        nameTextField.becomeFirstResponder()
     }
     
     // MARK: - Helpers
     
     private func configureUI() {
         view.backgroundColor = .systemBackground
+        navigationItem.leftBarButtonItem = leftBarButtonItem
         
         switch profileNameType {
         case .name:
@@ -100,8 +119,8 @@ final class ProfileNameEditController: UIViewController {
         
         nameResetButton.trailingAnchor.constraint(equalTo: nameTextFieldView.trailingAnchor, constant: -16).isActive = true
         nameResetButton.centerYAnchor.constraint(equalTo: nameTextFieldView.centerYAnchor).isActive = true
-        nameResetButton.widthAnchor.constraint(equalToConstant: 16).isActive = true
-        nameResetButton.heightAnchor.constraint(equalToConstant: 16).isActive = true
+        nameResetButton.widthAnchor.constraint(equalToConstant: 24).isActive = true
+        nameResetButton.heightAnchor.constraint(equalToConstant: 24).isActive = true
         
         nameTextField.topAnchor.constraint(equalTo: nameInfoLabel.bottomAnchor, constant: 0).isActive = true
         nameTextField.leadingAnchor.constraint(equalTo: nameTextFieldView.leadingAnchor, constant: 16).isActive = true
