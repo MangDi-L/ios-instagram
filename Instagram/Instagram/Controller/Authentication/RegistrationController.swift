@@ -83,17 +83,17 @@ final class RegistrationController: UIViewController {
         
         showLoader(true)
         
-        AuthService.registerUser(withCredential: credentials) { error in
+        AuthService.registerUser(withCredential: credentials) { result in
             self.showLoader(false)
             
-            if let error = error {
-                print("DEBUG: Failed to register user \(error.localizedDescription)")
-                return
+            switch result {
+            case .success:
+                print("DEBUG: Successfully registered user with firestore..")
+                self.delegate?.authenticationDidComplete()
+                self.dismiss(animated: true)
+            case .failure(let failure):
+                self.showMessage(withTitle: "Failed to register", message: failure.localizedDescription)
             }
-            
-            print("DEBUG: Successfully registered user with firestore..")
-            self.delegate?.authenticationDidComplete()
-            self.dismiss(animated: true)
         }
     }
     

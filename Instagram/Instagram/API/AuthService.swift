@@ -21,11 +21,12 @@ struct AuthService {
         Auth.auth().signIn(withEmail: email, password: password, completion: completion)
     }
     
-    static func registerUser(withCredential credentials: AuthCredentials, completion: @escaping(Error?) -> Void) {
+    static func registerUser(withCredential credentials: AuthCredentials, completion: @escaping (Result<(), Error>) -> Void) {
         ImageUploader.uploadImage(image: credentials.profileImage) { imageUrl in
             Auth.auth().createUser(withEmail: credentials.email, password: credentials.password) { authDataResult, error in
                 if let error = error {
                     print("DEBUG: Failed to register user \(error.localizedDescription)")
+                    completion(.failure(error))
                     return
                 }
                 
@@ -37,7 +38,9 @@ struct AuthService {
                                            "uid": uid,
                                            "username": credentials.username]
                 
-                COLLECTION_USERS.document(uid).setData(data, completion: completion)
+                COLLECTION_USERS.document(uid).setData(data) { error in
+                    completion(.success(()))
+                }
             }
         }
     }
