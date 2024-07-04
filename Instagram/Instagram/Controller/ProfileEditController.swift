@@ -164,16 +164,14 @@ extension ProfileEditController: UITableViewDataSource {
 
 extension ProfileEditController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let profileNameEditController = ProfileNameEditController()
-        
         guard let user = user else { return }
+        
+        let profileNameEditController = ProfileNameEditController(user: user)
         
         if indexPath == IndexPath(row: 0, section: 0) {
             profileNameEditController.profileNameType = .name
-            profileNameEditController.name = user.fullname
         } else {
             profileNameEditController.profileNameType = .username
-            profileNameEditController.name = user.username
         }
 
         tableView.deselectRow(at: indexPath, animated: true)

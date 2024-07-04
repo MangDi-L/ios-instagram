@@ -16,8 +16,8 @@ final class ProfileNameEditController: UIViewController {
     
     // MARK: - Properties
     
+    var user: User
     var profileNameType: ProfileNameType = .name
-    var name: String = ""
     
     private lazy var leftBarButtonItem: UIBarButtonItem = {
         let barButtonItem = UIBarButtonItem(image: UIImage(systemName: "chevron.left"), style: .plain, target: self, action: #selector(handleBackward))
@@ -77,7 +77,16 @@ final class ProfileNameEditController: UIViewController {
     }()
     
     // MARK: - Lifecycle
-
+    
+    init(user: User) {
+        self.user = user
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -92,7 +101,12 @@ final class ProfileNameEditController: UIViewController {
     }
     
     @objc private func handleCompletion() {
+        guard let nameText = nameTextField.text else { return }
         
+        showLoader(true)
+        UserService.updateUserProfileName(user: user, type: profileNameType, name: nameText) { error in
+            self.showLoader(false)
+        }
     }
     
     @objc private func handleReset() {
@@ -111,12 +125,12 @@ final class ProfileNameEditController: UIViewController {
         case .name:
             navigationItem.title = "Name"
             nameInfoLabel.text = "Name"
+            nameTextField.text = user.fullname
         case .username:
             navigationItem.title = "UserName"
             nameInfoLabel.text = "UserName"
+            nameTextField.text = user.username
         }
-        
-        nameTextField.text = name
         
         view.addSubview(nameTextFieldView)
         
