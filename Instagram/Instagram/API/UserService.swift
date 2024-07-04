@@ -139,4 +139,18 @@ struct UserService {
             }
         }
     }
+    
+    static func updateUserProfileName(user: User, type: ProfileNameType, name: String, completion: @escaping(Error?) -> Void) {
+        var user = user
+        
+        switch type {
+        case .name:
+            user.fullname = name
+        case .username:
+            user.username = name
+        }
+        
+        let dictionary = user.dictionary
+        COLLECTION_USERS.document(user.uid).updateData(dictionary, completion: completion)
+    }
 }
