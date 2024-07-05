@@ -48,6 +48,10 @@ struct AuthService {
                                                    "username": credentials.username]
                         
                         COLLECTION_USERS.document(uid).setData(data) { error in
+                            if let error = error {
+                                print(error.localizedDescription)
+                            }
+                            
                             completion(.success(()))
                         }
                     }
