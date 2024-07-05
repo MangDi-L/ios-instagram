@@ -23,8 +23,16 @@ struct AuthCredentials {
 }
 
 struct AuthService {
-    static func logUserIn(withEmail email: String, password: String, completion: @escaping (AuthDataResult?, Error?) -> Void) {
-        Auth.auth().signIn(withEmail: email, password: password, completion: completion)
+    static func logUserIn(withEmail email: String, password: String, completion: @escaping (Result<Void, Error>) -> Void) {
+        Auth.auth().signIn(withEmail: email, password: password) { _, error in
+            if let error = error {
+                print(error.localizedDescription)
+                completion(.failure(error))
+                return
+            }
+            
+            completion(.success(()))
+        }
     }
     
     static func registerUser(withCredential credentials: AuthCredentials, completion: @escaping (Result<(), Error>) -> Void) {
@@ -50,6 +58,8 @@ struct AuthService {
                         COLLECTION_USERS.document(uid).setData(data) { error in
                             if let error = error {
                                 print(error.localizedDescription)
+//                                completion(.failure(error))
+//                                return
                             }
                             
                             completion(.success(()))

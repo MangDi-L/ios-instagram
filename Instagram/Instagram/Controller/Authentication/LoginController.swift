@@ -78,14 +78,14 @@ final class LoginController: UIViewController {
         guard let email = emailTextField.text else { return }
         guard let password = passwordTextField.text else { return }
         
-        AuthService.logUserIn(withEmail: email, password: password) { authDataResult, error in
-            if let error = error {
-                print("DEBUG: Failed to login \(error.localizedDescription)")
-                return
+        AuthService.logUserIn(withEmail: email, password: password) { result in
+            switch result {
+            case .success(let success):
+                self.delegate?.authenticationDidComplete()
+                self.dismiss(animated: true)
+            case .failure(let failure):
+                self.showMessage(withTitle: "Failed to login", message: failure.localizedDescription)
             }
-            
-            self.delegate?.authenticationDidComplete()
-            self.dismiss(animated: true)
         }
     }
     
