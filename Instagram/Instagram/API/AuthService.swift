@@ -10,7 +10,6 @@ import Firebase
 
 enum AuthServiceError: String, Error {
     case emailaddressDuplicate = "The email address is already in use by another account."
-    case fullnameDuplicate = "The fullname is already in use by another account."
     case usernameDuplicate = "The username is already in use by another account."
 }
 
@@ -39,9 +38,16 @@ struct AuthService {
         
         // 자동으로 이메일중복 검사
         Auth.auth().createUser(withEmail: credentials.email, password: credentials.password) { authDataResult, error in
-            if let error = error {
+            if let error = error as? NSError,
+               let errorCode = AuthErrorCode.Code(rawValue: error.code) {
                 print("DEBUG: Failed to register user \(error.localizedDescription)")
-                completion(.failure(error))
+                switch errorCode {
+                case .emailAlreadyInUse:
+                    completion(.failure(AuthServiceError.emailaddressDuplicate))
+                default:
+                    completion(.failure(error))
+                }
+
                 return
             }
             
@@ -66,7 +72,7 @@ struct AuthService {
                                 return
                             }
                             
-                            completion(.failure(setDataError))
+                            completion(.failure(AuthServiceError.usernameDuplicate))
                             return
                         }
                         return
