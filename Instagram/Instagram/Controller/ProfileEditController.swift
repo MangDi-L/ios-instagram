@@ -152,7 +152,7 @@ extension ProfileEditController: UITableViewDataSource {
         guard let user = user else { return ProfileEditCell() }
         
         if indexPath == IndexPath(row: 0, section: 0) {
-            cell.configureLabels(name: "Name", inputName: user.fullname)
+            cell.configureLabels(name: "FullName", inputName: user.fullname)
         } else if indexPath == IndexPath(row: 1, section: 0) {
             cell.configureLabels(name: "Username", inputName: user.username)
         }
@@ -171,7 +171,7 @@ extension ProfileEditController: UITableViewDelegate {
         profileNameEditController.delegate = self
         
         if indexPath == IndexPath(row: 0, section: 0) {
-            profileNameEditController.profileNameType = .name
+            profileNameEditController.profileNameType = .fullname
         } else {
             profileNameEditController.profileNameType = .username
         }
@@ -186,9 +186,9 @@ extension ProfileEditController: UITableViewDelegate {
 extension ProfileEditController: ProfileNameEditControllerDelegate {
     func profileNameUpdate(type: ProfileNameType, text: String, user: User) {
         switch type {
-        case .name:
+        case .fullname:
             let cell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? ProfileEditCell
-            cell?.configureLabels(name: "Name", inputName: text)
+            cell?.configureLabels(name: "FullName", inputName: text)
         case .username:
             let cell = tableView.cellForRow(at: IndexPath(row: 1, section: 0)) as? ProfileEditCell
             cell?.configureLabels(name: "Username", inputName: text)

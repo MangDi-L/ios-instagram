@@ -144,7 +144,7 @@ struct UserService {
         var user = user
         
         switch type {
-        case .name:
+        case .fullname:
             user.fullname = name
         case .username:
             user.username = name

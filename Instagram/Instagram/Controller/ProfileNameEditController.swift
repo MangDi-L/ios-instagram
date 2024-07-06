@@ -8,7 +8,7 @@
 import UIKit
 
 enum ProfileNameType {
-    case name
+    case fullname
     case username
 }
 
@@ -21,7 +21,7 @@ final class ProfileNameEditController: UIViewController {
     // MARK: - Properties
     
     var user: User
-    var profileNameType: ProfileNameType = .name
+    var profileNameType: ProfileNameType = .fullname
     weak var delegate: ProfileNameEditControllerDelegate?
     
     private lazy var leftBarButtonItem: UIBarButtonItem = {
@@ -130,9 +130,9 @@ final class ProfileNameEditController: UIViewController {
         navigationItem.rightBarButtonItem = rightBarButtonItem
         
         switch profileNameType {
-        case .name:
-            navigationItem.title = "Name"
-            nameInfoLabel.text = "Name"
+        case .fullname:
+            navigationItem.title = "fullname"
+            nameInfoLabel.text = "fullname"
             nameTextField.text = user.fullname
         case .username:
             navigationItem.title = "UserName"
