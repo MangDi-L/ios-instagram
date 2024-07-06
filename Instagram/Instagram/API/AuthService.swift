@@ -36,6 +36,8 @@ struct AuthService {
     }
     
     static func registerUser(withCredential credentials: AuthCredentials, completion: @escaping (Result<(), Error>) -> Void) {
+        
+        // 자동으로 이메일중복 검사
         Auth.auth().createUser(withEmail: credentials.email, password: credentials.password) { authDataResult, error in
             if let error = error {
                 print("DEBUG: Failed to register user \(error.localizedDescription)")
@@ -52,19 +54,21 @@ struct AuthService {
                                            "uid": uid,
                                            "username": credentials.username]
                 
-                // users컬렉션에 문서 추가
+                // users컬렉션에 문서 추가 및 username중복 검사, 중복시 error반환(Firestore rule)
                 COLLECTION_USERS.document(uid).setData(data) { error in
-                    if let error = error {
-                        print(error.localizedDescription)
+                    if let setDataError = error {
+                        print(setDataError.localizedDescription)
                         
                         deleteCurrentUser { error in
-                            if let error = error {
-                                print(error.localizedDescription)
-                                completion(.failure(error))
+                            if let deleteError = error {
+                                print(deleteError.localizedDescription)
+                                completion(.failure(deleteError))
                                 return
                             }
+                            
+                            completion(.failure(setDataError))
+                            return
                         }
-                        completion(.failure(error))
                         return
                     }
                     

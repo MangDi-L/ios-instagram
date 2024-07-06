@@ -92,8 +92,8 @@ final class RegistrationController: UIViewController {
                 self.delegate?.authenticationDidComplete()
                 self.dismiss(animated: true)
             case .failure(let failure):
+                print("DEBUG: Register Failed")
                 self.showMessage(withTitle: "Failed to register", message: failure.localizedDescription)
-                
             }
         }
     }
