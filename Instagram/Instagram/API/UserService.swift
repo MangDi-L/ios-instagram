@@ -7,6 +7,11 @@
 
 import Firebase
 
+enum UserServiceError: String, Error {
+    case sameUsername = "It's a same username"
+    case usernameDuplicate = "The username is already in use by another account."
+}
+
 typealias FirestoreCompletion = (Error?) -> Void
 
 struct UserService {
@@ -140,19 +145,85 @@ struct UserService {
         }
     }
     
-    static func updateUserProfileName(user: User, type: ProfileNameType, name: String, completion: @escaping(User) -> Void) {
-        var user = user
+    static func updateUserProfileName(user: User, type: ProfileNameType, name: String, completion: @escaping(Result<User, Error>) -> Void) {
+        var userData = user
         
         switch type {
         case .fullname:
-            user.fullname = name
+            userData.fullname = name
         case .username:
-            user.username = name
+            userData.username = name
         }
         
-        let dictionary = user.dictionary
-        COLLECTION_USERS.document(user.uid).updateData(dictionary) { error in
-            completion(user)
+        // 기존 username과 똑같을경우 리턴
+        if type == .username && userData.username == user.username {
+            completion(.failure(UserServiceError.sameUsername))
+            return
+        }
+        
+        let dictionary = userData.dictionary
+        
+        if type == .fullname {
+            
+            // fullname 갱신 시작
+            COLLECTION_USERS.document(user.uid).updateData(dictionary) { error in
+                if let error = error {
+                    print(error.localizedDescription)
+                    completion(.failure(error))
+                    return
+                }
+                
+                completion(.success(userData))
+            }
+            return
+        }
+        
+        // usernames컬렉션에 새로운 username이 중복되는지 확인
+        COLLECTION_USERNAMES.document(userData.username).getDocument { snapshot, error in
+            if let error = error {
+                print(error.localizedDescription)
+                completion(.failure(error))
+                return
+            }
+            
+            guard let snapshot = snapshot else { return }
+            
+            // 중복된 데이터가 있다면 실패completion호출 및 리턴
+            if snapshot.exists {
+                completion(.failure(UserServiceError.usernameDuplicate))
+                return
+            }
+            
+            // 중복된 데이터가 없다면
+            // usernames컬렉션의 기존 username삭제
+            COLLECTION_USERNAMES.document(user.username).delete { error in
+                if let error = error {
+                    print(error.localizedDescription)
+                    completion(.failure(error))
+                    return
+                }
+                
+                // usernames컬렉션에 새로바꾼 username추가
+                COLLECTION_USERNAMES.document(userData.username).setData(["uid": userData.uid]) { error in
+                    if let error = error {
+                        print(error.localizedDescription)
+                        completion(.failure(error))
+                        return
+                    }
+                    
+                    // username 갱신 시작
+                    COLLECTION_USERS.document(user.uid).updateData(dictionary) { error in
+                        if let error = error {
+                            print(error.localizedDescription)
+                            completion(.failure(error))
+                            return
+                        }
+                        
+                        completion(.success(userData))
+                    }
+                }
+                
+            }
         }
     }
 }

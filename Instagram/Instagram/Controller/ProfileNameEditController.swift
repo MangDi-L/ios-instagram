@@ -110,10 +110,18 @@ final class ProfileNameEditController: UIViewController {
         
         showLoader(true)
         
-        UserService.updateUserProfileName(user: user, type: profileNameType, name: nameText) { user in
+        UserService.updateUserProfileName(user: user, type: profileNameType, name: nameText) { result in
             self.showLoader(false)
-            self.delegate?.profileNameUpdate(type: self.profileNameType, text: nameText, user: user)
-            self.navigationController?.popViewController(animated: true)
+            
+            switch result {
+            case .success(let user):
+                self.delegate?.profileNameUpdate(type: self.profileNameType, text: nameText, user: user)
+                self.navigationController?.popViewController(animated: true)
+            case .failure(let failure as UserServiceError):
+                self.showMessage(withTitle: "Failed", message: failure.rawValue)
+            case .failure(let failure):
+                self.showMessage(withTitle: "Failed", message: failure.localizedDescription)
+            }
         }
     }
     
@@ -131,8 +139,8 @@ final class ProfileNameEditController: UIViewController {
         
         switch profileNameType {
         case .fullname:
-            navigationItem.title = "fullname"
-            nameInfoLabel.text = "fullname"
+            navigationItem.title = "FullName"
+            nameInfoLabel.text = "FullName"
             nameTextField.text = user.fullname
         case .username:
             navigationItem.title = "UserName"
