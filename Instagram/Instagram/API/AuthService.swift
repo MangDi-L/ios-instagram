@@ -56,6 +56,14 @@ struct AuthService {
                 COLLECTION_USERS.document(uid).setData(data) { error in
                     if let error = error {
                         print(error.localizedDescription)
+                        
+                        deleteCurrentUser { error in
+                            if let error = error {
+                                print(error.localizedDescription)
+                                completion(.failure(error))
+                                return
+                            }
+                        }
                         completion(.failure(error))
                         return
                     }
@@ -79,31 +87,8 @@ struct AuthService {
         Auth.auth().sendPasswordReset (withEmail: email, completion: completion)
     }
     
-    static func checkupDuplicate(email: String, fullname: String, username: String, completion: @escaping (Result<Void, AuthServiceError>) -> Void) {
-        COLLECTION_USERS.getDocuments { querySnapshot, error in
-            if let error = error {
-                print("DEBUG: \(error.localizedDescription)")
-            }
-            
-            guard let snapshot = querySnapshot else { return }
-            
-            if snapshot.documents.isEmpty { completion(.success(())) }
-            
-            let users = snapshot.documents.map { User(dictionary: $0.data()) }
-            let emails = users.map { $0.email }
-            let fullnames = users.map { $0.fullname }
-            let usernames = users.map { $0.username }
-            
-            if emails.contains(email) {
-                completion(.failure(.emailaddressDuplicate))
-            } else if fullnames.contains(fullname) {
-                completion(.failure(.fullnameDuplicate))
-            } else if usernames.contains(username) {
-                completion(.failure(.usernameDuplicate))
-            } else {
-                completion(.success(()))
-            }
-            
-        }
+    static func deleteCurrentUser(completion: @escaping (Error?) -> Void) {
+        let user = Auth.auth().currentUser
+        user?.delete(completion: completion)
     }
 }
