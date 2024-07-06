@@ -36,38 +36,41 @@ struct AuthService {
     }
     
     static func registerUser(withCredential credentials: AuthCredentials, completion: @escaping (Result<(), Error>) -> Void) {
-        checkupDuplicate(email: credentials.email, fullname: credentials.fullname, username: credentials.username) { result in
-            switch result {
-            case .success:
-                Auth.auth().createUser(withEmail: credentials.email, password: credentials.password) { authDataResult, error in
+        Auth.auth().createUser(withEmail: credentials.email, password: credentials.password) { authDataResult, error in
+            if let error = error {
+                print("DEBUG: Failed to register user \(error.localizedDescription)")
+                completion(.failure(error))
+                return
+            }
+            
+            ImageUploader.uploadImage(image: credentials.profileImage) { imageUrl in
+                guard let uid = authDataResult?.user.uid else { return }
+                
+                let data: [String: Any] = ["email": credentials.email,
+                                           "fullname": credentials.fullname,
+                                           "profileImageUrl": imageUrl,
+                                           "uid": uid,
+                                           "username": credentials.username]
+                
+                // users컬렉션에 문서 추가
+                COLLECTION_USERS.document(uid).setData(data) { error in
                     if let error = error {
-                        print("DEBUG: Failed to register user \(error.localizedDescription)")
+                        print(error.localizedDescription)
                         completion(.failure(error))
                         return
                     }
                     
-                    ImageUploader.uploadImage(image: credentials.profileImage) { imageUrl in
-                        guard let uid = authDataResult?.user.uid else { return }
-                        
-                        let data: [String: Any] = ["email": credentials.email,
-                                                   "fullname": credentials.fullname,
-                                                   "profileImageUrl": imageUrl,
-                                                   "uid": uid,
-                                                   "username": credentials.username]
-                        
-                        COLLECTION_USERS.document(uid).setData(data) { error in
-                            if let error = error {
-                                print(error.localizedDescription)
-//                                completion(.failure(error))
-//                                return
-                            }
-                            
-                            completion(.success(()))
+                    // usernames컬렉션에 문서 추가
+                    COLLECTION_USERNAMES.document(credentials.username).setData(["uid": uid]) { error in
+                        if let error = error {
+                            print(error.localizedDescription)
+                            completion(.failure(error))
+                            return
                         }
+                        
+                        completion(.success(()))
                     }
                 }
-            case .failure(let failure):
-                completion(.failure(failure))
             }
         }
     }
