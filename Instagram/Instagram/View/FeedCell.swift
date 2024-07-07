@@ -43,6 +43,16 @@ final class FeedCell: UICollectionViewCell {
         return button
     }()
     
+    private lazy var menuButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "ellipsis"), for: .normal)
+        button.tintColor = .black
+        button.backgroundColor = .systemBackground
+        button.addTarget(self, action: #selector(handleMenu), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
     private let postImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
@@ -104,6 +114,7 @@ final class FeedCell: UICollectionViewCell {
         
         [profileImageView,
          usernameButton,
+         menuButton,
          postImageView,
          likesLabel,
          captionLabel,
@@ -113,6 +124,9 @@ final class FeedCell: UICollectionViewCell {
         profileImageView.layer.cornerRadius = 40 / 2
         
         usernameButton.centerY(inView: profileImageView, leftAnchor: profileImageView.rightAnchor, paddingLeft: 8)
+        
+        menuButton.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor).isActive = true
+        menuButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12).isActive = true
         
         postImageView.anchor(top: profileImageView.bottomAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 8)
         postImageView.heightAnchor.constraint(equalTo: widthAnchor, multiplier: 1).isActive = true
@@ -140,6 +154,10 @@ final class FeedCell: UICollectionViewCell {
         guard let viewModel = viewModel,
               let user = viewModel.post.postUser else { return }
         delegate?.cell(self, wantsToShowProfileFor: user)
+    }
+    
+    @objc private func handleMenu() {
+        
     }
     
     @objc private func didTapLike() {
