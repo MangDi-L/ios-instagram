@@ -179,6 +179,11 @@ final class FeedCell: UICollectionViewCell {
         postImageView.sd_setImage(with: viewModel.postImageUrl)
         profileImageView.sd_setImage(with: viewModel.profileImageUrl)
         usernameButton.setTitle(viewModel.username, for: .normal)
+        if viewModel.isMyPost {
+            menuButton.isHidden = false
+        } else {
+            menuButton.isHidden = true
+        }
         
         likesLabel.text = viewModel.likesLabelText
         likeButton.setImage(viewModel.likeButtonImage, for: .normal)

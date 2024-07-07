@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Firebase
 
 struct PostViewModel {
     var post: Post
@@ -52,6 +53,10 @@ struct PostViewModel {
     
     var username: String {
         return post.postUser?.username ?? ""
+    }
+    
+    var isMyPost: Bool {
+        return post.ownerUid == Auth.auth().currentUser?.uid
     }
     
     init(post: Post) {
