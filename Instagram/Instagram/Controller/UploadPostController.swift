@@ -12,6 +12,11 @@ protocol UploadPostControllerDelegate: AnyObject {
     func controllerDidCanceledUploadingPost()
 }
 
+enum UploadPostType {
+    case upload
+    case modify
+}
+
 final class UploadPostController: UIViewController {
     
     // MARK: - Properties
@@ -21,6 +26,9 @@ final class UploadPostController: UIViewController {
     var selectedImage: UIImage? {
         didSet { photoImageView.image = selectedImage }
     }
+    
+    var type: UploadPostType = .upload
+    var post: Post?
     
     private let photoImageView: UIImageView = {
         let imageView = UIImageView()
@@ -57,8 +65,11 @@ final class UploadPostController: UIViewController {
     
     // MARK: - Actions
     
-    @objc private func didTapCancel() {
+    @objc private func didTapCancelByUpload() {
         delegate?.controllerDidCanceledUploadingPost()
+        dismiss(animated: true)
+    }
+    @objc private func didTapCancelByModify() {
         dismiss(animated: true)
     }
     
@@ -80,6 +91,10 @@ final class UploadPostController: UIViewController {
         }
     }
     
+    @objc private func didTapModify() {
+        
+    }
+    
     // MARK: - Helpers
     
     private func checkMaxLength(_ textView: UITextView) {
@@ -91,10 +106,25 @@ final class UploadPostController: UIViewController {
     private func configureUI() {
         view.backgroundColor = .systemBackground
         
-        navigationItem.title = "Upload Post"
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(didTapCancel))
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Share", style: .done, target: self, action: #selector(didTapShare))
-        
+        switch type {
+        case .upload:
+            navigationItem.title = "Upload Post"
+            navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(didTapCancelByUpload))
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Share", style: .done, target: self, action: #selector(didTapShare))
+        case .modify:
+            navigationItem.title = "Modify Post"
+            navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(didTapCancelByModify))
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Modify", style: .done, target: self, action: #selector(didTapModify))
+            
+            guard let post = post else { return }
+            
+            photoImageView.sd_setImage(with: URL(string: post.imageUrl))
+            captionTextView.becomeFirstResponder()
+            captionTextView.text = post.caption
+            captionTextView.placeholderLabel.isHidden = true
+            let count = post.caption.count
+            characterCountLabel.text = "\(count) / 100"
+        }
         
         view.addSubview(photoImageView)
         photoImageView.setDimensions(height: 200, width: 200)

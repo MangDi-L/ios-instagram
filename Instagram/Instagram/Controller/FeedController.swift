@@ -184,13 +184,20 @@ extension FeedController: UICollectionViewDelegateFlowLayout {
 extension FeedController: FeedCellDelegate {
     func cell(_ cell: FeedCell, wantsToShowMenuFor post: Post) {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let modifyAction = UIAlertAction(title: "Modify", style: .default) { action in
+        
+        let modifyAction = UIAlertAction(title: "Modify", style: .default) { _ in
+            let uploadPostController = UploadPostController()
+            uploadPostController.type = .modify
+            uploadPostController.post = post
+            let nav = UINavigationController(rootViewController: uploadPostController)
+            nav.modalPresentationStyle = .fullScreen
+            self.present(nav, animated: true)
             return
         }
-        let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { action in
+        let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { _ in
             return
         }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { action in
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { _ in
             return
         }
         

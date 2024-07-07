@@ -109,6 +109,7 @@ final class MainTabController: UITabBarController {
                 guard let selectedImage = items.singlePhoto?.image else { return }
                 
                 let controller = UploadPostController()
+                controller.type = .upload
                 controller.selectedImage = selectedImage
                 controller.delegate = self
                 let nav = UINavigationController(rootViewController: controller)
