@@ -8,6 +8,7 @@
 import UIKit
 
 protocol FeedCellDelegate: AnyObject {
+    func cell(_ cell: FeedCell, wantsToShowMenuFor post: Post)
     func cell(_ cell: FeedCell, wantsToShowCommentsFor post: Post)
     func cell(_ cell: FeedCell, didLike post: Post)
     func cell(_ cell: FeedCell, wantsToShowProfileFor user: User)
@@ -157,7 +158,8 @@ final class FeedCell: UICollectionViewCell {
     }
     
     @objc private func handleMenu() {
-        
+        guard let viewModel = viewModel else { return }
+        delegate?.cell(self, wantsToShowMenuFor: viewModel.post)
     }
     
     @objc private func didTapLike() {
