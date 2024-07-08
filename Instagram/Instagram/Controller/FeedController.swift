@@ -189,6 +189,7 @@ extension FeedController: FeedCellDelegate {
             let uploadPostController = UploadPostController()
             uploadPostController.type = .modify
             uploadPostController.post = post
+            uploadPostController.modifyPostControllerDelegate = self
             let nav = UINavigationController(rootViewController: uploadPostController)
             nav.modalPresentationStyle = .fullScreen
             self.present(nav, animated: true)
@@ -241,5 +242,14 @@ extension FeedController: FeedCellDelegate {
     func cell(_ cell: FeedCell, wantsToShowProfileFor user: User) {
         let controller = ProfileController(user: user)
         navigationController?.pushViewController(controller, animated: true)
+    }
+}
+
+// MARK: - ModifyPostControllerDelegate
+
+extension FeedController: ModifyPostControllerDelegate {
+    func controllerDidFinishModifyPost(_ controller: UploadPostController) {
+        controller.dismiss(animated: true)
+        handleRefresh()
     }
 }

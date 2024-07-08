@@ -111,7 +111,7 @@ final class MainTabController: UITabBarController {
                 let controller = UploadPostController()
                 controller.type = .upload
                 controller.selectedImage = selectedImage
-                controller.delegate = self
+                controller.uploadPostControllerDelegate = self
                 let nav = UINavigationController(rootViewController: controller)
                 nav.modalPresentationStyle = .fullScreen
                 // 자연스런 화면이동을 위해 animated는 false로 설정

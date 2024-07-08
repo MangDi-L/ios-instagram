@@ -12,6 +12,10 @@ protocol UploadPostControllerDelegate: AnyObject {
     func controllerDidCanceledUploadingPost()
 }
 
+protocol ModifyPostControllerDelegate: AnyObject {
+    func controllerDidFinishModifyPost(_ controller: UploadPostController)
+}
+
 enum UploadPostType {
     case upload
     case modify
@@ -21,7 +25,8 @@ final class UploadPostController: UIViewController {
     
     // MARK: - Properties
     
-    weak var delegate: UploadPostControllerDelegate?
+    weak var uploadPostControllerDelegate: UploadPostControllerDelegate?
+    weak var modifyPostControllerDelegate: ModifyPostControllerDelegate?
     
     var selectedImage: UIImage? {
         didSet { photoImageView.image = selectedImage }
@@ -66,7 +71,7 @@ final class UploadPostController: UIViewController {
     // MARK: - Actions
     
     @objc private func didTapCancelByUpload() {
-        delegate?.controllerDidCanceledUploadingPost()
+        uploadPostControllerDelegate?.controllerDidCanceledUploadingPost()
         dismiss(animated: true)
     }
     @objc private func didTapCancelByModify() {
@@ -87,7 +92,7 @@ final class UploadPostController: UIViewController {
                 return
             }
             
-            self.delegate?.controllerDidFinishUploadingPost(self)
+            self.uploadPostControllerDelegate?.controllerDidFinishUploadingPost(self)
         }
     }
     
@@ -106,7 +111,7 @@ final class UploadPostController: UIViewController {
                 return
             }
             
-            self.dismiss(animated: true)
+            self.modifyPostControllerDelegate?.controllerDidFinishModifyPost(self)
         }
     }
     
