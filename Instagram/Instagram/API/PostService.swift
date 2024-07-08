@@ -159,4 +159,15 @@ struct PostService {
         
         COLLECTION_POSTS.document(post.postId).updateData(dictionary, completion: completion)
     }
+    
+    static func deletePost(post: Post, completion: @escaping () -> Void) {
+        COLLECTION_POSTS.document(post.postId).delete { error in
+            if let error = error {
+                print(error.localizedDescription)
+                return
+            }
+            
+            completion()
+        }
+    }
 }

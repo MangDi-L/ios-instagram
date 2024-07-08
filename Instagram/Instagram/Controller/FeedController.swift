@@ -196,11 +196,25 @@ extension FeedController: FeedCellDelegate {
             return
         }
         let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { _ in
-            return
+            let alertController = UIAlertController(title: "Are you sure you want to delete the post?", message: nil, preferredStyle: .alert)
+            
+            let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { _ in
+                // 삭제
+                self.showLoader(true)
+                
+                PostService.deletePost(post: post) {
+                    self.showLoader(false)
+                    self.handleRefresh()
+                }
+            }
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+            
+            alertController.addAction(deleteAction)
+            alertController.addAction(cancelAction)
+            
+            self.present(alertController, animated: true)
         }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { _ in
-            return
-        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         
         alertController.addAction(modifyAction)
         alertController.addAction(deleteAction)
