@@ -18,6 +18,14 @@ struct Post {
     var postUser: User?
     var didLike = false
     
+    var dictionary: [String: Any] {
+        return ["caption": caption,
+                "likes": likes,
+                "imageUrl": imageUrl,
+                "ownerUid": ownerUid,
+                "timestamp": timestamp]
+    }
+    
     init(postId: String, dictionary: [String: Any]) {
         self.postId = postId
         self.caption = dictionary["caption"] as? String ?? ""

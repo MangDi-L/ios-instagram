@@ -153,4 +153,10 @@ struct PostService {
             }
         }
     }
+    
+    static func modifyPost(post: Post, completion: @escaping (Error?) -> Void) {
+        let dictionary = post.dictionary
+        
+        COLLECTION_POSTS.document(post.postId).updateData(dictionary, completion: completion)
+    }
 }

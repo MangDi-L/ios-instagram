@@ -92,7 +92,22 @@ final class UploadPostController: UIViewController {
     }
     
     @objc private func didTapModify() {
+        guard var post = post,
+              let caption = captionTextView.text else { return }
         
+        post.caption = caption
+        showLoader(true)
+        
+        PostService.modifyPost(post: post) { error in
+            self.showLoader(false)
+            
+            if let error = error {
+                print(error.localizedDescription)
+                return
+            }
+            
+            self.dismiss(animated: true)
+        }
     }
     
     // MARK: - Helpers
