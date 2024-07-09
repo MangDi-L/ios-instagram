@@ -161,12 +161,7 @@ struct PostService {
     }
     
     static func deletePost(post: Post, completion: @escaping () -> Void) {
-        // posts - post-likes
-        // users - user-likes
-        // posts - comments
-        //
-        // users - user-feed 동기화 필요
-        //
+        // users - user-likes 삭제
         // 삭제
         
         COLLECTION_POSTS.document(post.postId).collection("post-likes").getDocuments { snapshot, error in
@@ -186,5 +181,11 @@ struct PostService {
             
             completion()
         }
+        
+        // posts - 하위comments컬렉션 삭제
+        // posts - 하위post-likes컬렉션 삭제
+        // users - user-feed컬렉션의 postID 문서 삭제
+        // 위 세가지는 Cloud Function 이용해서 해결해야함
+        // 삭제는 필드만 삭제가되서 컬렉션 및 문서 자체를 삭제하려면 Cloud Function 이용..
     }
 }
