@@ -6,6 +6,7 @@
 //
 
 import Firebase
+import FirebaseFirestoreInternal
 
 struct NotificationService {
     static func uploadNotification(toUid uid: String, fromUid: String,
@@ -64,7 +65,6 @@ struct NotificationService {
     static func fetchNotificationWithPost(notifications: [Notification], completion: @escaping([Notification]) -> Void) {
         var notifications: [Notification] = notifications
         var indexes: [Int] = []
-        var countIndex: Int = 0
         
         for (index, notification) in notifications.enumerated() {
             if notification.type != .follow {
@@ -81,11 +81,7 @@ struct NotificationService {
             guard let postId = notifications[index].postId else { return }
             PostService.fetchPost(id: postId, isNeedPostUser: false) { post in
                 notifications[index].post = post
-                countIndex += 1
-                
-                if countIndex == indexes.count {
-                    completion(notifications)
-                }
+                completion(notifications)
             }
         }
     }
