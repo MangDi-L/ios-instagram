@@ -10,6 +10,7 @@ import SDWebImage
 
 protocol ProfileHeaderDelegate: AnyObject {
     func header(_ profileHeader: ProfileHeader, didTapActionButtonFor user: User)
+    func header(_ profileHeader: ProfileHeader, changeCellType: ProfileCellType)
 }
 
 final class ProfileHeader: UICollectionReusableView {
@@ -70,23 +71,26 @@ final class ProfileHeader: UICollectionReusableView {
         return label
     }()
     
-    let gridButton: UIButton = {
+    private lazy var gridButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(named: "grid"), for: .normal)
+        button.tintColor = .systemBlue
+        button.addTarget(self, action: #selector(touchupGridButton), for: .touchUpInside)
         return button
     }()
     
-    let listButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setImage(UIImage(named: "list"), for: .normal)
-        button.tintColor = UIColor(white: 0, alpha: 0.2)
-        return button
-    }()
+//    let listButton: UIButton = {
+//        let button = UIButton(type: .system)
+//        button.setImage(UIImage(named: "list"), for: .normal)
+//        button.tintColor = UIColor(white: 0, alpha: 0.2)
+//        return button
+//    }()
     
-    let bookmarkButton: UIButton = {
+    private lazy var bookmarkButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(named: "ribbon"), for: .normal)
         button.tintColor = UIColor(white: 0, alpha: 0.2)
+        button.addTarget(self, action: #selector(touchupBookmarkButton), for: .touchUpInside)
         return button
     }()
     
@@ -126,7 +130,7 @@ final class ProfileHeader: UICollectionReusableView {
         let bottomDivider = UIView()
         bottomDivider.backgroundColor = .lightGray
         
-        let cellTypeButtonStack = UIStackView(arrangedSubviews: [gridButton, listButton, bookmarkButton])
+        let cellTypeButtonStack = UIStackView(arrangedSubviews: [gridButton, bookmarkButton])
         cellTypeButtonStack.distribution = .fillEqually
         
         addSubview(topDivider)
@@ -148,6 +152,18 @@ final class ProfileHeader: UICollectionReusableView {
     @objc private func handleEditProfileFollowTapped() {
         guard let viewModel = viewModel else { return }
         delegate?.header(self, didTapActionButtonFor: viewModel.user)
+    }
+    
+    @objc private func touchupGridButton() {
+        gridButton.tintColor = .systemBlue
+        bookmarkButton.tintColor = UIColor(white: 0, alpha: 0.2)
+        delegate?.header(self, changeCellType: .grid)
+    }
+    
+    @objc private func touchupBookmarkButton() {
+        bookmarkButton.tintColor = .systemBlue
+        gridButton.tintColor = UIColor(white: 0, alpha: 0.2)
+        delegate?.header(self, changeCellType: .bookmark)
     }
     
     // MARK: - Helpers

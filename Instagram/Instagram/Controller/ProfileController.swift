@@ -7,6 +7,11 @@
 
 import UIKit
 
+enum ProfileCellType {
+    case grid
+    case bookmark
+}
+
 final class ProfileController: UICollectionViewController {
     
     private let cellIdentifier = "ProfileCell"
@@ -16,6 +21,8 @@ final class ProfileController: UICollectionViewController {
     
     private var user: User
     private var posts: [Post] = []
+    private var likedPosts: [Post] = []
+    var cellType: ProfileCellType = .grid
     
     // MARK: - Lifecycle
     
@@ -40,6 +47,7 @@ final class ProfileController: UICollectionViewController {
         checkIfUserIsFollowed()
         fetchUserStats()
         fetchPosts { }
+        fetchLikedPosts()
     }
     
     // MARK: - API
@@ -63,6 +71,13 @@ final class ProfileController: UICollectionViewController {
             self.posts = posts
             self.collectionView.reloadData()
             completion()
+        }
+    }
+    
+    private func fetchLikedPosts() {
+        PostService.fetchLikedPost(from: user) { posts in
+            self.likedPosts = posts
+            self.collectionView.reloadData()
         }
     }
     
@@ -101,12 +116,24 @@ final class ProfileController: UICollectionViewController {
 
 extension ProfileController {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return posts.count
+        switch cellType {
+        case .grid:
+            return posts.count
+        case .bookmark:
+            return likedPosts.count
+        }
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as? ProfileCell ?? ProfileCell()
-        cell.viewModel = PostViewModel(post: posts[indexPath.row])
+        
+        switch cellType {
+        case .grid:
+            cell.viewModel = PostViewModel(post: posts[indexPath.row])
+        case .bookmark:
+            cell.viewModel = PostViewModel(post: likedPosts[indexPath.row])
+        }
+        
         return cell
     }
     
@@ -125,8 +152,15 @@ extension ProfileController {
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let controller = FeedController(collectionViewLayout: UICollectionViewFlowLayout())
         controller.feedType = .profile
-        controller.posts = posts
         controller.moveToCellIndex = indexPath
+        
+        switch cellType {
+        case .grid:
+            controller.posts = posts
+        case .bookmark:
+            controller.posts = likedPosts
+        }
+        
         navigationController?.pushViewController(controller, animated: true)
     }
 }
@@ -184,6 +218,17 @@ extension ProfileController: ProfileHeaderDelegate {
                 UserService.updateUserFeedAfterFollowing(opponentUid: user.uid, didFollow: true)
             }
         }
+    }
+    
+    func header(_ profileHeader: ProfileHeader, changeCellType: ProfileCellType) {
+        switch changeCellType {
+        case .grid:
+            cellType = .grid
+        case .bookmark:
+            cellType = .bookmark
+        }
+        
+        collectionView.reloadData()
     }
 }
 
