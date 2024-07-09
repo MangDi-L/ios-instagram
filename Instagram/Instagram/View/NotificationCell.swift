@@ -11,6 +11,7 @@ protocol NotificationCellDelegate: AnyObject {
     func cell(_ cell: NotificationCell, wansToFollow uid: String)
     func cell(_ cell: NotificationCell, wantsToUnfollow uid: String)
     func cell(_ cell: NotificationCell, wantsToViewPost post: Post)
+    func failedToViewPost(_ cell: NotificationCell)
     func cell(_ cell: NotificationCell, wantsToProfile user: User)
 }
 
@@ -119,7 +120,10 @@ final class NotificationCell: UITableViewCell {
     
     @objc private func handlePostImageTapped() {
         guard let viewModel = viewModel,
-              let post = viewModel.notification.post else { return }
+              let post = viewModel.notification.post else {
+            delegate?.failedToViewPost(self)
+            return
+        }
         delegate?.cell(self, wantsToViewPost: post)
     }
     

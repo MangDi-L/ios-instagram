@@ -6,6 +6,7 @@
 //
 
 import Firebase
+import FirebaseFirestoreInternal
 
 enum NotificationType: Int {
     case like

@@ -94,6 +94,10 @@ extension NotificationController {
 // MARK: - NotificationCellDelegate
 
 extension NotificationController: NotificationCellDelegate {
+    func failedToViewPost(_ cell: NotificationCell) {
+        showMessage(withTitle: "", message: "This post has already been deleted.")
+    }
+    
     func cell(_ cell: NotificationCell, wansToFollow uid: String) {
         guard let tab = tabBarController as? MainTabController else { return }
         guard let currentUser = tab.user else { return }

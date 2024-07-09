@@ -6,6 +6,7 @@
 //
 
 import Firebase
+import FirebaseFirestoreInternal
 
 struct CommentService {
     static func uploadComment(comment: String, postID: String, userID: String, completion: @escaping(FirestoreCompletion)) {
