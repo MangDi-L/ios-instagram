@@ -161,6 +161,23 @@ struct PostService {
     }
     
     static func deletePost(post: Post, completion: @escaping () -> Void) {
+        // posts - post-likes
+        // users - user-likes
+        // posts - comments
+        //
+        // users - user-feed 동기화 필요
+        //
+        // 삭제
+        
+        COLLECTION_POSTS.document(post.postId).collection("post-likes").getDocuments { snapshot, error in
+            guard let documents = snapshot?.documents else { return }
+            
+            // post를 like한사람들의 uid를 가지고 user-likes중 해당 postID 삭제
+            documents.forEach { document in
+                COLLECTION_USERS.document(document.documentID).collection("user-likes").document(post.postId).delete()
+            }
+        }
+        
         COLLECTION_POSTS.document(post.postId).delete { error in
             if let error = error {
                 print(error.localizedDescription)
