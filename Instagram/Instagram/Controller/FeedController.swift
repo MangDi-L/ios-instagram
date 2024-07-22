@@ -187,6 +187,7 @@ extension FeedController: FeedCellDelegate {
         
         let modifyAction = UIAlertAction(title: "Modify", style: .default) { _ in
             let uploadPostController = UploadPostController()
+            uploadPostController.feedType = self.feedType
             uploadPostController.type = .modify
             uploadPostController.post = post
             uploadPostController.modifyPostControllerDelegate = self
@@ -262,8 +263,9 @@ extension FeedController: FeedCellDelegate {
 // MARK: - ModifyPostControllerDelegate
 
 extension FeedController: ModifyPostControllerDelegate {
-    func controllerDidFinishModifyPost(_ controller: UploadPostController) {
+    func controllerDidFinishModifyPost(_ controller: UploadPostController, feedType: FeedType) {
         controller.dismiss(animated: true)
+        self.feedType = feedType
         handleRefresh()
     }
 }

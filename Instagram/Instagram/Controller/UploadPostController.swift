@@ -13,7 +13,7 @@ protocol UploadPostControllerDelegate: AnyObject {
 }
 
 protocol ModifyPostControllerDelegate: AnyObject {
-    func controllerDidFinishModifyPost(_ controller: UploadPostController)
+    func controllerDidFinishModifyPost(_ controller: UploadPostController, feedType: FeedType)
 }
 
 enum UploadPostType {
@@ -32,6 +32,7 @@ final class UploadPostController: UIViewController {
         didSet { photoImageView.image = selectedImage }
     }
     
+    var feedType: FeedType = .basic
     var type: UploadPostType = .upload
     var post: Post?
     
@@ -111,7 +112,7 @@ final class UploadPostController: UIViewController {
                 return
             }
             
-            self.modifyPostControllerDelegate?.controllerDidFinishModifyPost(self)
+            self.modifyPostControllerDelegate?.controllerDidFinishModifyPost(self, feedType: self.feedType)
         }
     }
     
